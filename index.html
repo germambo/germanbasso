@@ -18,7 +18,7 @@
             overflow: hidden;
         }
         
-        /* Navigation */
+        /* Navigation - Dynamic positioning */
         .nav {
             position: fixed;
             top: 0;
@@ -29,16 +29,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(3px);
+            background: #000;
+            backdrop-filter: none;
             transition: all 0.3s ease;
             padding: 0 50px;
             transform: translateY(3px);
         }
         
         .nav:hover {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(8px);
+            background: #000;
+            backdrop-filter: none;
+        }
+        
+        .nav.dynamic-position {
+            position: absolute;
+            top: auto;
+            bottom: auto;
         }
         
         .logo {
@@ -387,7 +393,7 @@
             height: 24px;
         }
         
-        /* Bottom Navigation Bar */
+        /* Bottom Navigation Bar - Dynamic positioning */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -399,11 +405,23 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 15px;
-            background: rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(3px);
+            background: #000;
+            backdrop-filter: none;
             transition: all 0.3s ease;
             padding-left: 50px;
             padding-right: 50px;
+            transform: translateY(0);
+        }
+        
+        .bottom-nav:hover {
+            background: #000;
+            backdrop-filter: none;
+        }
+        
+        .bottom-nav.dynamic-position {
+            position: absolute;
+            bottom: auto;
+            top: auto;
         }
         
         .bottom-nav:hover {
@@ -1173,11 +1191,14 @@
             }
             
             .bottom-nav {
-                height: 60px; /* Increased height to accommodate stacked content */
-                padding-top: 12px;
+                height: 70px; /* Increased height for mobile to accommodate stacked content */
+                padding-top: 0; /* Remove top padding to center content properly */
                 padding-left: 25px;
                 padding-right: 25px;
                 bottom: 25px; /* Move bottom nav up 25px from original 0 */
+                display: flex;
+                align-items: center; /* Center content vertically */
+                justify-content: center;
             }
             
             .video-controls {
@@ -1906,6 +1927,105 @@
                 this.setupMobileMenu();
                 this.setupMobileLogo();
                 this.setupProjectNavigation();
+                this.setupDynamicFooterPosition();
+                
+                // Setup window resize listener for dynamic positioning with debounce
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        this.updateFooterPosition();
+                        this.updateHeaderPosition();
+                    }, 100);
+                });
+            }
+            
+            setupDynamicFooterPosition() {
+                this.updateFooterPosition();
+                this.updateHeaderPosition();
+            }
+            
+            updateHeaderPosition() {
+                const nav = document.querySelector('.nav');
+                const carousel = document.getElementById('carousel');
+                const currentVideo = this.videos[this.currentSlide];
+                
+                if (!nav || !carousel || !currentVideo) return;
+                
+                // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
+                if (window.innerWidth <= 780 || carousel.style.display === 'none') {
+                    nav.classList.remove('dynamic-position');
+                    nav.style.top = '';
+                    nav.style.bottom = '';
+                    return;
+                }
+                
+                // Wait for video to be loaded and get accurate dimensions
+                const updatePosition = () => {
+                    const videoRect = currentVideo.getBoundingClientRect();
+                    const navHeight = 60;
+                    
+                    // Calculate the space above the video
+                    const spaceAbove = videoRect.top;
+                    
+                    // Calculate ideal center position
+                    const centerPosition = (spaceAbove / 2) - (navHeight / 2);
+                    
+                    // Ensure header doesn't get cut off at top of screen
+                    const minAllowedTop = 0;
+                    const finalPosition = Math.max(centerPosition, minAllowedTop);
+                    
+                    nav.classList.add('dynamic-position');
+                    nav.style.top = finalPosition + 'px';
+                    nav.style.bottom = 'auto';
+                };
+                
+                // Try immediately, then with delays to ensure video is rendered
+                updatePosition();
+                setTimeout(updatePosition, 50);
+                setTimeout(updatePosition, 200);
+            }
+            
+            updateFooterPosition() {
+                const bottomNav = document.querySelector('.bottom-nav');
+                const carousel = document.getElementById('carousel');
+                const currentVideo = this.videos[this.currentSlide];
+                
+                if (!bottomNav || !carousel || !currentVideo) return;
+                
+                // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
+                if (window.innerWidth <= 780 || carousel.style.display === 'none') {
+                    bottomNav.classList.remove('dynamic-position');
+                    bottomNav.style.bottom = '';
+                    bottomNav.style.top = '';
+                    return;
+                }
+                
+                // Wait for video to be loaded and get accurate dimensions
+                const updatePosition = () => {
+                    const videoRect = currentVideo.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const navHeight = 60;
+                    
+                    // Calculate the space below the video
+                    const spaceBelow = windowHeight - videoRect.bottom;
+                    
+                    // Calculate ideal center position
+                    const centerPosition = videoRect.bottom + (spaceBelow / 2) - (navHeight / 2);
+                    
+                    // Ensure footer doesn't get cut off at bottom of screen
+                    const maxAllowedTop = windowHeight - navHeight;
+                    const finalPosition = Math.min(centerPosition, maxAllowedTop);
+                    
+                    bottomNav.classList.add('dynamic-position');
+                    bottomNav.style.top = finalPosition + 'px';
+                    bottomNav.style.bottom = 'auto';
+                };
+                
+                // Try immediately, then with delays to ensure video is rendered
+                updatePosition();
+                setTimeout(updatePosition, 50);
+                setTimeout(updatePosition, 200);
             }
             
             setupMobileLogo() {
@@ -2193,6 +2313,12 @@
                 this.progressDots[this.currentSlide].classList.add('active');
                 this.updateProjectInfo();
                 this.playCurrentVideo();
+                
+                // Update header and footer position after slide change
+                setTimeout(() => {
+                    this.updateFooterPosition();
+                    this.updateHeaderPosition();
+                }, 100);
             }
             
             updateProjectInfo() {
@@ -2221,6 +2347,20 @@
                 video.currentTime = 0;
                 video.muted = this.isMuted;
                 video.play().catch(e => console.log('Error playing video:', e));
+                
+                // Update header and footer position when video starts playing
+                video.addEventListener('loadedmetadata', () => {
+                    setTimeout(() => {
+                        this.updateFooterPosition();
+                        this.updateHeaderPosition();
+                    }, 100);
+                }, { once: true });
+                
+                // Also update after a short delay to ensure rendering is complete
+                setTimeout(() => {
+                    this.updateFooterPosition();
+                    this.updateHeaderPosition();
+                }, 300);
             }
             
             toggleVideoPlayback(index) {
@@ -2273,6 +2413,8 @@
                     // Reactivar el video actual al volver a trabajos
                     setTimeout(() => {
                         this.playCurrentVideo();
+                        this.updateFooterPosition();
+                        this.updateHeaderPosition();
                     }, 100);
                 } else {
                     this.carousel.style.display = 'none';
