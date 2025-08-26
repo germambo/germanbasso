@@ -380,21 +380,6 @@
             backdrop-filter: blur(10px);
         }
         
-        /* Remove hover effect on mobile after touch */
-        @media (max-width: 768px) {
-            .nav-arrow:hover {
-                background: transparent;
-                border: 1px solid transparent;
-                backdrop-filter: none;
-            }
-            
-            .nav-arrow:active {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                backdrop-filter: blur(10px);
-            }
-        }
-        
         .nav-arrow.prev {
             left: 50px;
         }
@@ -517,7 +502,7 @@
         
         .content-wrapper h1 {
             font-size: 48px;
-            margin-bottom: 50px; /* Increased from 30px to 50px for contact section */
+            margin-bottom: 30px;
             font-weight: 300;
         }
         
@@ -1480,22 +1465,19 @@
         <div class="content-wrapper">
             <h1>Contacto</h1>
             <div class="contact-info">
+                <p>¿Interesado en trabajar juntos? No dudes en contactarme.</p>
                 <div class="contact-details">
                     <div class="contact-item">
-                        <strong>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                        <strong>Email:</strong>
                         <a href="mailto:gerbasso@gmail.com">gerbasso@gmail.com</a>
                     </div>
                     <div class="contact-item">
-                        <strong>Teléfono:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                        <a href="https://wa.me/542215664582" target="_blank">+54 221 5664582</a>
+                        <strong>Teléfono:</strong>
+                        <a href="tel:+542215664582">+54 221 5664582</a>
                     </div>
                     <div class="contact-item">
-                        <strong>Instagram:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                        <strong>Instagram:</strong>
                         <a href="https://www.instagram.com/germanbasso/" target="_blank">@germanbasso</a>
-                    </div>
-                    <div class="contact-item">
-                        <strong>LinkedIn:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                        <a href="https://www.linkedin.com/in/germanbasso" target="_blank">germanbasso</a>
                     </div>
                 </div>
             </div>
@@ -1666,16 +1648,6 @@
                         <div class="vialidad-videos">
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/LiIt8ncgEc0" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                                <div class="video-description">
-                                    <h4>Derrumbe Brazo Huemul - La Angostura</h4>
-                                    <p>Documental sobre la respuesta de emergencia ante el derrumbe en Brazo Huemul, mostrando el trabajo coordinado de los equipos técnicos y la rapidez en la solución de la crisis vial.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="video-row">
-                                <div class="video-embed">
                                     <iframe src="https://www.youtube.com/embed/s_XLHpwqQwc" frameborder="0" allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
@@ -1691,6 +1663,16 @@
                                 <div class="video-description">
                                     <h4>Día del Camino 2024</h4>
                                     <p>Producción especial conmemorativa del Día del Camino, celebrando el trabajo de los equipos de Vialidad Nacional y la importancia de las rutas en la conectividad del país.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="video-row">
+                                <div class="video-embed">
+                                    <iframe src="https://www.youtube.com/embed/LiIt8ncgEc0" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                                <div class="video-description">
+                                    <h4>Derrumbe Brazo Huemul - La Angostura</h4>
+                                    <p>Documental sobre la respuesta de emergencia ante el derrumbe en Brazo Huemul, mostrando el trabajo coordinado de los equipos técnicos y la rapidez en la solución de la crisis vial.</p>
                                 </div>
                             </div>
                             
@@ -2038,8 +2020,8 @@
                     const actualViewportHeight = window.visualViewport ? 
                         window.visualViewport.height : window.innerHeight;
                     
-                    // Safety margin only to prevent going behind taskbar (reduced to 5px - minimum recommended)
-                    const taskbarSafetyMargin = 5;
+                    // Safety margin only to prevent going behind taskbar (reduced to 10px)
+                    const taskbarSafetyMargin = 10;
                     const absoluteMaxTop = actualViewportHeight - navHeight - taskbarSafetyMargin;
                     
                     // Calculate the space below the video
