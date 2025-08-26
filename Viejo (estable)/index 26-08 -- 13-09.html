@@ -2020,8 +2020,8 @@
                     const actualViewportHeight = window.visualViewport ? 
                         window.visualViewport.height : window.innerHeight;
                     
-                    // Safety margin only to prevent going behind taskbar (reduced to 20px)
-                    const taskbarSafetyMargin = 20;
+                    // Safety margin only to prevent going behind taskbar (reduced from 80 to 40)
+                    const taskbarSafetyMargin = 40;
                     const absoluteMaxTop = actualViewportHeight - navHeight - taskbarSafetyMargin;
                     
                     // Calculate the space below the video
