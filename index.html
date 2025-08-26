@@ -2016,12 +2016,16 @@
                     const videoRect = currentVideo.getBoundingClientRect();
                     const navHeight = 60;
                     
-                    // Use viewport height directly and set absolute maximum
-                    const viewportHeight = Math.min(window.innerHeight, window.screen.height);
-                    const absoluteMaxTop = viewportHeight - navHeight - 50; // 50px safety margin
+                    // Use visual viewport if available (more accurate for actual visible area)
+                    const actualViewportHeight = window.visualViewport ? 
+                        window.visualViewport.height : window.innerHeight;
+                    
+                    // Add aggressive safety margin to account for taskbar/browser chrome
+                    const safetyMargin = 80; // Increased from 50 to 80px
+                    const absoluteMaxTop = actualViewportHeight - navHeight - safetyMargin;
                     
                     // Calculate the space below the video
-                    const spaceBelow = viewportHeight - videoRect.bottom;
+                    const spaceBelow = actualViewportHeight - videoRect.bottom;
                     
                     // Calculate ideal center position
                     const centerPosition = videoRect.bottom + (spaceBelow / 2) - (navHeight / 2);
@@ -2044,7 +2048,7 @@
                     bottomNav.classList.add('dynamic-position');
                     
                     // Debug log for troubleshooting
-                    console.log('Footer position:', finalPosition, 'Viewport height:', viewportHeight, 'Max allowed:', absoluteMaxTop);
+                    console.log('Footer position:', finalPosition, 'Actual viewport height:', actualViewportHeight, 'Max allowed:', absoluteMaxTop, 'Safety margin:', safetyMargin);
                 };
                 
                 // Try multiple times with increasing delays
