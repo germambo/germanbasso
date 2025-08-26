@@ -1938,12 +1938,6 @@
                         this.updateHeaderPosition();
                     }, 100);
                 });
-                
-                // Listen for fullscreen changes
-                document.addEventListener('fullscreenchange', () => this.updateFooterPosition());
-                document.addEventListener('webkitfullscreenchange', () => this.updateFooterPosition());
-                document.addEventListener('mozfullscreenchange', () => this.updateFooterPosition());
-                document.addEventListener('msfullscreenchange', () => this.updateFooterPosition());
             }
             
             setupDynamicFooterPosition() {
@@ -2013,22 +2007,14 @@
                     const windowHeight = window.innerHeight;
                     const navHeight = 60;
                     
-                    // Detect fullscreen mode and add safety margin
-                    const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || 
-                                        document.mozFullScreenElement || document.msFullscreenElement ||
-                                        window.innerHeight === screen.height;
-                    
-                    const safetyMargin = isFullscreen ? 20 : 0; // Add margin in fullscreen
-                    const effectiveHeight = windowHeight - safetyMargin;
-                    
                     // Calculate the space below the video
-                    const spaceBelow = effectiveHeight - videoRect.bottom;
+                    const spaceBelow = windowHeight - videoRect.bottom;
                     
                     // Calculate ideal center position
                     const centerPosition = videoRect.bottom + (spaceBelow / 2) - (navHeight / 2);
                     
                     // Ensure footer doesn't get cut off at bottom of screen
-                    const maxAllowedTop = effectiveHeight - navHeight;
+                    const maxAllowedTop = windowHeight - navHeight;
                     const finalPosition = Math.min(centerPosition, maxAllowedTop);
                     
                     bottomNav.classList.add('dynamic-position');
