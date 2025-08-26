@@ -18,7 +18,7 @@
             overflow: hidden;
         }
         
-        /* Navigation - Dynamic positioning */
+        /* Navigation */
         .nav {
             position: fixed;
             top: 0;
@@ -29,22 +29,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #000;
-            backdrop-filter: none;
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(3px);
             transition: all 0.3s ease;
             padding: 0 50px;
             transform: translateY(3px);
         }
         
         .nav:hover {
-            background: #000;
-            backdrop-filter: none;
-        }
-        
-        .nav.dynamic-position {
-            position: absolute;
-            top: auto;
-            bottom: auto;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
         }
         
         .logo {
@@ -1935,55 +1929,12 @@
                     clearTimeout(resizeTimeout);
                     resizeTimeout = setTimeout(() => {
                         this.updateFooterPosition();
-                        this.updateHeaderPosition();
                     }, 100);
                 });
             }
             
             setupDynamicFooterPosition() {
                 this.updateFooterPosition();
-                this.updateHeaderPosition();
-            }
-            
-            updateHeaderPosition() {
-                const nav = document.querySelector('.nav');
-                const carousel = document.getElementById('carousel');
-                const currentVideo = this.videos[this.currentSlide];
-                
-                if (!nav || !carousel || !currentVideo) return;
-                
-                // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
-                if (window.innerWidth <= 780 || carousel.style.display === 'none') {
-                    nav.classList.remove('dynamic-position');
-                    nav.style.top = '';
-                    nav.style.bottom = '';
-                    return;
-                }
-                
-                // Wait for video to be loaded and get accurate dimensions
-                const updatePosition = () => {
-                    const videoRect = currentVideo.getBoundingClientRect();
-                    const navHeight = 60;
-                    
-                    // Calculate the space above the video
-                    const spaceAbove = videoRect.top;
-                    
-                    // Calculate ideal center position
-                    const centerPosition = (spaceAbove / 2) - (navHeight / 2);
-                    
-                    // Ensure header doesn't get cut off at top of screen
-                    const minAllowedTop = 0;
-                    const finalPosition = Math.max(centerPosition, minAllowedTop);
-                    
-                    nav.classList.add('dynamic-position');
-                    nav.style.top = finalPosition + 'px';
-                    nav.style.bottom = 'auto';
-                };
-                
-                // Try immediately, then with delays to ensure video is rendered
-                updatePosition();
-                setTimeout(updatePosition, 50);
-                setTimeout(updatePosition, 200);
             }
             
             updateFooterPosition() {
@@ -2314,10 +2265,9 @@
                 this.updateProjectInfo();
                 this.playCurrentVideo();
                 
-                // Update header and footer position after slide change
+                // Update footer position after slide change
                 setTimeout(() => {
                     this.updateFooterPosition();
-                    this.updateHeaderPosition();
                 }, 100);
             }
             
@@ -2348,19 +2298,13 @@
                 video.muted = this.isMuted;
                 video.play().catch(e => console.log('Error playing video:', e));
                 
-                // Update header and footer position when video starts playing
+                // Update footer position when video starts playing
                 video.addEventListener('loadedmetadata', () => {
-                    setTimeout(() => {
-                        this.updateFooterPosition();
-                        this.updateHeaderPosition();
-                    }, 100);
+                    setTimeout(() => this.updateFooterPosition(), 100);
                 }, { once: true });
                 
                 // Also update after a short delay to ensure rendering is complete
-                setTimeout(() => {
-                    this.updateFooterPosition();
-                    this.updateHeaderPosition();
-                }, 300);
+                setTimeout(() => this.updateFooterPosition(), 300);
             }
             
             toggleVideoPlayback(index) {
@@ -2414,7 +2358,6 @@
                     setTimeout(() => {
                         this.playCurrentVideo();
                         this.updateFooterPosition();
-                        this.updateHeaderPosition();
                     }, 100);
                 } else {
                     this.carousel.style.display = 'none';
