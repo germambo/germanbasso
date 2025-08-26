@@ -393,37 +393,34 @@
             height: 24px;
         }
         
-        /* Bottom Navigation Bar - Dynamic positioning with web compatibility */
+        /* Bottom Navigation Bar - Dynamic positioning */
         .bottom-nav {
-            position: fixed !important;
+            position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 1000 !important;
+            z-index: 1000;
             height: 60px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding-top: 15px;
-            background: #000 !important;
+            background: #000;
             backdrop-filter: none;
             transition: all 0.3s ease;
             padding-left: 50px;
             padding-right: 50px;
             transform: translateY(0);
-            margin: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
         }
         
         .bottom-nav:hover {
-            background: #000 !important;
+            background: #000;
             backdrop-filter: none;
         }
         
         .bottom-nav.dynamic-position {
-            position: fixed !important;
-            bottom: auto !important;
+            position: absolute;
+            bottom: auto;
             top: auto;
         }
         
@@ -2007,51 +2004,42 @@
                     bottomNav.classList.remove('dynamic-position');
                     bottomNav.style.bottom = '';
                     bottomNav.style.top = '';
-                    bottomNav.style.transform = '';
                     return;
                 }
                 
                 // Wait for video to be loaded and get accurate dimensions
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
                     const navHeight = 60;
                     
-                    // Use viewport height directly and set absolute maximum
-                    const viewportHeight = Math.min(window.innerHeight, window.screen.height);
-                    const absoluteMaxTop = viewportHeight - navHeight - 50; // 50px safety margin
+                    // Detect fullscreen mode and add safety margin
+                    const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || 
+                                        document.mozFullScreenElement || document.msFullscreenElement ||
+                                        window.innerHeight === screen.height;
+                    
+                    const safetyMargin = isFullscreen ? 20 : 0; // Add margin in fullscreen
+                    const effectiveHeight = windowHeight - safetyMargin;
                     
                     // Calculate the space below the video
-                    const spaceBelow = viewportHeight - videoRect.bottom;
+                    const spaceBelow = effectiveHeight - videoRect.bottom;
                     
                     // Calculate ideal center position
                     const centerPosition = videoRect.bottom + (spaceBelow / 2) - (navHeight / 2);
                     
-                    // Force position properties
-                    bottomNav.style.position = 'fixed';
-                    bottomNav.style.zIndex = '1000';
-                    bottomNav.style.left = '0';
-                    bottomNav.style.right = '0';
-                    bottomNav.style.width = '100%';
-                    bottomNav.style.bottom = 'auto';
+                    // Ensure footer doesn't get cut off at bottom of screen
+                    const maxAllowedTop = effectiveHeight - navHeight;
+                    const finalPosition = Math.min(centerPosition, maxAllowedTop);
                     
-                    // Use the most restrictive value (closest to top)
-                    const finalPosition = Math.min(
-                        Math.max(centerPosition, 10), // Never above 10px from top
-                        absoluteMaxTop  // Never below viewport - navHeight - safety
-                    );
-                    
-                    bottomNav.style.top = finalPosition + 'px';
                     bottomNav.classList.add('dynamic-position');
-                    
-                    // Debug log for troubleshooting
-                    console.log('Footer position:', finalPosition, 'Viewport height:', viewportHeight, 'Max allowed:', absoluteMaxTop);
+                    bottomNav.style.top = finalPosition + 'px';
+                    bottomNav.style.bottom = 'auto';
                 };
                 
-                // Try multiple times with increasing delays
+                // Try immediately, then with delays to ensure video is rendered
                 updatePosition();
                 setTimeout(updatePosition, 50);
                 setTimeout(updatePosition, 200);
-                setTimeout(updatePosition, 500);
             }
             
             setupMobileLogo() {
