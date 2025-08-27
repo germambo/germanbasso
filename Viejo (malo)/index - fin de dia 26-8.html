@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Germán Basso</title>
+    <title>Germán Basso - Portafolio</title>
     <style>
         * {
             margin: 0;
@@ -95,7 +95,7 @@
             width: 300px;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            padding: 30px 25px 50px 25px; /* Increased bottom padding from 30px to 50px */
+            padding: 30px 25px;
             transform: translateX(100%);
             transition: transform 0.3s ease;
             z-index: 999;
@@ -136,6 +136,7 @@
             flex-direction: column;
             gap: 15px;
             margin-top: -5px;
+            padding-right: 20px;
             text-align: right;
         }
         
@@ -1192,7 +1193,7 @@
             
             .mobile-menu-overlay {
                 display: block;
-                padding: 30px 25px 50px 25px; /* Updated bottom padding to match */
+                padding: 30px 25px;
                 top: 71px; /* Adjusted for mobile nav height + new position */
                 width: 240px; /* 20% wider than before (200px) */
             }
@@ -1220,10 +1221,7 @@
             
             .video-controls {
                 padding-right: 25px;
-                padding-top: 0; /* Changed from 2px to 0 */
-                display: flex;
-                align-items: center; /* Added to center vertically */
-                height: 100%; /* Added to take full height of footer */
+                padding-top: 2px;
             }
             
             .nav-arrow {
@@ -1951,8 +1949,6 @@
                 this.setupMobileLogo();
                 this.setupProjectNavigation();
                 this.setupDynamicFooterPosition();
-                this.setupSwipeGestures(); // Add swipe functionality
-                this.setupYoutubeLazyLoading(); // Add YouTube lazy loading
                 
                 // Setup window resize listener for dynamic positioning with debounce
                 let resizeTimeout;
@@ -1969,93 +1965,6 @@
                 document.addEventListener('webkitfullscreenchange', () => this.updateFooterPosition());
                 document.addEventListener('mozfullscreenchange', () => this.updateFooterPosition());
                 document.addEventListener('msfullscreenchange', () => this.updateFooterPosition());
-            }
-            
-            setupSwipeGestures() {
-                if (!this.isMobile) return; // Only enable on mobile
-                
-                let startX = 0;
-                let startY = 0;
-                let endX = 0;
-                let endY = 0;
-                const minSwipeDistance = 50; // Minimum distance for swipe
-                const maxVerticalDistance = 100; // Maximum vertical movement allowed
-                
-                this.carousel.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                }, { passive: true });
-                
-                this.carousel.addEventListener('touchend', (e) => {
-                    endX = e.changedTouches[0].clientX;
-                    endY = e.changedTouches[0].clientY;
-                    
-                    const deltaX = endX - startX;
-                    const deltaY = Math.abs(endY - startY);
-                    
-                    // Check if it's a horizontal swipe (not vertical scroll)
-                    if (Math.abs(deltaX) > minSwipeDistance && deltaY < maxVerticalDistance) {
-                        if (deltaX > 0) {
-                            // Swipe right - go to previous slide
-                            this.prevSlide();
-                        } else {
-                            // Swipe left - go to next slide
-                            this.nextSlide();
-                        }
-                    }
-                }, { passive: true });
-            }
-            
-            setupYoutubeLazyLoading() {
-                // Replace all YouTube iframes with lazy loading placeholders
-                const iframes = document.querySelectorAll('iframe[src*="youtube.com"]');
-                iframes.forEach(iframe => {
-                    const videoId = this.extractYouTubeId(iframe.src);
-                    if (videoId) {
-                        const placeholder = this.createYouTubePlaceholder(videoId, iframe);
-                        iframe.parentNode.replaceChild(placeholder, iframe);
-                    }
-                });
-            }
-            
-            extractYouTubeId(url) {
-                const regex = /(?:youtube\.com\/embed\/|youtu\.be\/)([^?&]+)/;
-                const match = url.match(regex);
-                return match ? match[1] : null;
-            }
-            
-            createYouTubePlaceholder(videoId, originalIframe) {
-                const placeholder = document.createElement('div');
-                placeholder.className = 'youtube-placeholder';
-                placeholder.dataset.videoId = videoId;
-                placeholder.dataset.src = originalIframe.src;
-                
-                // Copy original iframe attributes
-                if (originalIframe.allow) placeholder.dataset.allow = originalIframe.allow;
-                if (originalIframe.referrerPolicy) placeholder.dataset.referrerPolicy = originalIframe.referrerPolicy;
-                
-                placeholder.addEventListener('click', () => {
-                    this.loadYouTubeVideo(placeholder);
-                });
-                
-                return placeholder;
-            }
-            
-            loadYouTubeVideo(placeholder) {
-                placeholder.classList.add('loading');
-                
-                const iframe = document.createElement('iframe');
-                iframe.src = placeholder.dataset.src;
-                iframe.frameBorder = '0';
-                iframe.allowFullscreen = true;
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.borderRadius = '8px';
-                
-                if (placeholder.dataset.allow) iframe.allow = placeholder.dataset.allow;
-                if (placeholder.dataset.referrerPolicy) iframe.referrerPolicy = placeholder.dataset.referrerPolicy;
-                
-                placeholder.parentNode.replaceChild(iframe, placeholder);
             }
             
             setupDynamicFooterPosition() {
