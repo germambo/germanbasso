@@ -1943,21 +1943,16 @@
             }
             
             init() {
-                // Critical initialization for immediate display
                 this.setupVideoSources();
-                this.setupMobileLogo();
+                this.bindEvents();
                 this.loadFirstVideo();
-                
-                // Defer non-critical setup to reduce initial blocking time
-                setTimeout(() => {
-                    this.bindEvents();
-                    this.setupCustomScrollbar();
-                    this.setupMobileMenu();
-                    this.setupProjectNavigation();
-                    this.setupSwipeGestures();
-                    this.setupYoutubeLazyLoading();
-                    this.setupDynamicFooterPosition();
-                }, 0); // Defer to next tick
+                this.setupCustomScrollbar();
+                this.setupMobileMenu();
+                this.setupMobileLogo();
+                this.setupProjectNavigation();
+                this.setupDynamicFooterPosition();
+                this.setupSwipeGestures(); // Add swipe functionality
+                this.setupYoutubeLazyLoading(); // Add YouTube lazy loading
                 
                 // Setup window resize listener for dynamic positioning with debounce
                 let resizeTimeout;
@@ -2337,14 +2332,8 @@
             }
             
             loadFirstVideo() {
-                // Load first video immediately with preload metadata
+                // Load first video immediately
                 this.loadVideo(0, true);
-                
-                // Set preload attribute for first video to reduce render delay
-                const firstVideo = this.videos[0];
-                if (firstVideo) {
-                    firstVideo.preload = 'metadata';
-                }
                 
                 // Initialize project info
                 this.updateProjectInfo();
