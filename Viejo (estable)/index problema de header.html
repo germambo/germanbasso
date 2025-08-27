@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Germán Basso</title>
+    <!-- Optimize font loading to reduce render delay -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <style>
         * {
             margin: 0;
@@ -2075,22 +2078,8 @@
             }
             
             setupDynamicFooterPosition() {
-                // Initialize footer immediately
                 this.updateFooterPosition();
-                
-                // Delay header positioning until video dimensions are available
-                setTimeout(() => {
-                    const firstVideo = this.videos[0];
-                    if (firstVideo && firstVideo.videoHeight > 0) {
-                        // Video has dimensions, safe to position header
-                        this.updateHeaderPosition();
-                    } else {
-                        // Video not ready, wait for loadedmetadata event
-                        firstVideo.addEventListener('loadedmetadata', () => {
-                            setTimeout(() => this.updateHeaderPosition(), 100);
-                        }, { once: true });
-                    }
-                }, 200);
+                this.updateHeaderPosition();
             }
             
             updateHeaderPosition() {
@@ -2108,27 +2097,30 @@
                     return;
                 }
                 
-                // Single calculation to prevent multiple layout shifts
+                // Wait for video to be loaded and get accurate dimensions
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
                     const navHeight = 60;
+                    
+                    // Calculate the space above the video
                     const spaceAbove = videoRect.top;
                     
-                    // Only update if there's a significant change (>10px) to reduce layout shifts
+                    // Calculate ideal center position
                     const centerPosition = (spaceAbove / 2) - (navHeight / 2);
-                    const finalPosition = Math.max(centerPosition, 0);
                     
-                    // Check if current position is significantly different
-                    const currentTop = parseInt(nav.style.top) || 3; // Default translateY(3px)
-                    if (Math.abs(currentTop - finalPosition) > 10) {
-                        nav.classList.add('dynamic-position');
-                        nav.style.top = finalPosition + 'px';
-                        nav.style.bottom = 'auto';
-                    }
+                    // Ensure header doesn't get cut off at top of screen
+                    const minAllowedTop = 0;
+                    const finalPosition = Math.max(centerPosition, minAllowedTop);
+                    
+                    nav.classList.add('dynamic-position');
+                    nav.style.top = finalPosition + 'px';
+                    nav.style.bottom = 'auto';
                 };
                 
-                // Single execution to prevent multiple shifts
+                // Try immediately, then with delays to ensure video is rendered
                 updatePosition();
+                setTimeout(updatePosition, 50);
+                setTimeout(updatePosition, 200);
             }
             
             updateFooterPosition() {
@@ -2488,11 +2480,11 @@
                 this.updateProjectInfo();
                 this.playCurrentVideo();
                 
-                // Update positions only after significant slide changes
+                // Update header and footer position after slide change
                 setTimeout(() => {
                     this.updateFooterPosition();
                     this.updateHeaderPosition();
-                }, 200); // Slightly longer delay to ensure stability
+                }, 100);
             }
             
             updateProjectInfo() {
@@ -2522,7 +2514,7 @@
                 video.muted = this.isMuted;
                 video.play().catch(e => console.log('Error playing video:', e));
                 
-                // Update positions when video metadata is loaded (ensures proper dimensions)
+                // Update header and footer position when video starts playing
                 video.addEventListener('loadedmetadata', () => {
                     setTimeout(() => {
                         this.updateFooterPosition();
@@ -2530,11 +2522,11 @@
                     }, 100);
                 }, { once: true });
                 
-                // Fallback update after delay
+                // Also update after a short delay to ensure rendering is complete
                 setTimeout(() => {
                     this.updateFooterPosition();
                     this.updateHeaderPosition();
-                }, 500);
+                }, 300);
             }
             
             toggleVideoPlayback(index) {
@@ -2588,6 +2580,7 @@
                     setTimeout(() => {
                         this.playCurrentVideo();
                         this.updateFooterPosition();
+                        this.updateHeaderPosition();
                     }, 100);
                 } else {
                     this.carousel.style.display = 'none';
