@@ -264,7 +264,6 @@
             background: #000;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            min-height: 100vh; /* Reserve space to prevent layout shift */
         }
         
         .video-slide.active {
@@ -2017,19 +2016,9 @@
             }
             
             setupYoutubeLazyLoading() {
-                // Only apply lazy loading to iframes that are NOT in project detail pages
-                // Target only iframes in sections that are initially hidden/non-critical
-                const iframes = document.querySelectorAll('iframe[src*="youtube.com"]:not(.no-lazy)');
+                // Replace all YouTube iframes with lazy loading placeholders
+                const iframes = document.querySelectorAll('iframe[src*="youtube.com"]');
                 iframes.forEach(iframe => {
-                    // Skip iframes that are in project detail sections
-                    if (iframe.closest('#project-detail') || 
-                        iframe.closest('.vialidad-projects') ||
-                        iframe.closest('.alpapuyo-video') ||
-                        iframe.closest('.cosasviejas-video') ||
-                        iframe.closest('.roca-additional-video')) {
-                        return; // Don't lazy load these
-                    }
-                    
                     const videoId = this.extractYouTubeId(iframe.src);
                     if (videoId) {
                         const placeholder = this.createYouTubePlaceholder(videoId, iframe);
