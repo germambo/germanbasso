@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Germán Basso</title>
-    <!-- Optimize font loading to reduce render delay -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <style>
         * {
             margin: 0;
@@ -54,7 +51,6 @@
             font-size: 18px;
             font-weight: 600;
             letter-spacing: 1px;
-            contain: layout style; /* Optimize rendering */
         }
         
         .nav-menu {
@@ -1947,14 +1943,10 @@
             }
             
             init() {
-                // Critical initialization for immediate display - prioritize video loading
-                this.setupMobileLogo(); // Load logo first (smaller element)
-                this.setupVideoSources(); // Then setup video sources
-                
-                // Immediately trigger first video load to compete with logo for LCP
-                requestAnimationFrame(() => {
-                    this.loadFirstVideo();
-                });
+                // Critical initialization for immediate display
+                this.setupVideoSources();
+                this.setupMobileLogo();
+                this.loadFirstVideo();
                 
                 // Defer non-critical setup to reduce initial blocking time
                 setTimeout(() => {
