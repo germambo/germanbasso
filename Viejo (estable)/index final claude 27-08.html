@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Germán Basso</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Asimovian:wght@400&family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,116 +12,10 @@
         }
         
         body {
-            font-family: "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #000;
             color: #fff;
             overflow: hidden;
-        }
-        
-        /* Bio section with fixed title and scrollable text */
-        .bio-wrapper {
-            max-width: 800px;
-            width: 100%;
-            padding: 150px 50px 120px; /* Reduced padding since title is now fixed */
-            height: 100vh;
-            position: relative;
-            overflow: hidden; /* Hide overflow from wrapper */
-        }
-        
-        .bio-header {
-            position: fixed;
-            top: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            background: #000;
-            padding: 0 50px;
-            width: 100%;
-            max-width: 800px;
-        }
-        
-        .bio-header h1 {
-            font-size: 42px;
-            margin-bottom: 0;
-            font-weight: 300;
-            text-align: center;
-        }
-        
-        .bio-text-container {
-            margin-top: 100px; /* Space for fixed title */
-            height: calc(100vh - 270px); /* Adjust height considering fixed title */
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        /* Fade mask at top of text container */
-        .bio-text-container::before {
-            content: '';
-            position: fixed;
-            top: 230px; /* Just below the title */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 800px;
-            height: 40px;
-            background: linear-gradient(to bottom, #000 0%, transparent 100%);
-            pointer-events: none;
-            z-index: 99;
-        }
-        
-        /* Hide native scrollbar for bio text */
-        .bio-text-container::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .bio-text-container {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        .bio-text p {
-            font-size: 16px;
-            line-height: 1.7;
-            opacity: 0.8;
-            text-align: justify;
-            font-weight: 300;
-            padding-top: 20px; /* Space from fade mask */
-        }
-        p, 
-        .content-wrapper p,
-        .project-description p,
-        .video-description p,
-        .review-text p,
-        .contact-item a,
-        .detail-item span,
-        .award-festival li,
-        .project-header p {
-            font-family: "Roboto", sans-serif;
-        }
-        h1, h2, h3, h4, h5, h6,
-        .logo,
-        .nav-item,
-        .dropdown-item,
-        .mobile-nav-item,
-        .mobile-project-item,
-        .project-title,
-        .project-subtitle,
-        .project-header h1,
-        .content-wrapper h1,
-        .project-info-detail h3,
-        .project-reviews h3,
-        .project-details h3,
-        .project-links h3,
-        .project-awards h3,
-        .vialidad-projects h3,
-        .roca-additional-video h3,
-        .fiat-rectangles h3,
-        .alpapuyo-video h3,
-        .cosasviejas-video h3,
-        .video-description h4,
-        .award-festival h4,
-        .contact-item strong {
-            font-family: "Asimovian", sans-serif;
         }
         
         /* Navigation - Dynamic positioning */
@@ -622,7 +513,6 @@
             max-width: 800px;
             padding: 0 50px;
             text-align: center;
-            padding-top: 80px; /* Added top padding for Bio section */
         }
         
         .content-wrapper h1 {
@@ -686,7 +576,7 @@
         .project-detail-wrapper {
             max-width: 1200px;
             width: 100%;
-            padding: 150px 50px 120px; /* Increased top padding from 100px to 150px */
+            padding: 100px 50px 120px; /* Increased bottom padding to avoid footer overlap */
             height: 100vh;
             overflow-y: auto;
             position: relative;
@@ -1351,7 +1241,7 @@
             }
             
             .project-detail-wrapper {
-                padding: 151px 25px 50px; /* Adjusted top padding from 101px to 151px (50px more) */
+                padding: 101px 25px 50px; /* Adjusted top padding for new nav position and bottom for new footer position */
             }
             
             /* Mobile back button - remove box styling */
@@ -1392,8 +1282,10 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="nav">
-        <div class="logo">germán basso</div>
+        <div class="logo">GERMÁN BASSO</div>
+        <!-- Progress Dots in Navigation -->
         <div class="nav-progress-dots" id="navProgressDots">
             <div class="nav-progress-dot active"></div>
             <div class="nav-progress-dot"></div>
@@ -1405,7 +1297,7 @@
         
         <div class="nav-menu">
             <div class="nav-dropdown">
-                <a href="#" class="nav-item active" data-section="trabajos">trabajos</a>
+                <a href="#" class="nav-item active" data-section="trabajos">Trabajos</a>
                 <div class="dropdown-menu">
                     <a href="#" class="dropdown-item" data-project="carrero">Carrero</a>
                     <a href="#" class="dropdown-item" data-project="roca">Roca</a>
@@ -1415,10 +1307,11 @@
                     <a href="#" class="dropdown-item" data-project="cosasviejas">Cosas Viejas</a>
                 </div>
             </div>
-            <a href="#" class="nav-item" data-section="about">bio</a>
-            <a href="#" class="nav-item" data-section="contact">contacto</a>
+            <a href="#" class="nav-item" data-section="about">Acerca de</a>
+            <a href="#" class="nav-item" data-section="contact">Contacto</a>
         </div>
         
+        <!-- Hamburger Menu for Mobile -->
         <div class="hamburger-menu" id="hamburgerMenu">
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
@@ -1426,11 +1319,12 @@
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
         <div class="mobile-menu-items">
-            <a href="#" class="mobile-nav-item" data-section="about">bio</a>
-            <a href="#" class="mobile-nav-item" data-section="contact">contacto</a>
-            <a href="#" class="mobile-nav-item" data-section="trabajos">trabajos</a>
+            <a href="#" class="mobile-nav-item" data-section="about">Acerca de</a>
+            <a href="#" class="mobile-nav-item" data-section="contact">Contacto</a>
+            <a href="#" class="mobile-nav-item" data-section="trabajos">Trabajos</a>
             <div class="mobile-project-items">
                 <a href="#" class="mobile-project-item" data-project="carrero">Carrero</a>
                 <a href="#" class="mobile-project-item" data-project="roca">Roca</a>
@@ -1442,6 +1336,7 @@
         </div>
     </div>
 
+    <!-- Video Carousel -->
     <div class="carousel-container" id="carousel">
         <div class="video-slide active">
             <video muted loop preload="none" poster="">
@@ -1521,6 +1416,7 @@
             </div>
         </div>
 
+        <!-- Navigation Arrows -->
         <button class="nav-arrow prev" id="prevBtn">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -1533,16 +1429,19 @@
             </svg>
         </button>
 
+        <!-- Video Controls -->
         <div class="video-controls">
             <button class="sound-toggle" id="soundToggleBottom">
             </button>
         </div>
     </div>
 
+    <!-- Custom Scrollbar -->
     <div class="custom-scrollbar" id="customScrollbar">
         <div class="custom-scrollbar-thumb" id="customScrollbarThumb"></div>
     </div>
 
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
         <div class="project-info">
             <div class="project-title" data-project="carrero">CARRERO</div>
@@ -1559,6 +1458,7 @@
         </div>
     </div>
 
+        <!-- Progress Dots (Hidden - now in nav) -->
         <div class="progress-dots" id="progressDots" style="display: none;">
             <div class="progress-dot active"></div>
             <div class="progress-dot"></div>
@@ -1569,26 +1469,16 @@
         </div>
     </div>
 
+    <!-- About Section -->
     <div class="content-section" id="about">
-        <div class="bio-wrapper" id="bioWrapper">
-            <div class="bio-header">
-                <h1>Bio</h1>
-            </div>
-            
-            <div class="bio-text-container" id="bioTextContainer">
-                <div class="bio-text">
-                    <p>En una entrevista reciente, el cineasta colombiano Victor Gaviria reconoce que no tienen las llaves para entrar a su interioridad, y que sólo logra acceder a ella cuando accede a "otras almas, a otras casas". Me siento reflejado en esta idea, y la vinculo con otra que percibí de chico: lo que más me interesa es lo que me resulta lejano y ajeno.<br><br>
-
-                    Supongo que por eso elegí la carrera de historia en Humanidades de La Plata. Pero cuando la terminé me dí cuenta que no me interesaba seguir esa profesión y me encontré con un magnetismo por la fotografía que rápidamente decantó en lo audiovisual. Filmé videoclips, grabé casamientos y trabajé en televisión. Cuándo quise ingresar al rubro documental sentí qué me faltaban herramientas, así que hice una maestría en cine documental en la FUC y terminé con el cortometraje "Cosas Viejas". A partir de ahí me volqué al desarrollo de lo que fue Carrero, mi primer largometraje de ficción.<br><br>
-
-                    Me acerqué a un barrio a las afueras de La Plata, con la intención de ver un poco como es la vida ahí. Conocí a un grupo de chicos y chicas de 16-17 años con ganas de actuar y se formó un equipo. El guión de Carrero se fue armando mientras ensayábamos escenas para filmar, durante las vacaciones o los fines de semana largos. Los cuatro años que llevó hacer la película fueron claves para que cada uno perfeccionara su rol, pero también para que la historia tuviera un contacto asentado con el espacio que pretendía narrar.<br><br>
-
-                    En ese mismo barrio hay un grupo de inmigrantes del Chaco, descendientes de los Qom. Allí conocí a Hugo Cardozo, que es una figura destacada de la comunidad originaria de La Plata y quien resultó de enorme ayuda para la realización del film. La amistad que se construyó de aquella experiencia trascendió la película, y con él fui al Chaco, a conocer su tierra de orígen y su comunidad. Roca, el documental que me encuentro realizando, se centra en esas otras casas, como diría Victor Gaviria.</p>
-                </div>
-            </div>
+        <div class="content-wrapper">
+            <h1>Acerca de</h1>
+            <p>Director del largometraje CARRERO (2022). Jefe del Área Audiovisual en Vialidad Nacional. Director de cine y productor audiovisual con experiencia en ficción, documental, publicidad y creación de contenidos para redes sociales.<br><br>
+            Ganador de premios internacionales con Carrero y Alpapuyo. Actualmente desarrolla un proyecto documental sobre comunidades indígenas Qom.</p>
         </div>
     </div>
 
+    <!-- Contact Section -->
     <div class="content-section" id="contact">
         <div class="content-wrapper">
             <h1>Contacto</h1>
@@ -1600,7 +1490,7 @@
                     </div>
                     <div class="contact-item">
                         <strong>Teléfono:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                        <a href="https://wa.me/542215550199" target="_blank">+54 221 5550199</a>
+                        <a href="https://wa.me/542215664582" target="_blank">+54 221 5664582</a>
                     </div>
                     <div class="contact-item">
                         <strong>Instagram:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
@@ -1615,6 +1505,7 @@
         </div>
     </div>
 
+    <!-- Project Detail Section -->
     <div class="content-section" id="project-detail">
         <div class="project-detail-wrapper" id="projectDetailWrapper">
             <div class="project-nav-container">
@@ -1772,6 +1663,7 @@
                         </div>
                     </div>
                     
+                    <!-- Vialidad Nacional Projects Section -->
                     <div class="vialidad-projects" id="vialidad-projects" style="display: none;">
                         <h3>Proyectos realizados</h3>
                         <div class="vialidad-videos">
@@ -1847,6 +1739,7 @@
                         </div>
                     </div>
                     
+                    <!-- Alpapuyo Video Section -->
                     <div class="alpapuyo-video" id="alpapuyo-video" style="display: none;">
                         <div class="project-media">
                             <div class="video-embed-large">
@@ -1855,6 +1748,7 @@
                         </div>
                     </div>
                     
+                    <!-- FIAT Rectangles Section -->
                     <div class="fiat-rectangles" id="fiat-rectangles" style="display: none;">
                         <h3>Galería</h3>
                         <div class="rectangles-grid">
@@ -1876,6 +1770,7 @@
                         </div>
                     </div>
                     
+                    <!-- Cosas Viejas Video Section -->
                     <div class="cosasviejas-video" id="cosasviejas-video" style="display: none;">
                         <div class="project-media">
                             <div class="video-embed-large">
@@ -1884,6 +1779,7 @@
                         </div>
                     </div>
                     
+                    <!-- Roca Additional Video Section -->
                     <div class="roca-additional-video" id="roca-additional-video" style="display: none;">
                         <h3>Teaser</h3>
                         <div class="project-media">
@@ -2310,9 +2206,9 @@
                 const logo = document.querySelector('.logo');
                 const updateLogo = () => {
                     if (window.innerWidth <= 768) {
-                        logo.textContent = 'germán\nbasso';
+                        logo.textContent = 'GERMÁN\nBASSO';
                     } else {
-                        logo.textContent = 'germán basso';
+                        logo.textContent = 'GERMÁN BASSO';
                     }
                 };
                 
@@ -2355,17 +2251,16 @@
             
             setupCustomScrollbar() {
                 const scrollContainer = document.getElementById('projectDetailWrapper');
-                const bioTextContainer = document.getElementById('bioTextContainer');
                 const customScrollbar = document.getElementById('customScrollbar');
                 const scrollThumb = document.getElementById('customScrollbarThumb');
                 let scrollTimeout;
                 
-                const updateScrollbar = (container) => {
-                    if (!container || !customScrollbar || !scrollThumb) return;
+                const updateScrollbar = () => {
+                    if (!scrollContainer || !customScrollbar || !scrollThumb) return;
                     
-                    const scrollTop = container.scrollTop;
-                    const scrollHeight = container.scrollHeight;
-                    const containerHeight = container.clientHeight;
+                    const scrollTop = scrollContainer.scrollTop;
+                    const scrollHeight = scrollContainer.scrollHeight;
+                    const containerHeight = scrollContainer.clientHeight;
                     
                     // Calculate thumb height and position
                     const thumbHeight = Math.max((containerHeight / scrollHeight) * customScrollbar.offsetHeight, 20);
@@ -2387,30 +2282,20 @@
                 
                 const showHideScrollbar = () => {
                     const projectDetailSection = document.getElementById('project-detail');
-                    const aboutSection = document.getElementById('about');
-                    
                     if (projectDetailSection && projectDetailSection.classList.contains('active')) {
                         customScrollbar.style.display = 'block';
-                        updateScrollbar(scrollContainer);
-                    } else if (aboutSection && aboutSection.classList.contains('active')) {
-                        customScrollbar.style.display = 'block';
-                        updateScrollbar(bioTextContainer);
+                        updateScrollbar();
                     } else {
                         customScrollbar.style.display = 'none';
                     }
                 };
                 
-                // Bind scroll events for both containers
-                if (scrollContainer) scrollContainer.addEventListener('scroll', () => updateScrollbar(scrollContainer));
-                if (bioTextContainer) bioTextContainer.addEventListener('scroll', () => updateScrollbar(bioTextContainer));
+                // Bind scroll events
+                scrollContainer.addEventListener('scroll', updateScrollbar);
                 
                 // Show/hide scrollbar based on active section
                 const observer = new MutationObserver(showHideScrollbar);
                 observer.observe(document.getElementById('project-detail'), {
-                    attributes: true,
-                    attributeFilter: ['class']
-                });
-                observer.observe(document.getElementById('about'), {
                     attributes: true,
                     attributeFilter: ['class']
                 });
