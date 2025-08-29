@@ -504,29 +504,22 @@
 
         @media (max-width: 768px)
 
+
 {
     .bio-wrapper {
-        padding: 150px 5% 120px; /* Solo en móvil: 5% de padding lateral */
-        max-width: none; /* Quita el límite de 800px en móvil */
+        padding: 150px 5% 50px; /* Reducido el padding inferior de 120px a 50px */
+        height: 100vh; /* Asegura que use toda la altura de la pantalla */
+    }
+    
+    .bio-text-container {
+        height: calc(100vh - 270px); /* Ajustado para el nuevo padding */
+        margin-top: 90px; /* Reducido de 70px */
     }
     
     .bio-header {
-        max-width: none;
-        padding: 0 5%;
-    }
-    
-    .bio-text-container::before {
-        max-width: none;
+        top: 150px; /* Ajustado para mantener consistencia */
     }
 }
-
-{
-    .bio-text-container {
-        height: calc(100vh - 320px); /* Reducido de 470px a 320px para que el texto llegue más abajo */
-    }
-}
-
-
 
 
 
