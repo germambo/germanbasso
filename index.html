@@ -501,7 +501,30 @@
         }
         
         /* Remove hover effect on mobile after touch */
-        @media (max-width: 768px) {
+
+        @media (max-width: 768px)
+
+
+{
+    .bio-wrapper {
+        padding: 150px 5% 50px; /* Reducido el padding inferior de 120px a 50px */
+        height: 100vh; /* Asegura que use toda la altura de la pantalla */
+    }
+    
+    .bio-text-container {
+        height: calc(100vh - 270px); /* Ajustado para el nuevo padding */
+        margin-top: 90px; /* Reducido de 70px */
+    }
+    
+    .bio-header {
+        top: 150px; /* Ajustado para mantener consistencia */
+    }
+}
+
+
+
+
+ {
             .nav-arrow:hover {
                 background: transparent;
                 border: 1px solid transparent;
