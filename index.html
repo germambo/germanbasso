@@ -62,8 +62,8 @@
         }
         
         .bio-text-container {
-            margin-top: 70px; /* Space for fixed title */
-            height: calc(100vh - 370px); /* Adjust height considering fixed title */
+            margin-top: 0px; /* Space for fixed title */
+            height: calc(100vh - 300px); /* Adjust height considering fixed title */
             overflow-y: auto;
             position: relative;
         }
@@ -72,7 +72,7 @@
         .bio-text-container::before {
             content: '';
             position: fixed;
-            top: 230px; /* Just below the title */
+            top: 180px; /* Just below the title */
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
