@@ -1526,8 +1526,8 @@
     </div>
 
     <div class="carousel-container" id="carousel">
-        <div class="video-slide active" style="background-image: url('Recursos/Carrero-vertical.jpg')">
-            <video muted loop preload="none" poster="Recursos/Carrero-vertical.jpg">
+        <div class="video-slide active" style="background-image: url('Recursos/carrerovertical.jpg')">
+            <video muted loop preload="metadata" poster="Recursos/carrerovertical.jpg">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -2574,15 +2574,8 @@
                 this.videos.forEach((video, index) => {
                     const baseName = this.videoSources[index];
 
-                    // Set poster image with new naming convention
-                    const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
-                    let baseNameLower = baseName.toLowerCase();
-                    let posterPath = `Recursos/${baseNameLower}${posterOrientation}.jpg`;
-
-                    // Specific case fixes based on folder scan
-                    if (baseName === 'Carrero') posterPath = `Recursos/carrero${posterOrientation}.jpg`;
-                    if (baseName === 'FIAT' && !this.isMobile) posterPath = `Recursos/fiat-horizontal.jpg`;
-                    if (baseName === 'FIAT' && this.isMobile) posterPath = `Recursos/fiat-vertical.jpg`;
+                    // Set poster image with robust helper
+                    const posterPath = this.getPosterPath(baseName, this.isMobile);
 
                     video.poster = posterPath;
                     this.slides[index].style.backgroundImage = `url('${posterPath}')`;
@@ -2631,6 +2624,37 @@
                 });
             }
 
+            getPosterPath(baseName, isMobile) {
+                const orientation = isMobile ? 'vertical' : 'horizontal';
+
+                // Special mapping for inconsistencies in Recursos folder
+                const mapping = {
+                    'Carrero': {
+                        'vertical': 'Recursos/carrerovertical.jpg',
+                        'horizontal': 'Recursos/carrerohorizontal.jpg'
+                    },
+                    'Alpapuyo': {
+                        'vertical': 'Recursos/Alpapuyo-Vertical.jpg',
+                        'horizontal': 'Recursos/Alpapuyo.jpg'
+                    },
+                    'FIAT': {
+                        'vertical': 'Recursos/fiat-vertical.jpg',
+                        'horizontal': 'Recursos/fiat-horizontal.jpg'
+                    },
+                    'Roca': {
+                        'vertical': 'Recursos/roca-vertical.jpg',
+                        'horizontal': 'Recursos/roca-horizontal.jpg'
+                    }
+                };
+
+                if (mapping[baseName]) {
+                    return mapping[baseName][orientation] || mapping[baseName]['horizontal'];
+                }
+
+                // Default pattern: Name-orientation.jpg
+                return `Recursos/${baseName}-${orientation}.jpg`;
+            }
+
             loadFirstVideo() {
                 // Initial load: Only the first video
                 this.loadVideo(0, true);
@@ -2672,16 +2696,9 @@
                 this.videosLoading.add(index);
                 const video = this.videos[index];
 
-                // Set high quality poster path
+                // Set high quality poster path with robust helper
                 const baseName = this.videoSources[index];
-                const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
-                let baseNameLower = baseName.toLowerCase();
-                let posterPath = `Recursos/${baseNameLower}${posterOrientation}.jpg`;
-
-                // Specific case fixes
-                if (baseName === 'Carrero') posterPath = `Recursos/carrero${posterOrientation}.jpg`;
-                if (baseName === 'FIAT' && !this.isMobile) posterPath = `Recursos/fiat-horizontal.jpg`;
-                if (baseName === 'FIAT' && this.isMobile) posterPath = `Recursos/fiat-vertical.jpg`;
+                const posterPath = this.getPosterPath(baseName, this.isMobile);
 
                 video.poster = posterPath;
                 this.slides[index].style.backgroundImage = `url('${posterPath}')`;
@@ -2701,7 +2718,7 @@
                     video.classList.add('v-loaded');
                 };
 
-                video.addEventListener('canplaythrough', loadHandler, { once: true });
+                video.addEventListener('canplay', loadHandler, { once: true });
                 video.addEventListener('playing', playingHandler, { once: true });
 
                 // Error handling
@@ -2710,7 +2727,11 @@
                     this.videosLoading.delete(index);
                 }, { once: true });
 
-                video.load();
+                if (video.readyState < 2) {
+                    video.load();
+                } else {
+                    loadHandler();
+                }
 
                 // If slow connection, stop at loading the essential ones
                 if (this.isSlowConnection && !immediate && index !== this.currentSlide) {
@@ -2829,23 +2850,30 @@
 
             playCurrentVideo() {
                 const video = this.videos[this.currentSlide];
-                video.currentTime = 0;
-                video.muted = this.isMuted;
-                video.play().catch(e => console.log('Error playing video:', e));
 
-                // Update positions when video metadata is loaded (ensures proper dimensions)
-                video.addEventListener('loadedmetadata', () => {
-                    setTimeout(() => {
-                        this.updateFooterPosition();
-                        this.updateHeaderPosition();
-                    }, 100);
-                }, { once: true });
+                // If video already loaded, play immediately
+                if (video.readyState >= 2) {
+                    video.muted = this.isMuted;
+                    video.play().then(() => {
+                        video.classList.add('v-loaded');
+                    }).catch(e => console.log('Error playing video:', e));
+                } else {
+                    // Wait for it
+                    video.load();
+                }
 
-                // Fallback update after delay
-                setTimeout(() => {
+                // Update positions when video metadata is loaded
+                if (video.videoHeight > 0) {
                     this.updateFooterPosition();
                     this.updateHeaderPosition();
-                }, 500);
+                } else {
+                    video.addEventListener('loadedmetadata', () => {
+                        setTimeout(() => {
+                            this.updateFooterPosition();
+                            this.updateHeaderPosition();
+                        }, 100);
+                    }, { once: true });
+                }
             }
 
             toggleVideoPlayback(index) {
