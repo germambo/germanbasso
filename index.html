@@ -2386,14 +2386,14 @@
                     const navHeight = this.isMobile ? 50 : 60;
                     const spaceAbove = videoRect.top;
 
-                    // Add a small visual offset for mobile (e.g., 3px) to compensate for visual weight
-                    const mobileOffset = this.isMobile ? 3 : 0;
+                    // Reset offset to 0 for debugging
+                    const mobileOffset = this.isMobile ? 0 : 0;
                     const centerPosition = (spaceAbove / 2) - (navHeight / 2) + mobileOffset;
                     const finalPosition = Math.max(centerPosition, 0);
 
-                    // Check if current position is significantly different
+                    // Force update for mobile (threshold 0)
                     const currentTop = parseInt(nav.style.top) || 0;
-                    const threshold = this.isMobile ? 1 : 10;
+                    const threshold = this.isMobile ? 0 : 10;
                     if (Math.abs(currentTop - finalPosition) > threshold) {
                         nav.classList.add('dynamic-position');
                         nav.style.top = finalPosition + 'px';
