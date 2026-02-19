@@ -2049,7 +2049,7 @@
                         <h3>Teaser</h3>
                         <div class="project-media">
                             <div class="video-embed-large">
-                                <iframe src="https://www.youtube.com/embed/-Q7NrS4_0L4?si=dDJQ_in2JEXYptoE"
+                                <iframe src="https://www.youtube.com/embed/YhT1mZvRUR0?si=mXD55jjdJybgaJj-"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -2386,14 +2386,14 @@
                     const navHeight = this.isMobile ? 50 : 60;
                     const spaceAbove = videoRect.top;
 
-                    // Reset offset to 0 for debugging
-                    const mobileOffset = this.isMobile ? 0 : 0;
+                    // Calculate centered position
+                    const mobileOffset = 0; // Final adjustment at 0
                     const centerPosition = (spaceAbove / 2) - (navHeight / 2) + mobileOffset;
                     const finalPosition = Math.max(centerPosition, 0);
 
-                    // Force update for mobile (threshold 0)
+                    // Apply position if change is significant (>1px mobile, >10px desktop)
                     const currentTop = parseInt(nav.style.top) || 0;
-                    const threshold = this.isMobile ? 0 : 10;
+                    const threshold = this.isMobile ? 1 : 10;
                     if (Math.abs(currentTop - finalPosition) > threshold) {
                         nav.classList.add('dynamic-position');
                         nav.style.top = finalPosition + 'px';
