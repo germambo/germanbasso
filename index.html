@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WHHCW3M805"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WHHCW3M805"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'G-WHHCW3M805');
-</script>
+        gtag('config', 'G-WHHCW3M805');
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>Vaso – Germán Basso</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Asimovian:wght@400&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Asimovian:wght@400&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: "Ubuntu Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000;
             color: #fff;
             overflow: hidden;
         }
-        
+
         /* Bio section with fixed title and scrollable text */
         .bio-wrapper {
             max-width: 800px;
             width: 100%;
-            padding: 120px 100px 120px; /* Reduced padding since title is now fixed */
+            padding: 120px 100px 120px;
+            /* Reduced padding since title is now fixed */
             height: 85vh;
             position: relative;
-            overflow: hidden; /* Hide overflow from wrapper */
+            overflow: hidden;
+            /* Hide overflow from wrapper */
         }
-        
+
         .bio-header {
             position: fixed;
             top: 200px;
@@ -53,26 +58,29 @@
             width: 100%;
             max-width: 800px;
         }
-        
+
         .bio-header h1 {
             font-size: 42px;
             margin-bottom: 0;
             font-weight: 300;
             text-align: center;
         }
-        
+
         .bio-text-container {
-            margin-top: 0px; /* Space for fixed title */
-            height: calc(100vh - 300px); /* Adjust height considering fixed title */
+            margin-top: 0px;
+            /* Space for fixed title */
+            height: calc(100vh - 300px);
+            /* Adjust height considering fixed title */
             overflow-y: auto;
             position: relative;
         }
-        
+
         /* Fade mask at top of text container */
         .bio-text-container::before {
             content: '';
             position: fixed;
-            top: 150px; /* Just below the title */
+            top: 150px;
+            /* Just below the title */
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -82,26 +90,28 @@
             pointer-events: none;
             z-index: 99;
         }
-        
+
         /* Hide native scrollbar for bio text */
         .bio-text-container::-webkit-scrollbar {
             display: none;
         }
-        
+
         .bio-text-container {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        
+
         .bio-text p {
             font-size: 16px;
             line-height: 1.7;
             opacity: 0.9;
             text-align: justify;
             font-weight: 300;
-            padding-top: 20px; /* Space from fade mask */
+            padding-top: 20px;
+            /* Space from fade mask */
         }
-        p, 
+
+        p,
         .content-wrapper p,
         .project-description p,
         .video-description p,
@@ -112,7 +122,13 @@
         .project-header p {
             font-family: "Ubuntu Sans", sans-serif;
         }
-        h1, h2, h3, h4, h5, h6,
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
         .logo,
         .nav-item,
         .dropdown-item,
@@ -137,7 +153,7 @@
         .contact-item strong {
             font-family: "Asimovian", sans-serif;
         }
-        
+
         /* Navigation - Dynamic positioning */
         .nav {
             position: fixed;
@@ -155,31 +171,32 @@
             padding: 0 50px;
             transform: translateY(3px);
         }
-        
+
         .nav:hover {
             background: #000;
             backdrop-filter: none;
         }
-        
+
         .nav.dynamic-position {
             position: absolute;
             top: auto;
             bottom: auto;
         }
-        
+
         .logo {
             font-size: 35px;
             font-weight: 400;
             letter-spacing: 1px;
-            contain: layout style; /* Optimize rendering */
+            contain: layout style;
+            /* Optimize rendering */
         }
-        
+
         .nav-menu {
             display: flex;
             gap: 40px;
             align-items: center;
         }
-        
+
         /* Hamburger Menu for Mobile */
         .hamburger-menu {
             display: none;
@@ -188,26 +205,26 @@
             padding: 5px;
             gap: 4px;
         }
-        
+
         .hamburger-line {
             width: 20px;
             height: 2px;
             background: #fff;
             transition: all 0.3s ease;
         }
-        
+
         .hamburger-menu.active .hamburger-line:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
-        
+
         .hamburger-menu.active .hamburger-line:nth-child(2) {
             opacity: 0;
         }
-        
+
         .hamburger-menu.active .hamburger-line:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -6px);
         }
-        
+
         /* Mobile Menu Overlay */
         .mobile-menu-overlay {
             position: fixed;
@@ -216,7 +233,8 @@
             width: 300px;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            padding: 30px 25px 50px 25px; /* Increased bottom padding from 30px to 50px */
+            padding: 30px 25px 50px 25px;
+            /* Increased bottom padding from 30px to 50px */
             transform: translateX(100%);
             transition: transform 0.3s ease;
             z-index: 999;
@@ -225,20 +243,20 @@
             opacity: 0;
             border-radius: 8px 0 0 8px;
         }
-        
+
         .mobile-menu-overlay.active {
             transform: translateX(0);
             visibility: visible;
             opacity: 1;
         }
-        
+
         .mobile-menu-items {
             display: flex;
             flex-direction: column;
             gap: 20px;
             text-align: right;
         }
-        
+
         .mobile-nav-item {
             font-size: 18px;
             font-weight: 500;
@@ -247,11 +265,11 @@
             text-decoration: none;
             transition: opacity 0.3s ease;
         }
-        
+
         .mobile-nav-item:hover {
             opacity: 0.7;
         }
-        
+
         .mobile-project-items {
             display: flex;
             flex-direction: column;
@@ -259,7 +277,7 @@
             margin-top: -5px;
             text-align: right;
         }
-        
+
         .mobile-project-item {
             font-size: 16px;
             font-weight: 400;
@@ -269,11 +287,11 @@
             text-decoration: none;
             transition: opacity 0.3s ease;
         }
-        
+
         .mobile-project-item:hover {
             opacity: 0.6;
         }
-        
+
         /* Progress Dots in Navigation */
         .nav-progress-dots {
             position: absolute;
@@ -286,7 +304,7 @@
             pointer-events: all;
             z-index: 1001;
         }
-        
+
         .nav-progress-dot {
             width: 6px;
             height: 6px;
@@ -295,20 +313,20 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .nav-progress-dot.active {
             background: #fff;
             transform: scale(1.2);
         }
-        
+
         .nav-progress-dot:hover {
             background: rgba(255, 255, 255, 0.8);
         }
-        
+
         .nav-dropdown {
             position: relative;
         }
-        
+
         .nav-item {
             color: #fff;
             text-decoration: none;
@@ -319,12 +337,12 @@
             cursor: pointer;
             display: block;
         }
-        
+
         .nav-item:hover,
         .nav-item.active {
             opacity: 0.7;
         }
-        
+
         .dropdown-menu {
             position: absolute;
             top: 100%;
@@ -341,13 +359,13 @@
             transition: all 0.3s ease;
             margin-top: 10px;
         }
-        
+
         .nav-dropdown:hover .dropdown-menu {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
-        
+
         .dropdown-item {
             display: block;
             padding: 10px 20px;
@@ -356,11 +374,11 @@
             font-size: 14px;
             transition: background-color 0.3s ease;
         }
-        
+
         .dropdown-item:hover {
             background: rgba(255, 255, 255, 0.1);
         }
-        
+
         /* Video Carousel */
         .carousel-container {
             position: relative;
@@ -368,7 +386,7 @@
             height: 100vh;
             overflow: hidden;
         }
-        
+
         .video-slide {
             position: absolute;
             top: 0;
@@ -382,11 +400,11 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-        
+
         .video-slide.active {
             opacity: 1;
         }
-        
+
         .video-slide video {
             width: auto;
             height: auto;
@@ -396,19 +414,26 @@
             cursor: pointer;
             position: relative;
             z-index: 50;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
-        
+
+        .video-slide video.v-loaded {
+            opacity: 1;
+        }
+
         /* Video clickable area (excludes project info area) */
         .video-clickable {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 120px; /* Exclude bottom area where project info is */
+            bottom: 120px;
+            /* Exclude bottom area where project info is */
             cursor: pointer;
             z-index: 60;
         }
-        
+
         /* Pause Icon Animation */
         .pause-icon {
             position: absolute;
@@ -428,17 +453,17 @@
             pointer-events: none;
             backdrop-filter: blur(10px);
         }
-        
+
         .pause-icon.show {
             opacity: 1;
         }
-        
+
         .pause-icon svg {
             width: 32px;
             height: 32px;
             color: #fff;
         }
-        
+
         /* Video Controls */
         .video-controls {
             position: absolute;
@@ -447,7 +472,7 @@
             padding-right: 50px;
             padding-top: 3px;
         }
-        
+
         .sound-toggle {
             background: transparent;
             border: 1px solid transparent;
@@ -462,18 +487,18 @@
             transition: all 0.3s ease;
             backdrop-filter: none;
         }
-        
+
         .sound-toggle:hover {
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
         }
-        
+
         .sound-toggle svg {
             width: 20px;
             height: 20px;
         }
-        
+
         /* Navigation Arrows */
         .nav-arrow {
             position: absolute;
@@ -493,71 +518,62 @@
             z-index: 100;
             backdrop-filter: none;
         }
-        
+
         .nav-arrow:hover {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
         }
-        
+
         /* Remove hover effect on mobile after touch */
 
-        @media (max-width: 768px)
+        @media (max-width: 768px) {
+            .bio-wrapper {
+                padding: 150px 5% 120px;
+                max-width: none;
+            }
 
-{
-    .bio-wrapper {
-        padding: 150px 5% 120px; /* Solo en móvil: 5% de padding lateral */
-        max-width: none; /* Quita el límite de 800px en móvil */
-    }
-    
-    .bio-header {
-        max-width: none;
-        padding: 0 5%;
-    }
-    
-    .bio-text-container::before {
-        max-width: none;
-    }
-}
+            .bio-header {
+                max-width: none;
+                padding: 0 5%;
+            }
 
-{
-    .bio-text-container {
-        height: calc(100vh - 320px); /* Reducido de 470px a 320px para que el texto llegue más abajo */
-    }
-}
+            .bio-text-container::before {
+                max-width: none;
+            }
 
+            .bio-text-container {
+                height: calc(100vh - 320px);
+            }
+        }
 
-
-
-
-
- {
+        @media (hover: hover) {
             .nav-arrow:hover {
                 background: transparent;
                 border: 1px solid transparent;
                 backdrop-filter: none;
             }
-            
+
             .nav-arrow:active {
                 background: rgba(255, 255, 255, 0.1);
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 backdrop-filter: blur(10px);
             }
         }
-        
+
         .nav-arrow.prev {
             left: 50px;
         }
-        
+
         .nav-arrow.next {
             right: 50px;
         }
-        
+
         .nav-arrow svg {
             width: 24px;
             height: 24px;
         }
-        
+
         /* Bottom Navigation Bar - Dynamic positioning with web compatibility */
         .bottom-nav {
             position: fixed !important;
@@ -580,23 +596,23 @@
             border: none !important;
             box-shadow: none !important;
         }
-        
+
         .bottom-nav:hover {
             background: #000 !important;
             backdrop-filter: none;
         }
-        
+
         .bottom-nav.dynamic-position {
             position: fixed !important;
             bottom: auto !important;
             top: auto;
         }
-        
+
         .bottom-nav:hover {
             background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(8px);
         }
-        
+
         /* Project Info */
         .project-info {
             display: flex;
@@ -604,7 +620,7 @@
             gap: 20px;
             white-space: nowrap;
         }
-        
+
         .project-title {
             font-size: 18px;
             font-weight: 600;
@@ -613,17 +629,17 @@
             transition: opacity 0.3s ease;
             text-transform: uppercase;
         }
-        
+
         .project-title:hover {
             opacity: 0.7;
         }
-        
+
         .project-divider {
             width: 1px;
             height: 20px;
             background: rgba(255, 255, 255, 0.5);
         }
-        
+
         .project-subtitle {
             font-size: 16px;
             opacity: 0.8;
@@ -632,11 +648,11 @@
             transition: opacity 0.3s ease;
             text-transform: lowercase;
         }
-        
+
         .project-subtitle:hover {
             opacity: 0.6;
         }
-        
+
         /* Content Sections */
         .content-section {
             position: fixed;
@@ -653,49 +669,51 @@
             pointer-events: none;
             transition: opacity 0.5s ease;
         }
-        
+
         .content-section.active {
             opacity: 1;
             pointer-events: all;
         }
-        
+
         .content-wrapper {
             max-width: 800px;
             padding: 100px;
             text-align: center;
-            padding-top: 80px; /* Added top padding for Bio section */
+            padding-top: 80px;
+            /* Added top padding for Bio section */
         }
-        
+
         .content-wrapper h1 {
             font-size: 48px;
-            margin-bottom: 50px; /* Increased from 30px to 50px for contact section */
+            margin-bottom: 50px;
+            /* Increased from 30px to 50px for contact section */
             font-weight: 300;
         }
-        
+
         .content-wrapper p {
             font-size: 18px;
             line-height: 1.6;
             opacity: 0.8;
         }
-        
+
         /* Contact Styles */
         .contact-info {
             text-align: left;
             max-width: 500px;
             margin: 0 auto;
         }
-        
-        .contact-info > p {
+
+        .contact-info>p {
             text-align: center;
             margin-bottom: 40px;
         }
-        
+
         .contact-details {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        
+
         .contact-item {
             display: flex;
             justify-content: space-between;
@@ -703,47 +721,48 @@
             padding: 15px 0;
             border-bottom: 0px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .contact-item:last-child {
             border-bottom: none;
         }
-        
+
         .contact-item strong {
             font-size: 16px;
             opacity: 1;
             font-weight: 300;
         }
-        
+
         .contact-item a {
             color: #fff;
             text-decoration: none;
             transition: opacity 0.3s ease;
         }
-        
+
         .contact-item a:hover {
             opacity: 0.7;
         }
-        
+
         /* Project Detail Styles */
         .project-detail-wrapper {
             max-width: 1200px;
             width: 100%;
-            padding: 150px 50px 120px; /* Increased top padding from 100px to 150px */
+            padding: 150px 50px 120px;
+            /* Increased top padding from 100px to 150px */
             height: 100vh;
             overflow-y: auto;
             position: relative;
         }
-        
+
         /* Hide native scrollbar */
         .project-detail-wrapper::-webkit-scrollbar {
             display: none;
         }
-        
+
         .project-detail-wrapper {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        
+
         /* Custom scrollbar indicator */
         .custom-scrollbar {
             position: fixed;
@@ -756,7 +775,7 @@
             z-index: 1001;
             pointer-events: none;
         }
-        
+
         .custom-scrollbar-thumb {
             position: absolute;
             top: 0;
@@ -767,15 +786,15 @@
             transition: background 0.3s ease, opacity 0.3s ease;
             opacity: 0;
         }
-        
+
         .custom-scrollbar-thumb.scrolling {
             opacity: 1;
         }
-        
+
         .custom-scrollbar-thumb.active {
             background: rgba(255, 255, 255, 0.5);
         }
-        
+
         .back-btn {
             display: flex;
             align-items: center;
@@ -790,17 +809,17 @@
             margin-bottom: 40px;
             font-size: 14px;
         }
-        
+
         .back-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
         }
-        
+
         .back-btn svg {
             width: 16px;
             height: 16px;
         }
-        
+
         /* Project Navigation Controls */
         .project-nav-container {
             display: flex;
@@ -808,13 +827,13 @@
             align-items: flex-start;
             margin-bottom: 40px;
         }
-        
+
         .project-nav-controls {
             display: flex;
             gap: 18px;
             align-items: center;
         }
-        
+
         .project-nav-btn {
             background: transparent;
             border: 1px solid transparent;
@@ -829,18 +848,18 @@
             transition: all 0.3s ease;
             position: relative;
         }
-        
+
         .project-nav-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
         }
-        
+
         .project-nav-btn svg {
             width: 20px;
             height: 20px;
         }
-        
+
         /* Tooltip styles */
         .project-nav-btn::after {
             content: attr(data-tooltip);
@@ -860,35 +879,36 @@
             pointer-events: none;
             z-index: 1002;
         }
-        
+
         .project-nav-btn:hover::after {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .project-content {
             display: grid;
             gap: 40px;
         }
-        
+
         .project-header h1 {
             font-size: 42px;
             margin-bottom: 10px;
             font-weight: 300;
         }
-        
+
         .project-header p {
             font-size: 18px;
             opacity: 0.7;
-            margin-bottom: 0; /* Reduced to 0 */
+            margin-bottom: 0;
+            /* Reduced to 0 */
         }
-        
+
         .project-media {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         .video-embed-large {
             position: relative;
             width: 100%;
@@ -897,58 +917,58 @@
             overflow: hidden;
             background: rgba(255, 255, 255, 0.05);
         }
-        
+
         .video-embed-large iframe {
             width: 100%;
             height: 100%;
             border: none;
             border-radius: 8px;
         }
-        
+
         .project-media video {
             width: 100%;
             height: auto;
             border-radius: 8px;
         }
-        
+
         .project-info-detail {
             display: grid;
             gap: 30px;
             text-align: left;
         }
-        
+
         .project-info-detail h3 {
             font-size: 24px;
             margin-bottom: 15px;
             font-weight: 400;
         }
-        
+
         .project-description p {
             font-size: 16px;
             line-height: 1.6;
             opacity: 0.8;
         }
-        
+
         /* Project Reviews Styles */
         .project-reviews {
             display: grid;
             gap: 30px;
             text-align: left;
         }
-        
+
         .reviews-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-top: 15px;
         }
-        
+
         .review-item {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-        
+
         .review-text p {
             font-size: 15px;
             line-height: 1.6;
@@ -956,7 +976,7 @@
             font-style: italic;
             color: #fff;
         }
-        
+
         .review-author {
             text-align: right;
             opacity: 0.7;
@@ -965,52 +985,53 @@
             gap: 4px;
             align-items: flex-end;
         }
-        
+
         .review-author strong {
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
-        
+
         .review-source {
             font-size: 14px;
             opacity: 0.7;
             font-weight: 400;
             letter-spacing: 0.5px;
         }
-        
+
         .review-rating {
             display: flex;
             gap: 2px;
             margin-top: 2px;
         }
-        
+
         .star {
             font-size: 14px;
             line-height: 1;
         }
-        
+
         .star.filled {
             color: #fff;
         }
-        
+
         .star.empty {
             color: rgba(255, 255, 255, 0.3);
         }
-        
+
         @media (max-width: 768px) {
             .reviews-grid {
                 grid-template-columns: 1fr;
                 gap: 25px;
             }
-            
+
             /* Mobile project navigation */
             .project-nav-controls {
                 flex-direction: column;
-                gap: 10px; /* Increased gap from 7px to 10px (3px more) */
+                gap: 10px;
+                /* Increased gap from 7px to 10px (3px more) */
                 align-items: flex-end;
             }
-            
+
             .project-nav-btn {
                 width: auto;
                 height: auto;
@@ -1025,58 +1046,58 @@
                 opacity: 0.8;
                 transition: opacity 0.3s ease;
             }
-            
+
             .project-nav-btn:hover {
                 background: transparent;
                 border: none;
                 backdrop-filter: none;
                 opacity: 1;
             }
-            
+
             .project-nav-btn svg {
                 display: block;
                 width: 14px;
                 height: 14px;
             }
-            
+
             .project-nav-btn::after {
                 display: none;
             }
-            
+
             .project-nav-btn::before {
                 content: attr(data-mobile-text);
             }
         }
-        
+
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
-        
+
         .detail-item {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
-        
+
         .detail-item strong {
             font-size: 14px;
             opacity: 0.7;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .detail-item span {
             font-size: 16px;
         }
-        
+
         .links-container {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
         }
-        
+
         .project-link {
             display: inline-block;
             padding: 12px 24px;
@@ -1087,31 +1108,31 @@
             border-radius: 6px;
             transition: all 0.3s ease;
         }
-        
+
         .project-link:hover {
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.5);
         }
-        
+
         /* Project Awards Styles */
         .project-awards {
             display: grid;
             gap: 30px;
             text-align: left;
         }
-        
+
         .awards-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px 30px;
             margin-top: 15px;
         }
-        
+
         .award-festival {
             padding: 0;
             border: none;
         }
-        
+
         .award-festival h4 {
             font-size: 16px;
             margin-bottom: 8px;
@@ -1119,13 +1140,13 @@
             color: #fff;
             opacity: 0.9;
         }
-        
+
         .award-festival ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        
+
         .award-festival li {
             font-size: 14px;
             line-height: 1.4;
@@ -1135,7 +1156,7 @@
             padding-left: 12px;
             position: relative;
         }
-        
+
         .award-festival li:before {
             content: "•";
             position: absolute;
@@ -1143,26 +1164,26 @@
             color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
         }
-        
+
         @media (max-width: 768px) {
             .awards-list {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
         }
-        
+
         /* Vialidad Projects Styles */
         .vialidad-projects {
             margin-top: 30px;
         }
-        
+
         .vialidad-videos {
             display: flex;
             flex-direction: column;
             gap: 40px;
             margin-top: 20px;
         }
-        
+
         .video-row {
             display: grid;
             grid-template-columns: 400px 1fr;
@@ -1171,11 +1192,11 @@
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .video-row:last-child {
             border-bottom: none;
         }
-        
+
         .video-embed {
             position: relative;
             width: 100%;
@@ -1184,18 +1205,18 @@
             overflow: hidden;
             background: rgba(255, 255, 255, 0.05);
         }
-        
+
         .video-embed iframe {
             width: 100%;
             height: 100%;
             border: none;
             border-radius: 8px;
         }
-        
+
         .video-description {
             padding: 10px 0;
         }
-        
+
         .video-description h4 {
             font-size: 20px;
             margin-bottom: 15px;
@@ -1203,51 +1224,51 @@
             color: #fff;
             line-height: 1.3;
         }
-        
+
         .video-description p {
             font-size: 15px;
             line-height: 1.6;
             opacity: 0.8;
             color: #fff;
         }
-        
+
         @media (max-width: 1024px) {
             .video-row {
                 grid-template-columns: 350px 1fr;
                 gap: 25px;
             }
-            
+
             .video-embed {
                 height: 197px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .video-row {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .video-embed {
                 height: 225px;
             }
-            
+
             .video-description h4 {
                 font-size: 18px;
             }
-            
+
             .video-description p {
                 font-size: 14px;
             }
         }
-        
+
         /* FIAT Rectangle Grid */
         .fiat-rectangles {
             display: grid;
             gap: 30px;
             text-align: left;
         }
-        
+
         .rectangles-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(212px, 212px));
@@ -1255,7 +1276,7 @@
             justify-content: center;
             margin-top: 15px;
         }
-        
+
         .fiat-rectangle {
             width: 212px;
             height: 379px;
@@ -1267,135 +1288,151 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .fiat-rectangle:hover {
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
-        
+
         .fiat-rectangle img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 7px;
         }
-        
+
         @media (max-width: 768px) {
             .rectangles-grid {
                 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 15px;
             }
-            
+
             .fiat-rectangle {
                 width: 100%;
                 max-width: 212px;
                 margin: 0 auto;
             }
         }
+
         .project-details-roca p {
             font-size: 16px;
             line-height: 1.6;
             opacity: 0.8;
         }
+
         .progress-dots {
             display: none;
         }
-        
+
         @media (max-width: 768px) {
             .project-info {
-                gap: 4px; /* Further reduced gap to bring subtitle even closer to title */
+                gap: 4px;
+                /* Further reduced gap to bring subtitle even closer to title */
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
             }
-            
+
             .project-title {
                 font-size: 16px;
             }
-            
+
             .project-subtitle {
                 font-size: 14px;
             }
-            
+
             .project-divider {
-                display: none; /* Hide divider when stacked */
+                display: none;
+                /* Hide divider when stacked */
             }
-            
+
             .nav {
                 height: 50px;
                 padding: 0 25px;
-                top: 21px; /* Move nav down 21px from original 0 */
+                top: 21px;
+                /* Move nav down 21px from original 0 */
             }
-            
+
             .logo {
                 font-size: 24px;
                 line-height: 1.2;
                 white-space: pre-line;
             }
-            
+
             /* Hide desktop menu, show hamburger */
             .nav-menu {
                 display: none;
             }
-            
+
             .hamburger-menu {
                 display: flex;
             }
-            
+
             .mobile-menu-overlay {
                 display: block;
-                padding: 30px 25px 50px 25px; /* Updated bottom padding to match */
-                top: 71px; /* Adjusted for mobile nav height + new position */
-                width: 240px; /* 20% wider than before (200px) */
+                padding: 30px 25px 50px 25px;
+                /* Updated bottom padding to match */
+                top: 71px;
+                /* Adjusted for mobile nav height + new position */
+                width: 240px;
+                /* 20% wider than before (200px) */
             }
-            
+
             /* Compact progress dots for mobile */
             .nav-progress-dots {
                 gap: 4px;
             }
-            
+
             .nav-progress-dot {
                 width: 4px;
                 height: 4px;
             }
-            
+
             .bottom-nav {
-                height: 70px; /* Increased height for mobile to accommodate stacked content */
-                padding-top: 0; /* Remove top padding to center content properly */
+                height: 70px;
+                /* Increased height for mobile to accommodate stacked content */
+                padding-top: 0;
+                /* Remove top padding to center content properly */
                 padding-left: 25px;
                 padding-right: 25px;
-                bottom: 25px; /* Move bottom nav up 25px from original 0 */
+                bottom: 25px;
+                /* Move bottom nav up 25px from original 0 */
                 display: flex;
-                align-items: center; /* Center content vertically */
+                align-items: center;
+                /* Center content vertically */
                 justify-content: center;
             }
-            
+
             .video-controls {
                 padding-right: 25px;
-                padding-top: 0; /* Changed from 2px to 0 */
+                padding-top: 0;
+                /* Changed from 2px to 0 */
                 display: flex;
-                align-items: center; /* Added to center vertically */
-                height: 100%; /* Added to take full height of footer */
+                align-items: center;
+                /* Added to center vertically */
+                height: 100%;
+                /* Added to take full height of footer */
             }
-            
+
             .nav-arrow {
                 width: 50px;
                 height: 50px;
             }
-            
+
             .nav-arrow.prev {
                 left: 25px;
             }
-            
+
             .nav-arrow.next {
                 right: 25px;
             }
-            
+
             .project-detail-wrapper {
-                padding: 151px 25px 50px; /* Adjusted top padding from 101px to 151px (50px more) */
+                padding: 151px 25px 50px;
+                /* Adjusted top padding from 101px to 151px (50px more) */
             }
-            
+
             /* Mobile back button - remove box styling */
             .back-btn {
                 background: transparent;
@@ -1406,33 +1443,35 @@
                 opacity: 0.8;
                 transition: opacity 0.3s ease;
             }
-            
+
             .back-btn:hover {
                 background: transparent;
                 border: none;
                 opacity: 1;
             }
-            
+
             .back-btn svg {
                 width: 14px;
                 height: 14px;
             }
-            
+
             /* Reduce space between navigation and project title */
             .project-nav-container {
-                margin-bottom: 30px; /* Reduced from 40px to 30px (10px less) */
+                margin-bottom: 30px;
+                /* Reduced from 40px to 30px (10px less) */
             }
-            
+
             .detail-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .links-container {
                 flex-direction: column;
             }
         }
     </style>
 </head>
+
 <body>
     <nav class="nav">
         <div class="logo">vaso</div>
@@ -1444,7 +1483,7 @@
             <div class="nav-progress-dot"></div>
             <div class="nav-progress-dot"></div>
         </div>
-        
+
         <div class="nav-menu">
             <div class="nav-dropdown">
                 <a href="#" class="nav-item active" data-section="trabajos">trabajos</a>
@@ -1460,7 +1499,7 @@
             <a href="#" class="nav-item" data-section="about">bio</a>
             <a href="#" class="nav-item" data-section="contact">contacto</a>
         </div>
-        
+
         <div class="hamburger-menu" id="hamburgerMenu">
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
@@ -1493,59 +1532,7 @@
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="video-slide">
-            <video muted loop preload="none" poster="">
-                <source src="" type="video/webm">
-                <source src="" type="video/mp4">
-            </video>
-            <div class="video-clickable"></div>
-            <div class="pause-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="video-slide">
-            <video muted loop preload="none" poster="">
-                <source src="" type="video/webm">
-                <source src="" type="video/mp4">
-            </video>
-            <div class="video-clickable"></div>
-            <div class="pause-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="video-slide">
-            <video muted loop preload="none" poster="">
-                <source src="" type="video/webm">
-                <source src="" type="video/mp4">
-            </video>
-            <div class="video-clickable"></div>
-            <div class="pause-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="video-slide">
-            <video muted loop preload="none" poster="">
-                <source src="" type="video/webm">
-                <source src="" type="video/mp4">
-            </video>
-            <div class="video-clickable"></div>
-            <div class="pause-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                 </svg>
             </div>
         </div>
@@ -1558,20 +1545,72 @@
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="video-slide">
+            <video muted loop preload="none" poster="">
+                <source src="" type="video/webm">
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-clickable"></div>
+            <div class="pause-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="video-slide">
+            <video muted loop preload="none" poster="">
+                <source src="" type="video/webm">
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-clickable"></div>
+            <div class="pause-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="video-slide">
+            <video muted loop preload="none" poster="">
+                <source src="" type="video/webm">
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-clickable"></div>
+            <div class="pause-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="video-slide">
+            <video muted loop preload="none" poster="">
+                <source src="" type="video/webm">
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-clickable"></div>
+            <div class="pause-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                 </svg>
             </div>
         </div>
 
         <button class="nav-arrow prev" id="prevBtn">
             <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg>
         </button>
-        
+
         <button class="nav-arrow next" id="nextBtn">
             <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
         </button>
 
@@ -1591,41 +1630,61 @@
             <div class="project-divider"></div>
             <div class="project-subtitle" data-project="carrero">largometraje</div>
         </div>
-        
+
         <div class="video-controls">
             <button class="sound-toggle" id="soundToggle">
                 <svg id="soundIcon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    <path
+                        d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
                 </svg>
             </button>
         </div>
     </div>
 
-        <div class="progress-dots" id="progressDots" style="display: none;">
-            <div class="progress-dot active"></div>
-            <div class="progress-dot"></div>
-            <div class="progress-dot"></div>
-            <div class="progress-dot"></div>
-            <div class="progress-dot"></div>
-            <div class="progress-dot"></div>
-        </div>
+    <div class="progress-dots" id="progressDots" style="display: none;">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+    </div>
     </div>
 
     <div class="content-section" id="about">
         <div class="bio-wrapper" id="bioWrapper">
             <div class="bio-header">
-               
+
             </div>
-            
+
             <div class="bio-text-container" id="bioTextContainer">
                 <div class="bio-text">
-                    <p>El cineasta colombiano Victor Gaviria reconoce que no tiene las llaves para entrar a su interioridad, y que sólo logra acceder a ella cuando accede a "otras almas, a otras casas". Me siento reflejado en esta idea, y la vinculo con otra que percibí de chico: lo que más me interesa es lo que me resulta lejano y ajeno.<br><br>
+                    <p>El cineasta colombiano Victor Gaviria reconoce que no tiene las llaves para entrar a su
+                        interioridad, y que sólo logra acceder a ella cuando accede a "otras almas, a otras casas". Me
+                        siento reflejado en esta idea, y la vinculo con otra que percibí de chico: lo que más me
+                        interesa es lo que me resulta lejano y ajeno.<br><br>
 
-                    Supongo que por eso elegí la carrera de historia en Humanidades de La Plata. Pero cuando la terminé me dí cuenta que no me interesaba seguir esa profesión y me encontré con un magnetismo por la fotografía que rápidamente decantó en lo audiovisual. Filmé videoclips, grabé casamientos y trabajé en televisión. Cuándo quise ingresar al rubro documental sentí qué me faltaban herramientas, así que hice una maestría en cine documental en la FUC y terminé con el cortometraje "Cosas Viejas". A partir de ahí me volqué al desarrollo de lo que fue Carrero, mi primer largometraje de ficción.<br><br>
+                        Supongo que por eso elegí la carrera de historia en Humanidades de La Plata. Pero cuando la
+                        terminé me dí cuenta que no me interesaba seguir esa profesión y me encontré con un magnetismo
+                        por la fotografía que rápidamente decantó en lo audiovisual. Filmé videoclips, grabé casamientos
+                        y trabajé en televisión. Cuándo quise ingresar al rubro documental sentí qué me faltaban
+                        herramientas, así que hice una maestría en cine documental en la FUC y terminé con el
+                        cortometraje "Cosas Viejas". A partir de ahí me volqué al desarrollo de lo que fue Carrero, mi
+                        primer largometraje de ficción.<br><br>
 
-                    Me acerqué a un barrio a las afueras de La Plata, con la intención de ver un poco como era la vida ahí. Conocí a un grupo de chicos y chicas de 16-17 años con ganas de actuar y se formó un equipo. El guión de Carrero se fue armando mientras ensayábamos escenas para filmar, durante las vacaciones o los fines de semana largos. Los cuatro años que llevó hacer la película fueron claves para que cada uno perfeccionara su rol, pero también para que la historia tuviera un contacto asentado con el espacio que pretendía narrar.<br><br>
+                        Me acerqué a un barrio a las afueras de La Plata, con la intención de ver un poco como era la
+                        vida ahí. Conocí a un grupo de chicos y chicas de 16-17 años con ganas de actuar y se formó un
+                        equipo. El guión de Carrero se fue armando mientras ensayábamos escenas para filmar, durante las
+                        vacaciones o los fines de semana largos. Los cuatro años que llevó hacer la película fueron
+                        claves para que cada uno perfeccionara su rol, pero también para que la historia tuviera un
+                        contacto asentado con el espacio que pretendía narrar.<br><br>
 
-                    En ese mismo barrio hay un grupo de inmigrantes del Chaco, descendientes de los Qom. Allí conocí a Hugo Cardozo, que es una figura destacada de la comunidad originaria de La Plata y quien resultó de enorme ayuda para la realización del film. La amistad que se construyó de aquella experiencia trascendió la película, y con él fui al Chaco, a conocer su tierra de orígen y su comunidad. Roca, el documental que me encuentro realizando, se centra en esas otras casas, como diría Victor Gaviria.</p>
+                        En ese mismo barrio hay un grupo de inmigrantes del Chaco, descendientes de los Qom. Allí conocí
+                        a Hugo Cardozo, que es una figura destacada de la comunidad originaria de La Plata y quien
+                        resultó de enorme ayuda para la realización del film. La amistad que se construyó de aquella
+                        experiencia trascendió la película, y con él fui al Chaco, a conocer su tierra de orígen y su
+                        comunidad. Roca, el documental que me encuentro realizando, se centra en esas otras casas, como
+                        diría Victor Gaviria.</p>
                 </div>
             </div>
         </div>
@@ -1633,7 +1692,7 @@
 
     <div class="content-section" id="contact">
         <div class="content-wrapper">
-           
+
             <div class="contact-info">
                 <div class="contact-details">
                     <div class="contact-item">
@@ -1658,49 +1717,58 @@
             <div class="project-nav-container">
                 <button class="back-btn" id="backBtn">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                     </svg>
                     Home
                 </button>
-                
+
                 <div class="project-nav-controls">
-                    <button class="project-nav-btn" id="prevProjectBtn" data-tooltip="Proyecto anterior" data-mobile-text="Proyecto anterior">
+                    <button class="project-nav-btn" id="prevProjectBtn" data-tooltip="Proyecto anterior"
+                        data-mobile-text="Proyecto anterior">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                         </svg>
                     </button>
-                    <button class="project-nav-btn" id="nextProjectBtn" data-tooltip="Proyecto siguiente" data-mobile-text="Proyecto siguiente">
+                    <button class="project-nav-btn" id="nextProjectBtn" data-tooltip="Proyecto siguiente"
+                        data-mobile-text="Proyecto siguiente">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
                         </svg>
                     </button>
                 </div>
             </div>
-            
+
             <div class="project-content">
                 <div class="project-header">
                     <h1 id="projectTitle">Nombre del Proyecto</h1>
                     <p id="projectCategory">Categoría</p>
                 </div>
-                
+
                 <div class="project-media">
                     <div class="video-embed-large">
-                        <iframe id="projectYouTube" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe id="projectYouTube" src="" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
-                
+
                 <div class="project-info-detail">
                     <div class="project-description">
                         <h3>Descripción</h3>
                         <p id="projectDescription">Descripción detallada del proyecto...</p>
                     </div>
-                    
+
                     <div class="project-reviews" id="project-reviews" style="display: none;">
                         <h3>Críticas</h3>
                         <div class="reviews-grid">
                             <div class="review-item">
                                 <div class="review-text">
-                                    <p>...hay en <strong>Carrero</strong> una honestidad brutal, una credibilidad, una autenticidad que no abundan. No se filma <strong>A</strong> sino <strong>CON</strong> estos no-actores, que son pura verdad. Se los observa, se los escucha y se los deja fluir y vivir en pantalla. Y, con todo lo que tiene de visceral y urgente, no es una película precaria ni desprolija: hay una puesta en escena cuidada, inteligente y virtuosa...</p>
+                                    <p>...hay en <strong>Carrero</strong> una honestidad brutal, una credibilidad, una
+                                        autenticidad que no abundan. No se filma <strong>A</strong> sino
+                                        <strong>CON</strong> estos no-actores, que son pura verdad. Se los observa, se
+                                        los escucha y se los deja fluir y vivir en pantalla. Y, con todo lo que tiene de
+                                        visceral y urgente, no es una película precaria ni desprolija: hay una puesta en
+                                        escena cuidada, inteligente y virtuosa...</p>
                                 </div>
                                 <div class="review-author">
                                     <strong>Diego Batlle</strong>
@@ -1716,7 +1784,12 @@
                             </div>
                             <div class="review-item">
                                 <div class="review-text">
-                                    <p><strong>Carrero</strong> apela a una impronta documental, cortesía de las problemáticas que se plantean (las tomas de terreno, la droga como paliativo escapista ubicuo), una cámara que parece conocer las particularidades del terreno tanto o más que el propio protagonista y, último pero no menos importante, el aire de verdad que transpira un elenco conformado por vecinos y vecinas del lugar, todos ellos actores no profesionales.</p>
+                                    <p><strong>Carrero</strong> apela a una impronta documental, cortesía de las
+                                        problemáticas que se plantean (las tomas de terreno, la droga como paliativo
+                                        escapista ubicuo), una cámara que parece conocer las particularidades del
+                                        terreno tanto o más que el propio protagonista y, último pero no menos
+                                        importante, el aire de verdad que transpira un elenco conformado por vecinos y
+                                        vecinas del lugar, todos ellos actores no profesionales.</p>
                                 </div>
                                 <div class="review-author">
                                     <strong>Ezequiel Boetti</strong>
@@ -1732,7 +1805,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="project-details">
                         <h3>Detalles del Proyecto</h3>
                         <div class="detail-grid" id="detail-grid-standard">
@@ -1757,7 +1830,7 @@
                             <p id="projectClientRoca">Este documental se encuentra en desarrollo.</p>
                         </div>
                     </div>
-                    
+
                     <div class="project-links">
                         <h3>Enlaces</h3>
                         <div class="links-container">
@@ -1765,7 +1838,7 @@
                             <a href="#" id="projectLink2" class="project-link" target="_blank">Más Información</a>
                         </div>
                     </div>
-                    
+
                     <div class="project-awards" id="project-awards" style="display: none;">
                         <h3>Premios</h3>
                         <div class="awards-list">
@@ -1809,124 +1882,158 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="vialidad-projects" id="vialidad-projects" style="display: none;">
                         <h3>Proyectos realizados</h3>
                         <div class="vialidad-videos">
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/LiIt8ncgEc0" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/LiIt8ncgEc0" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Derrumbe Brazo Huemul - La Angostura</h4>
-                                    <p>Documental sobre la respuesta de emergencia ante el derrumbe en Brazo Huemul, mostrando el trabajo coordinado de los equipos técnicos y la rapidez en la solución de la crisis vial.</p>
+                                    <p>Documental sobre la respuesta de emergencia ante el derrumbe en Brazo Huemul,
+                                        mostrando el trabajo coordinado de los equipos técnicos y la rapidez en la
+                                        solución de la crisis vial.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/s_XLHpwqQwc" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/s_XLHpwqQwc" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Plan Integral de Mantenimiento Invernal 2025</h4>
-                                    <p>Campaña institucional que presenta las estrategias y operativos de mantenimiento vial durante la temporada invernal, destacando la importancia de la prevención y el cuidado de la infraestructura.</p>
+                                    <p>Campaña institucional que presenta las estrategias y operativos de mantenimiento
+                                        vial durante la temporada invernal, destacando la importancia de la prevención y
+                                        el cuidado de la infraestructura.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/6QQIy0L5N-k" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/6QQIy0L5N-k" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Día del Camino 2024</h4>
-                                    <p>Producción especial conmemorativa del Día del Camino, celebrando el trabajo de los equipos de Vialidad Nacional y la importancia de las rutas en la conectividad del país.</p>
+                                    <p>Producción especial conmemorativa del Día del Camino, celebrando el trabajo de
+                                        los equipos de Vialidad Nacional y la importancia de las rutas en la
+                                        conectividad del país.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/SppKAlIo2Sc" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/SppKAlIo2Sc" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Nuevos Laboratorios Regionales</h4>
-                                    <p>Presentación de la modernización tecnológica en Vialidad Nacional, destacando los nuevos laboratorios regionales y su impacto en la calidad del control de materiales viales.</p>
+                                    <p>Presentación de la modernización tecnológica en Vialidad Nacional, destacando los
+                                        nuevos laboratorios regionales y su impacto en la calidad del control de
+                                        materiales viales.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/yM5GciGtZVM" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/yM5GciGtZVM" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Operativo Invernal en Neuquén</h4>
-                                    <p>Cobertura del operativo especial de mantenimiento invernal en la provincia de Neuquén, mostrando las estrategias específicas para enfrentar las condiciones climáticas adversas.</p>
+                                    <p>Cobertura del operativo especial de mantenimiento invernal en la provincia de
+                                        Neuquén, mostrando las estrategias específicas para enfrentar las condiciones
+                                        climáticas adversas.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/o4A54NKJgHk" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/o4A54NKJgHk" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Historia de Vialidad Nacional</h4>
-                                    <p>Documental histórico que recorre la evolución de Vialidad Nacional desde sus orígenes, destacando los hitos más importantes en el desarrollo de la red vial argentina.</p>
+                                    <p>Documental histórico que recorre la evolución de Vialidad Nacional desde sus
+                                        orígenes, destacando los hitos más importantes en el desarrollo de la red vial
+                                        argentina.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="video-row">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/2NbDimA2vTo" frameborder="0" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/2NbDimA2vTo" frameborder="0"
+                                        allowfullscreen></iframe>
                                 </div>
                                 <div class="video-description">
                                     <h4>Día del Camino 2020</h4>
-                                    <p>Celebración del Día del Camino durante el contexto especial de 2020, adaptando los protocolos y destacando el trabajo esencial de los equipos de mantenimiento vial.</p>
+                                    <p>Celebración del Día del Camino durante el contexto especial de 2020, adaptando
+                                        los protocolos y destacando el trabajo esencial de los equipos de mantenimiento
+                                        vial.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="alpapuyo-video" id="alpapuyo-video" style="display: none;">
                         <div class="project-media">
                             <div class="video-embed-large">
-                                <iframe src="https://www.youtube.com/embed/QOEcIGJvAEY?si=K2ii9NyhsY_Hv_Aj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/QOEcIGJvAEY?si=K2ii9NyhsY_Hv_Aj"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="fiat-rectangles" id="fiat-rectangles" style="display: none;">
                         <h3>Galería</h3>
                         <div class="rectangles-grid">
                             <div class="fiat-rectangle" data-instagram="https://www.instagram.com/reel/DEI-nL-Sgdg/">
                                 <img src="Recursos/instagram1.jpg" alt="Instagram Post 1">
                             </div>
-                            <div class="fiat-rectangle" data-instagram="https://www.instagram.com/homeropettinato/reel/DFvP1x1x0vK/">
+                            <div class="fiat-rectangle"
+                                data-instagram="https://www.instagram.com/homeropettinato/reel/DFvP1x1x0vK/">
                                 <img src="Recursos/instagram2.jpg" alt="Instagram Post 2">
                             </div>
-                            <div class="fiat-rectangle" data-instagram="https://www.instagram.com/homeropettinato/reel/DC47H39y1LR/">
+                            <div class="fiat-rectangle"
+                                data-instagram="https://www.instagram.com/homeropettinato/reel/DC47H39y1LR/">
                                 <img src="Recursos/instagram3.jpg" alt="Instagram Post 3">
                             </div>
-                            <div class="fiat-rectangle" data-instagram="https://www.instagram.com/homeropettinato/reel/DHEwCDFSRu9/">
+                            <div class="fiat-rectangle"
+                                data-instagram="https://www.instagram.com/homeropettinato/reel/DHEwCDFSRu9/">
                                 <img src="Recursos/instagram4.jpg" alt="Instagram Post 4">
                             </div>
-                            <div class="fiat-rectangle" data-instagram="https://www.instagram.com/homeropettinato/reel/DIUlXTzSBSg/">
+                            <div class="fiat-rectangle"
+                                data-instagram="https://www.instagram.com/homeropettinato/reel/DIUlXTzSBSg/">
                                 <img src="Recursos/instagram5.jpg" alt="Instagram Post 5">
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="cosasviejas-video" id="cosasviejas-video" style="display: none;">
                         <div class="project-media">
                             <div class="video-embed-large">
-                                <iframe src="https://www.youtube.com/embed/W9JAXVvoanM?si=_97XVH6xyIm5nV_J&amp;start=4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/W9JAXVvoanM?si=_97XVH6xyIm5nV_J&amp;start=4"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="roca-additional-video" id="roca-additional-video" style="display: none;">
                         <h3>Teaser</h3>
                         <div class="project-media">
                             <div class="video-embed-large">
-                                <iframe src="https://www.youtube.com/embed/-Q7NrS4_0L4?si=dDJQ_in2JEXYptoE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/-Q7NrS4_0L4?si=dDJQ_in2JEXYptoE"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -1953,17 +2060,19 @@
                 this.isMobile = window.innerWidth <= 768;
                 this.videosLoaded = new Set();
                 this.videosLoading = new Set();
-                
+                this.connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                this.isSlowConnection = this.connection && (this.connection.saveData || ['slow-2g', '2g', '3g'].includes(this.connection.effectiveType));
+
                 // Video sources configuration
                 this.videoSources = [
                     'Carrero',
                     'Roca',
-                    'Vialidad_Nacional', 
+                    'Vialidad_Nacional',
                     'FIAT',
                     'Alpapuyo',
                     'Cosas_Viejas'
                 ];
-                
+
                 this.projectTitles = [
                     { title: 'CARRERO', subtitle: 'largometraje', project: 'carrero' },
                     { title: 'ROCA', subtitle: 'documental', project: 'roca' },
@@ -1972,7 +2081,7 @@
                     { title: 'ALPAPUYO', subtitle: 'videoclip', project: 'alpapuyo' },
                     { title: 'COSAS VIEJAS', subtitle: 'cortometraje', project: 'cosasviejas' }
                 ];
-                
+
                 // Project data
                 this.projectData = {
                     carrero: {
@@ -2050,47 +2159,47 @@
                         link2: { text: "Selecciones Festivales", url: "#" }
                     }
                 };
-                
+
                 this.init();
             }
-            
+
             setupProjectNavigation() {
                 // Project order array (same as home carousel)
                 this.projectOrder = ['carrero', 'roca', 'vialidad', 'fiat', 'alpapuyo', 'cosasviejas'];
                 this.currentProjectKey = null;
-                
+
                 // Bind navigation events
                 document.getElementById('prevProjectBtn').addEventListener('click', () => {
                     this.navigateToProject('prev');
                 });
-                
+
                 document.getElementById('nextProjectBtn').addEventListener('click', () => {
                     this.navigateToProject('next');
                 });
             }
-            
+
             navigateToProject(direction) {
                 if (!this.currentProjectKey) return;
-                
+
                 const currentIndex = this.projectOrder.indexOf(this.currentProjectKey);
                 let newIndex;
-                
+
                 if (direction === 'prev') {
                     newIndex = currentIndex === 0 ? this.projectOrder.length - 1 : currentIndex - 1;
                 } else {
                     newIndex = currentIndex === this.projectOrder.length - 1 ? 0 : currentIndex + 1;
                 }
-                
+
                 const newProjectKey = this.projectOrder[newIndex];
                 this.showProjectDetail(newProjectKey);
             }
-            
+
             init() {
                 // Keep it simple - original order worked better
                 this.setupVideoSources();
                 this.setupMobileLogo();
                 this.loadFirstVideo();
-                
+
                 // Defer non-critical setup
                 setTimeout(() => {
                     this.bindEvents();
@@ -2100,8 +2209,9 @@
                     this.setupSwipeGestures();
                     this.setupYoutubeLazyLoading();
                     this.setupDynamicFooterPosition();
+                    this.setupIntersectionObserver();
                 }, 0);
-                
+
                 // Setup window resize listener for dynamic positioning with debounce
                 let resizeTimeout;
                 window.addEventListener('resize', () => {
@@ -2111,36 +2221,36 @@
                         this.updateHeaderPosition();
                     }, 100);
                 });
-                
+
                 // Listen for fullscreen changes
                 document.addEventListener('fullscreenchange', () => this.updateFooterPosition());
                 document.addEventListener('webkitfullscreenchange', () => this.updateFooterPosition());
                 document.addEventListener('mozfullscreenchange', () => this.updateFooterPosition());
                 document.addEventListener('msfullscreenchange', () => this.updateFooterPosition());
             }
-            
+
             setupSwipeGestures() {
                 if (!this.isMobile) return; // Only enable on mobile
-                
+
                 let startX = 0;
                 let startY = 0;
                 let endX = 0;
                 let endY = 0;
                 const minSwipeDistance = 50; // Minimum distance for swipe
                 const maxVerticalDistance = 100; // Maximum vertical movement allowed
-                
+
                 this.carousel.addEventListener('touchstart', (e) => {
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
                 }, { passive: true });
-                
+
                 this.carousel.addEventListener('touchend', (e) => {
                     endX = e.changedTouches[0].clientX;
                     endY = e.changedTouches[0].clientY;
-                    
+
                     const deltaX = endX - startX;
                     const deltaY = Math.abs(endY - startY);
-                    
+
                     // Check if it's a horizontal swipe (not vertical scroll)
                     if (Math.abs(deltaX) > minSwipeDistance && deltaY < maxVerticalDistance) {
                         if (deltaX > 0) {
@@ -2153,21 +2263,21 @@
                     }
                 }, { passive: true });
             }
-            
+
             setupYoutubeLazyLoading() {
                 // Only apply lazy loading to iframes that are NOT in project detail pages
                 // Target only iframes in sections that are initially hidden/non-critical
                 const iframes = document.querySelectorAll('iframe[src*="youtube.com"]:not(.no-lazy)');
                 iframes.forEach(iframe => {
                     // Skip iframes that are in project detail sections
-                    if (iframe.closest('#project-detail') || 
+                    if (iframe.closest('#project-detail') ||
                         iframe.closest('.vialidad-projects') ||
                         iframe.closest('.alpapuyo-video') ||
                         iframe.closest('.cosasviejas-video') ||
                         iframe.closest('.roca-additional-video')) {
                         return; // Don't lazy load these
                     }
-                    
+
                     const videoId = this.extractYouTubeId(iframe.src);
                     if (videoId) {
                         const placeholder = this.createYouTubePlaceholder(videoId, iframe);
@@ -2175,33 +2285,33 @@
                     }
                 });
             }
-            
+
             extractYouTubeId(url) {
                 const regex = /(?:youtube\.com\/embed\/|youtu\.be\/)([^?&]+)/;
                 const match = url.match(regex);
                 return match ? match[1] : null;
             }
-            
+
             createYouTubePlaceholder(videoId, originalIframe) {
                 const placeholder = document.createElement('div');
                 placeholder.className = 'youtube-placeholder';
                 placeholder.dataset.videoId = videoId;
                 placeholder.dataset.src = originalIframe.src;
-                
+
                 // Copy original iframe attributes
                 if (originalIframe.allow) placeholder.dataset.allow = originalIframe.allow;
                 if (originalIframe.referrerPolicy) placeholder.dataset.referrerPolicy = originalIframe.referrerPolicy;
-                
+
                 placeholder.addEventListener('click', () => {
                     this.loadYouTubeVideo(placeholder);
                 });
-                
+
                 return placeholder;
             }
-            
+
             loadYouTubeVideo(placeholder) {
                 placeholder.classList.add('loading');
-                
+
                 const iframe = document.createElement('iframe');
                 iframe.src = placeholder.dataset.src;
                 iframe.frameBorder = '0';
@@ -2209,17 +2319,17 @@
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.borderRadius = '8px';
-                
+
                 if (placeholder.dataset.allow) iframe.allow = placeholder.dataset.allow;
                 if (placeholder.dataset.referrerPolicy) iframe.referrerPolicy = placeholder.dataset.referrerPolicy;
-                
+
                 placeholder.parentNode.replaceChild(iframe, placeholder);
             }
-            
+
             setupDynamicFooterPosition() {
                 // Initialize footer immediately
                 this.updateFooterPosition();
-                
+
                 // Delay header positioning until video dimensions are available
                 setTimeout(() => {
                     const firstVideo = this.videos[0];
@@ -2234,14 +2344,14 @@
                     }
                 }, 200);
             }
-            
+
             updateHeaderPosition() {
                 const nav = document.querySelector('.nav');
                 const carousel = document.getElementById('carousel');
                 const currentVideo = this.videos[this.currentSlide];
-                
+
                 if (!nav || !carousel || !currentVideo) return;
-                
+
                 // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
                 if (window.innerWidth <= 780 || carousel.style.display === 'none') {
                     nav.classList.remove('dynamic-position');
@@ -2249,17 +2359,17 @@
                     nav.style.bottom = '';
                     return;
                 }
-                
+
                 // Single calculation to prevent multiple layout shifts
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
                     const navHeight = 60;
                     const spaceAbove = videoRect.top;
-                    
+
                     // Only update if there's a significant change (>10px) to reduce layout shifts
                     const centerPosition = (spaceAbove / 2) - (navHeight / 2);
                     const finalPosition = Math.max(centerPosition, 0);
-                    
+
                     // Check if current position is significantly different
                     const currentTop = parseInt(nav.style.top) || 3; // Default translateY(3px)
                     if (Math.abs(currentTop - finalPosition) > 10) {
@@ -2268,18 +2378,18 @@
                         nav.style.bottom = 'auto';
                     }
                 };
-                
+
                 // Single execution to prevent multiple shifts
                 updatePosition();
             }
-            
+
             updateFooterPosition() {
                 const bottomNav = document.querySelector('.bottom-nav');
                 const carousel = document.getElementById('carousel');
                 const currentVideo = this.videos[this.currentSlide];
-                
+
                 if (!bottomNav || !carousel || !currentVideo) return;
-                
+
                 // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
                 if (window.innerWidth <= 780 || carousel.style.display === 'none') {
                     bottomNav.classList.remove('dynamic-position');
@@ -2288,25 +2398,25 @@
                     bottomNav.style.transform = '';
                     return;
                 }
-                
+
                 // Wait for video to be loaded and get accurate dimensions
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
                     const navHeight = 60;
-                    
+
                     // Use visual viewport if available (more accurate for actual visible area)
-                    const actualViewportHeight = window.visualViewport ? 
+                    const actualViewportHeight = window.visualViewport ?
                         window.visualViewport.height : window.innerHeight;
-                    
+
                     // Safety margin only to prevent going behind taskbar (reduced to 5px - minimum recommended)
                     const taskbarSafetyMargin = 5;
                     const absoluteMaxTop = actualViewportHeight - navHeight - taskbarSafetyMargin;
-                    
+
                     // Calculate the space below the video
                     const spaceBelow = actualViewportHeight - videoRect.bottom;
-                    
+
                     let finalPosition;
-                    
+
                     // Logic: prioritize being below video, center only if there's good space
                     if (spaceBelow >= navHeight + 20) {
                         // Enough space below video - try to center in that space
@@ -2319,10 +2429,10 @@
                         // Not enough space below - position as low as safely possible
                         finalPosition = absoluteMaxTop;
                     }
-                    
+
                     // Final safety check - never go above reasonable minimum
                     finalPosition = Math.max(finalPosition, 10);
-                    
+
                     // Force position properties
                     bottomNav.style.position = 'fixed';
                     bottomNav.style.zIndex = '1000';
@@ -2332,18 +2442,18 @@
                     bottomNav.style.bottom = 'auto';
                     bottomNav.style.top = finalPosition + 'px';
                     bottomNav.classList.add('dynamic-position');
-                    
+
                     // Debug log for troubleshooting
                     console.log('Footer position:', finalPosition, 'Space below video:', spaceBelow, 'Video bottom:', videoRect.bottom, 'Max allowed:', absoluteMaxTop);
                 };
-                
+
                 // Try multiple times with increasing delays
                 updatePosition();
                 setTimeout(updatePosition, 50);
                 setTimeout(updatePosition, 200);
                 setTimeout(updatePosition, 500);
             }
-            
+
             setupMobileLogo() {
                 const logo = document.querySelector('.logo');
                 const updateLogo = () => {
@@ -2353,26 +2463,26 @@
                         logo.textContent = 'vaso';
                     }
                 };
-                
+
                 updateLogo();
                 window.addEventListener('resize', updateLogo);
             }
-            
+
             setupMobileMenu() {
                 const hamburgerMenu = document.getElementById('hamburgerMenu');
                 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-                
+
                 hamburgerMenu.addEventListener('click', () => {
                     hamburgerMenu.classList.toggle('active');
                     mobileMenuOverlay.classList.toggle('active');
                 });
-                
+
                 // Close mobile menu when clicking on menu items
                 document.querySelectorAll('.mobile-nav-item, .mobile-project-item').forEach(item => {
                     item.addEventListener('click', () => {
                         hamburgerMenu.classList.remove('active');
                         mobileMenuOverlay.classList.remove('active');
-                        
+
                         // Handle navigation
                         if (item.dataset.section) {
                             this.handleNavigation(item.dataset.section);
@@ -2381,7 +2491,7 @@
                         }
                     });
                 });
-                
+
                 // Close mobile menu when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!hamburgerMenu.contains(e.target) && !mobileMenuOverlay.contains(e.target)) {
@@ -2390,43 +2500,43 @@
                     }
                 });
             }
-            
+
             setupCustomScrollbar() {
                 const scrollContainer = document.getElementById('projectDetailWrapper');
                 const bioTextContainer = document.getElementById('bioTextContainer');
                 const customScrollbar = document.getElementById('customScrollbar');
                 const scrollThumb = document.getElementById('customScrollbarThumb');
                 let scrollTimeout;
-                
+
                 const updateScrollbar = (container) => {
                     if (!container || !customScrollbar || !scrollThumb) return;
-                    
+
                     const scrollTop = container.scrollTop;
                     const scrollHeight = container.scrollHeight;
                     const containerHeight = container.clientHeight;
-                    
+
                     // Calculate thumb height and position
                     const thumbHeight = Math.max((containerHeight / scrollHeight) * customScrollbar.offsetHeight, 20);
                     const maxScrollTop = scrollHeight - containerHeight;
                     const thumbTop = (scrollTop / maxScrollTop) * (customScrollbar.offsetHeight - thumbHeight);
-                    
+
                     scrollThumb.style.height = thumbHeight + 'px';
                     scrollThumb.style.top = (isNaN(thumbTop) ? 0 : thumbTop) + 'px';
-                    
+
                     // Show scrollbar while scrolling
                     scrollThumb.classList.add('scrolling');
-                    
+
                     // Hide after scrolling stops
                     clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(() => {
                         scrollThumb.classList.remove('scrolling');
                     }, 1000);
                 };
-                
+
                 const showHideScrollbar = () => {
                     const projectDetailSection = document.getElementById('project-detail');
                     const aboutSection = document.getElementById('about');
-                    
+
                     if (projectDetailSection && projectDetailSection.classList.contains('active')) {
                         customScrollbar.style.display = 'block';
                         updateScrollbar(scrollContainer);
@@ -2437,11 +2547,11 @@
                         customScrollbar.style.display = 'none';
                     }
                 };
-                
+
                 // Bind scroll events for both containers
                 if (scrollContainer) scrollContainer.addEventListener('scroll', () => updateScrollbar(scrollContainer));
                 if (bioTextContainer) bioTextContainer.addEventListener('scroll', () => updateScrollbar(bioTextContainer));
-                
+
                 // Show/hide scrollbar based on active section
                 const observer = new MutationObserver(showHideScrollbar);
                 observer.observe(document.getElementById('project-detail'), {
@@ -2452,32 +2562,32 @@
                     attributes: true,
                     attributeFilter: ['class']
                 });
-                
+
                 // Initial setup
                 showHideScrollbar();
             }
-            
+
             setupVideoSources() {
                 this.videos.forEach((video, index) => {
                     const baseName = this.videoSources[index];
-                    
+
                     // Set poster image with new naming convention
                     const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
                     let posterPath = `Recursos/${baseName}${posterOrientation}.jpg`;
-                    
+
                     video.poster = posterPath;
-                    
+
                     // Clear existing sources
                     video.innerHTML = '';
-                    
+
                     // Create video sources with smart fallbacks
                     this.createVideoSources(video, baseName);
                 });
             }
-            
+
             createVideoSources(video, baseName) {
                 const sources = [];
-                
+
                 if (this.isMobile) {
                     // Mobile: vertical first (solo MP4), then horizontal fallbacks
                     sources.push(
@@ -2496,7 +2606,7 @@
                         { src: `Recursos/${baseName}.mp4`, type: 'video/mp4' }
                     );
                 }
-                
+
                 // Add sources to video element
                 sources.forEach(sourceData => {
                     const source = document.createElement('source');
@@ -2504,75 +2614,104 @@
                     source.type = sourceData.type;
                     video.appendChild(source);
                 });
-                
+
                 // Add error handling for graceful fallback
                 video.addEventListener('error', () => {
                     console.log(`Video error for ${baseName}, trying next source`);
                 });
             }
-            
+
             loadFirstVideo() {
-                // Only load first video initially, delay others more
+                // Initial load: Only the first video
                 this.loadVideo(0, true);
-                
+
                 // Initialize project info
                 this.updateProjectInfo();
-                
-                // Delay other videos significantly to reduce initial main thread work
-                setTimeout(() => this.loadVideo(1), 2000);
-                setTimeout(() => this.loadVideo(2), 3000);
-                setTimeout(() => this.loadVideo(3), 4000);
-                setTimeout(() => this.loadVideo(4), 5000);
-                setTimeout(() => this.loadVideo(5), 6000);
+
+                // Pre-load next video only if connection is fast
+                if (!this.isSlowConnection) {
+                    setTimeout(() => this.loadVideo(1), 2000);
+                }
             }
-            
+
+            setupIntersectionObserver() {
+                const options = {
+                    root: null, // use viewport
+                    rootMargin: '200px', // start loading 200px before it enters
+                    threshold: 0.01
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = Array.from(this.slides).indexOf(entry.target);
+                            if (index !== -1) {
+                                this.loadVideo(index);
+                            }
+                        }
+                    });
+                }, options);
+
+                // Observe all slides
+                this.slides.forEach(slide => this.observer.observe(slide));
+            }
+
             loadVideo(index, immediate = false) {
                 if (this.videosLoaded.has(index) || this.videosLoading.has(index)) return;
-                
+
                 this.videosLoading.add(index);
                 const video = this.videos[index];
-                
-                video.preload = 'metadata';
-                
+
+                // Set high quality poster path
+                const baseName = this.videoSources[index];
+                const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
+                video.poster = `Recursos/${baseName}${posterOrientation}.jpg`;
+
+                video.preload = 'auto'; // Change to auto for observed videos
+
                 const loadHandler = () => {
                     this.videosLoaded.add(index);
                     this.videosLoading.delete(index);
+                    video.classList.add('v-loaded');
                     if (index === this.currentSlide) {
                         this.playCurrentVideo();
                     }
                 };
-                
-                const progressHandler = () => {
-                    if (video.buffered.length > 0) {
-                        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-                        const duration = video.duration;
-                        if (bufferedEnd / duration >= 0.8) { // 80% loaded
-                            this.videosLoaded.add(index);
-                            if (index === this.currentSlide && immediate) {
-                                this.playCurrentVideo();
-                            }
-                        }
-                    }
+
+                const playingHandler = () => {
+                    video.classList.add('v-loaded');
                 };
-                
-                video.addEventListener('canplay', loadHandler, { once: true });
-                video.addEventListener('progress', progressHandler);
+
+                video.addEventListener('canplaythrough', loadHandler, { once: true });
+                video.addEventListener('playing', playingHandler, { once: true });
+
+                // Error handling
+                video.addEventListener('error', () => {
+                    console.log(`Error loading video ${index}, fallback to poster`);
+                    this.videosLoading.delete(index);
+                }, { once: true });
+
                 video.load();
+
+                // If slow connection, stop at loading the essential ones
+                if (this.isSlowConnection && !immediate && index !== this.currentSlide) {
+                    video.preload = 'none';
+                }
             }
-            
+
             bindEvents() {
                 // Navigation arrows
                 document.getElementById('prevBtn').addEventListener('click', () => this.prevSlide());
                 document.getElementById('nextBtn').addEventListener('click', () => this.nextSlide());
-                
+
                 // Progress dots
                 this.progressDots.forEach((dot, index) => {
                     dot.addEventListener('click', () => this.goToSlide(index));
                 });
-                
+
                 // Sound toggle
                 this.soundToggle.addEventListener('click', () => this.toggleSound());
-                
+
                 // Video click to pause/play usando área clickeable
                 this.videoClickables.forEach((clickable, index) => {
                     clickable.addEventListener('click', (e) => {
@@ -2581,7 +2720,7 @@
                         this.toggleVideoPlayback(index);
                     });
                 });
-                
+
                 // Project title and subtitle click to go to project detail
                 document.querySelectorAll('.project-title, .project-subtitle').forEach(element => {
                     element.addEventListener('click', (e) => {
@@ -2590,7 +2729,7 @@
                         this.showProjectDetail(element.dataset.project);
                     });
                 });
-                
+
                 // Navigation menu
                 this.navItems.forEach(item => {
                     item.addEventListener('click', (e) => {
@@ -2598,7 +2737,7 @@
                         this.handleNavigation(item.dataset.section);
                     });
                 });
-                
+
                 // Dropdown items
                 document.querySelectorAll('.dropdown-item').forEach(item => {
                     item.addEventListener('click', (e) => {
@@ -2606,17 +2745,17 @@
                         this.showProjectDetail(item.dataset.project);
                     });
                 });
-                
+
                 // Back button
                 document.getElementById('backBtn').addEventListener('click', () => {
                     this.showSection('trabajos');
                 });
-                
+
                 // Video ended event
                 this.videos.forEach(video => {
                     video.addEventListener('ended', () => this.nextSlide());
                 });
-                
+
                 // Keyboard navigation
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowLeft') this.prevSlide();
@@ -2628,53 +2767,53 @@
                     }
                 });
             }
-            
+
             goToSlide(index) {
                 this.slides[this.currentSlide].classList.remove('active');
                 this.progressDots[this.currentSlide].classList.remove('active');
                 this.videos[this.currentSlide].pause();
-                
+
                 this.currentSlide = index;
-                
+
                 this.slides[this.currentSlide].classList.add('active');
                 this.progressDots[this.currentSlide].classList.add('active');
                 this.updateProjectInfo();
                 this.playCurrentVideo();
-                
+
                 // Update positions only after significant slide changes
                 setTimeout(() => {
                     this.updateFooterPosition();
                     this.updateHeaderPosition();
                 }, 200); // Slightly longer delay to ensure stability
             }
-            
+
             updateProjectInfo() {
                 const projectInfo = this.projectTitles[this.currentSlide];
                 const titleElement = document.querySelector('.project-title');
                 const subtitleElement = document.querySelector('.project-subtitle');
-                
+
                 titleElement.textContent = projectInfo.title;
                 titleElement.dataset.project = projectInfo.project;
                 subtitleElement.textContent = projectInfo.subtitle;
                 subtitleElement.dataset.project = projectInfo.project;
             }
-            
+
             nextSlide() {
                 const nextIndex = (this.currentSlide + 1) % this.slides.length;
                 this.goToSlide(nextIndex);
             }
-            
+
             prevSlide() {
                 const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
                 this.goToSlide(prevIndex);
             }
-            
+
             playCurrentVideo() {
                 const video = this.videos[this.currentSlide];
                 video.currentTime = 0;
                 video.muted = this.isMuted;
                 video.play().catch(e => console.log('Error playing video:', e));
-                
+
                 // Update positions when video metadata is loaded (ensures proper dimensions)
                 video.addEventListener('loadedmetadata', () => {
                     setTimeout(() => {
@@ -2682,18 +2821,18 @@
                         this.updateHeaderPosition();
                     }, 100);
                 }, { once: true });
-                
+
                 // Fallback update after delay
                 setTimeout(() => {
                     this.updateFooterPosition();
                     this.updateHeaderPosition();
                 }, 500);
             }
-            
+
             toggleVideoPlayback(index) {
                 const video = this.videos[index];
                 const pauseIcon = this.pauseIcons[index];
-                
+
                 if (video.paused) {
                     video.play().catch(e => console.log('Error playing video:', e));
                 } else {
@@ -2701,42 +2840,42 @@
                     this.showPauseIcon(pauseIcon);
                 }
             }
-            
+
             showPauseIcon(pauseIcon) {
                 pauseIcon.classList.add('show');
                 setTimeout(() => {
                     pauseIcon.classList.remove('show');
                 }, 800);
             }
-            
+
             toggleSound() {
                 this.isMuted = !this.isMuted;
                 this.videos[this.currentSlide].muted = this.isMuted;
-                
+
                 if (this.isMuted) {
                     this.soundIcon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
                 } else {
                     this.soundIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
                 }
             }
-            
+
             handleNavigation(section) {
                 // Update active nav item
                 this.navItems.forEach(item => item.classList.remove('active'));
                 document.querySelector(`[data-section="${section}"]`).classList.add('active');
-                
+
                 this.showSection(section);
             }
-            
+
             showSection(section) {
                 if (section === 'trabajos') {
                     this.carousel.style.display = 'block';
                     this.sections.forEach(s => s.classList.remove('active'));
-                    
+
                     // Show navigation elements for trabajos
                     document.querySelector('.nav-progress-dots').style.display = 'flex';
                     document.querySelector('.bottom-nav').style.display = 'flex';
-                    
+
                     // Reactivar el video actual al volver a trabajos
                     setTimeout(() => {
                         this.playCurrentVideo();
@@ -2746,36 +2885,36 @@
                     this.carousel.style.display = 'none';
                     this.sections.forEach(s => s.classList.remove('active'));
                     document.getElementById(section).classList.add('active');
-                    
+
                     // Hide navigation elements for other sections
                     document.querySelector('.nav-progress-dots').style.display = 'none';
                     document.querySelector('.bottom-nav').style.display = 'none';
-                    
+
                     // Pause current video when not in trabajos section
                     this.videos[this.currentSlide].pause();
                 }
             }
-            
+
             showProjectDetail(projectKey) {
                 const project = this.projectData[projectKey];
                 if (!project) return;
-                
+
                 // Store current project key for navigation
                 this.currentProjectKey = projectKey;
-                
+
                 // Hide navigation elements for project detail pages
                 document.querySelector('.nav-progress-dots').style.display = 'none';
                 document.querySelector('.bottom-nav').style.display = 'none';
-                
+
                 // Update project detail content
                 document.getElementById('projectTitle').textContent = project.title;
                 document.getElementById('projectCategory').textContent = project.category;
                 document.getElementById('projectDescription').textContent = project.description;
-                
+
                 // Handle project details differently for Roca
                 const detailGridStandard = document.getElementById('detail-grid-standard');
                 const projectDetailsRoca = document.getElementById('project-details-roca');
-                
+
                 if (projectKey === 'roca') {
                     // Show Roca-specific details format
                     detailGridStandard.style.display = 'none';
@@ -2790,11 +2929,11 @@
                     document.getElementById('projectDuration').textContent = project.duration;
                     document.getElementById('projectFormat').textContent = project.format;
                 }
-                
+
                 // Update video source (YouTube or local video) - Hide for Roca project
                 const projectYouTube = document.getElementById('projectYouTube');
                 const projectVideo = document.getElementById('projectVideo');
-                
+
                 if (projectKey === 'roca') {
                     // Hide main video section for Roca project
                     projectYouTube.parentElement.style.display = 'none';
@@ -2811,7 +2950,7 @@
                     }
                     projectYouTube.parentElement.style.display = 'none';
                 }
-                
+
                 // Update links - hide links section for Roca, Vialidad and FIAT projects, modify for Alpapuyo and Cosas Viejas
                 const linksSection = document.querySelector('.project-links');
                 if (projectKey === 'roca' || projectKey === 'vialidad' || projectKey === 'fiat') {
@@ -2838,7 +2977,7 @@
                         link2.style.display = 'inline-block';
                     }
                 }
-                
+
                 // Handle project details - hide for Roca, Vialidad, FIAT, Alpapuyo and Cosas Viejas
                 const projectDetailsSection = document.querySelector('.project-details');
                 if (projectKey === 'roca') {
@@ -2860,7 +2999,7 @@
                     document.getElementById('projectDuration').textContent = project.duration;
                     document.getElementById('projectFormat').textContent = project.format;
                 }
-                
+
                 // Show/hide sections based on project
                 const vialidadProjects = document.getElementById('vialidad-projects');
                 const projectAwards = document.getElementById('project-awards');
@@ -2869,21 +3008,21 @@
                 const fiatRectangles = document.getElementById('fiat-rectangles');
                 const alpapuyoVideo = document.getElementById('alpapuyo-video');
                 const cosasviejasVideo = document.getElementById('cosasviejas-video');
-                
+
                 // Vialidad Nacional projects section
                 if (projectKey === 'vialidad') {
                     vialidadProjects.style.display = 'block';
                 } else {
                     vialidadProjects.style.display = 'none';
                 }
-                
+
                 // Roca additional video section
                 if (projectKey === 'roca') {
                     rocaAdditionalVideo.style.display = 'block';
                 } else {
                     rocaAdditionalVideo.style.display = 'none';
                 }
-                
+
                 // FIAT rectangles section
                 if (projectKey === 'fiat') {
                     fiatRectangles.style.display = 'block';
@@ -2892,44 +3031,44 @@
                 } else {
                     fiatRectangles.style.display = 'none';
                 }
-                
+
                 // Alpapuyo video section
                 if (projectKey === 'alpapuyo') {
                     alpapuyoVideo.style.display = 'block';
                 } else {
                     alpapuyoVideo.style.display = 'none';
                 }
-                
+
                 // Cosas Viejas video section
                 if (projectKey === 'cosasviejas') {
                     cosasviejasVideo.style.display = 'block';
                 } else {
                     cosasviejasVideo.style.display = 'none';
                 }
-                
+
                 // Awards section
                 if (project.hasAwards) {
                     projectAwards.style.display = 'block';
                 } else {
                     projectAwards.style.display = 'none';
                 }
-                
+
                 // Reviews section
                 if (project.hasReviews) {
                     projectReviews.style.display = 'block';
                 } else {
                     projectReviews.style.display = 'none';
                 }
-                
+
                 // Show project detail section
                 this.carousel.style.display = 'none';
                 this.sections.forEach(s => s.classList.remove('active'));
                 document.getElementById('project-detail').classList.add('active');
-                
+
                 // Pause current video
                 this.videos[this.currentSlide].pause();
             }
-            
+
             setupInstagramLinks() {
                 // Setup click events for Instagram rectangles
                 document.querySelectorAll('.fiat-rectangle').forEach(rectangle => {
@@ -2943,11 +3082,12 @@
                 });
             }
         }
-        
+
         // Initialize carousel when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new VideoCarousel();
         });
     </script>
 </body>
+
 </html>
