@@ -1367,8 +1367,6 @@
             .nav {
                 height: 50px;
                 padding: 0 25px;
-                top: 21px;
-                /* Move nav down 21px from original 0 */
             }
 
             .logo {
@@ -1413,8 +1411,6 @@
                 /* Remove top padding to center content properly */
                 padding-left: 25px;
                 padding-right: 25px;
-                bottom: 25px;
-                /* Move bottom nav up 25px from original 0 */
                 display: flex;
                 align-items: center;
                 /* Center content vertically */
@@ -2377,8 +2373,8 @@
 
                 if (!nav || !carousel || !currentVideo) return;
 
-                // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
-                if (window.innerWidth <= 780 || carousel.style.display === 'none') {
+                // Disable dynamic position only if not in trabajos section
+                if (carousel.style.display === 'none') {
                     nav.classList.remove('dynamic-position');
                     nav.style.top = '';
                     nav.style.bottom = '';
@@ -2388,7 +2384,7 @@
                 // Single calculation to prevent multiple layout shifts
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
-                    const navHeight = 60;
+                    const navHeight = this.isMobile ? 50 : 60;
                     const spaceAbove = videoRect.top;
 
                     // Only update if there's a significant change (>10px) to reduce layout shifts
@@ -2415,8 +2411,8 @@
 
                 if (!bottomNav || !carousel || !currentVideo) return;
 
-                // Only apply dynamic positioning on desktop (above 780px width) for trabajos section
-                if (window.innerWidth <= 780 || carousel.style.display === 'none') {
+                // Disable dynamic position only if not in trabajos section
+                if (carousel.style.display === 'none') {
                     bottomNav.classList.remove('dynamic-position');
                     bottomNav.style.bottom = '';
                     bottomNav.style.top = '';
@@ -2427,7 +2423,7 @@
                 // Wait for video to be loaded and get accurate dimensions
                 const updatePosition = () => {
                     const videoRect = currentVideo.getBoundingClientRect();
-                    const navHeight = 60;
+                    const navHeight = this.isMobile ? 70 : 60;
 
                     // Use visual viewport if available (more accurate for actual visible area)
                     const actualViewportHeight = window.visualViewport ?
