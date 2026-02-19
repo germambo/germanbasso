@@ -169,7 +169,6 @@
             backdrop-filter: none;
             transition: all 0.3s ease;
             padding: 0 50px;
-            transform: translateY(3px);
         }
 
         .nav:hover {
@@ -1539,7 +1538,7 @@
     <div class="carousel-container" id="carousel">
         <div class="video-slide active">
             <img class="video-poster" src="Recursos/carrerovertical.jpg" alt="">
-            <video muted loop preload="metadata" poster="Recursos/carrerovertical.jpg">
+            <video muted loop playsinline webkit-playsinline preload="metadata" poster="Recursos/carrerovertical.jpg">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1553,7 +1552,7 @@
 
         <div class="video-slide">
             <img class="video-poster" src="" alt="">
-            <video muted loop preload="none" poster="">
+            <video muted loop playsinline webkit-playsinline preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1567,7 +1566,7 @@
 
         <div class="video-slide">
             <img class="video-poster" src="" alt="">
-            <video muted loop preload="none" poster="">
+            <video muted loop playsinline webkit-playsinline preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1581,7 +1580,7 @@
 
         <div class="video-slide">
             <img class="video-poster" src="" alt="">
-            <video muted loop preload="none" poster="">
+            <video muted loop playsinline webkit-playsinline preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1595,7 +1594,7 @@
 
         <div class="video-slide">
             <img class="video-poster" src="" alt="">
-            <video muted loop preload="none" poster="">
+            <video muted loop playsinline webkit-playsinline preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1609,7 +1608,7 @@
 
         <div class="video-slide">
             <img class="video-poster" src="" alt="">
-            <video muted loop preload="none" poster="">
+            <video muted loop playsinline webkit-playsinline preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -2387,8 +2386,9 @@
                     const navHeight = this.isMobile ? 50 : 60;
                     const spaceAbove = videoRect.top;
 
-                    // Only update if there's a significant change (>10px) to reduce layout shifts
-                    const centerPosition = (spaceAbove / 2) - (navHeight / 2);
+                    // Add a small visual offset for mobile (e.g., 3px-5px) to compensate for visual weight
+                    const mobileOffset = this.isMobile ? 3 : 0;
+                    const centerPosition = (spaceAbove / 2) - (navHeight / 2) + mobileOffset;
                     const finalPosition = Math.max(centerPosition, 0);
 
                     // Check if current position is significantly different
