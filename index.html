@@ -399,6 +399,8 @@
             background: #000;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
         }
 
         .video-slide.active {
@@ -1524,8 +1526,8 @@
     </div>
 
     <div class="carousel-container" id="carousel">
-        <div class="video-slide active">
-            <video muted loop preload="none" poster="">
+        <div class="video-slide active" style="background-image: url('Recursos/Carrero-vertical.jpg')">
+            <video muted loop preload="none" poster="Recursos/Carrero-vertical.jpg">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
@@ -1768,7 +1770,8 @@
                                         <strong>CON</strong> estos no-actores, que son pura verdad. Se los observa, se
                                         los escucha y se los deja fluir y vivir en pantalla. Y, con todo lo que tiene de
                                         visceral y urgente, no es una película precaria ni desprolija: hay una puesta en
-                                        escena cuidada, inteligente y virtuosa...</p>
+                                        escena cuidada, inteligente y virtuosa...
+                                    </p>
                                 </div>
                                 <div class="review-author">
                                     <strong>Diego Batlle</strong>
@@ -2573,9 +2576,16 @@
 
                     // Set poster image with new naming convention
                     const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
-                    let posterPath = `Recursos/${baseName}${posterOrientation}.jpg`;
+                    let baseNameLower = baseName.toLowerCase();
+                    let posterPath = `Recursos/${baseNameLower}${posterOrientation}.jpg`;
+
+                    // Specific case fixes based on folder scan
+                    if (baseName === 'Carrero') posterPath = `Recursos/carrero${posterOrientation}.jpg`;
+                    if (baseName === 'FIAT' && !this.isMobile) posterPath = `Recursos/fiat-horizontal.jpg`;
+                    if (baseName === 'FIAT' && this.isMobile) posterPath = `Recursos/fiat-vertical.jpg`;
 
                     video.poster = posterPath;
+                    this.slides[index].style.backgroundImage = `url('${posterPath}')`;
 
                     // Clear existing sources
                     video.innerHTML = '';
@@ -2665,7 +2675,16 @@
                 // Set high quality poster path
                 const baseName = this.videoSources[index];
                 const posterOrientation = this.isMobile ? '-vertical' : '-horizontal';
-                video.poster = `Recursos/${baseName}${posterOrientation}.jpg`;
+                let baseNameLower = baseName.toLowerCase();
+                let posterPath = `Recursos/${baseNameLower}${posterOrientation}.jpg`;
+
+                // Specific case fixes
+                if (baseName === 'Carrero') posterPath = `Recursos/carrero${posterOrientation}.jpg`;
+                if (baseName === 'FIAT' && !this.isMobile) posterPath = `Recursos/fiat-horizontal.jpg`;
+                if (baseName === 'FIAT' && this.isMobile) posterPath = `Recursos/fiat-vertical.jpg`;
+
+                video.poster = posterPath;
+                this.slides[index].style.backgroundImage = `url('${posterPath}')`;
 
                 video.preload = 'auto'; // Change to auto for observed videos
 
