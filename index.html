@@ -399,12 +399,27 @@
             background: #000;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            background-size: cover;
-            background-position: center;
         }
 
         .video-slide.active {
             opacity: 1;
+        }
+
+        .video-poster {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: absolute;
+            z-index: 45;
+            transition: opacity 0.8s ease;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .video-slide.v-playing .video-poster {
+            opacity: 0;
         }
 
         .video-slide video {
@@ -417,10 +432,10 @@
             position: relative;
             z-index: 50;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 0.8s ease;
         }
 
-        .video-slide video.v-loaded {
+        .video-slide.v-playing video {
             opacity: 1;
         }
 
@@ -1526,7 +1541,8 @@
     </div>
 
     <div class="carousel-container" id="carousel">
-        <div class="video-slide active" style="background-image: url('Recursos/carrerovertical.jpg')">
+        <div class="video-slide active">
+            <img class="video-poster" src="Recursos/carrerovertical.jpg" alt="">
             <video muted loop preload="metadata" poster="Recursos/carrerovertical.jpg">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -1540,6 +1556,7 @@
         </div>
 
         <div class="video-slide">
+            <img class="video-poster" src="" alt="">
             <video muted loop preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -1553,6 +1570,7 @@
         </div>
 
         <div class="video-slide">
+            <img class="video-poster" src="" alt="">
             <video muted loop preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -1566,6 +1584,7 @@
         </div>
 
         <div class="video-slide">
+            <img class="video-poster" src="" alt="">
             <video muted loop preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -1579,6 +1598,7 @@
         </div>
 
         <div class="video-slide">
+            <img class="video-poster" src="" alt="">
             <video muted loop preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -1592,6 +1612,7 @@
         </div>
 
         <div class="video-slide">
+            <img class="video-poster" src="" alt="">
             <video muted loop preload="none" poster="">
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
@@ -2051,6 +2072,7 @@
                 this.currentSlide = 0;
                 this.slides = document.querySelectorAll('.video-slide');
                 this.videos = document.querySelectorAll('.video-slide video');
+                this.posters = document.querySelectorAll('.video-poster');
                 this.progressDots = document.querySelectorAll('.nav-progress-dot'); // Changed to nav dots
                 this.navItems = document.querySelectorAll('.nav-item');
                 this.sections = document.querySelectorAll('.content-section');
@@ -2578,7 +2600,9 @@
                     const posterPath = this.getPosterPath(baseName, this.isMobile);
 
                     video.poster = posterPath;
-                    this.slides[index].style.backgroundImage = `url('${posterPath}')`;
+                    if (this.posters[index]) {
+                        this.posters[index].src = posterPath;
+                    }
 
                     // Clear existing sources
                     video.innerHTML = '';
@@ -2701,21 +2725,22 @@
                 const posterPath = this.getPosterPath(baseName, this.isMobile);
 
                 video.poster = posterPath;
-                this.slides[index].style.backgroundImage = `url('${posterPath}')`;
+                if (this.posters[index]) {
+                    this.posters[index].src = posterPath;
+                }
 
                 video.preload = 'auto'; // Change to auto for observed videos
 
                 const loadHandler = () => {
                     this.videosLoaded.add(index);
                     this.videosLoading.delete(index);
-                    video.classList.add('v-loaded');
                     if (index === this.currentSlide) {
                         this.playCurrentVideo();
                     }
                 };
 
                 const playingHandler = () => {
-                    video.classList.add('v-loaded');
+                    this.slides[index].classList.add('v-playing');
                 };
 
                 video.addEventListener('canplay', loadHandler, { once: true });
@@ -2810,6 +2835,7 @@
 
             goToSlide(index) {
                 this.slides[this.currentSlide].classList.remove('active');
+                this.slides[this.currentSlide].classList.remove('v-playing');
                 this.progressDots[this.currentSlide].classList.remove('active');
                 this.videos[this.currentSlide].pause();
 
@@ -2855,7 +2881,7 @@
                 if (video.readyState >= 2) {
                     video.muted = this.isMuted;
                     video.play().then(() => {
-                        video.classList.add('v-loaded');
+                        this.slides[this.currentSlide].classList.add('v-playing');
                     }).catch(e => console.log('Error playing video:', e));
                 } else {
                     // Wait for it
