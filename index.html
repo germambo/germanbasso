@@ -2393,7 +2393,8 @@
 
                     // Check if current position is significantly different
                     const currentTop = parseInt(nav.style.top) || 0;
-                    if (Math.abs(currentTop - finalPosition) > 1) {
+                    const threshold = this.isMobile ? 1 : 10;
+                    if (Math.abs(currentTop - finalPosition) > threshold) {
                         nav.classList.add('dynamic-position');
                         nav.style.top = finalPosition + 'px';
                         nav.style.bottom = 'auto';
