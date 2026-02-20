@@ -16,6 +16,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>Vaso – Germán Basso</title>
+    <meta name="description"
+        content="Portfolio de Germán Basso – Director audiovisual. Largometrajes, documentales, contenido institucional y videoclips.">
+    <meta property="og:title" content=">Vaso – Germán Basso">
+    <meta property="og:description"
+        content="Portfolio de Germán Basso – Director audiovisual. Largometrajes, documentales, contenido institucional y videoclips.">
+    <meta property="og:image" content="Recursos/carrerovertical.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content=">Vaso – Germán Basso">
+    <meta name="twitter:description" content="Portfolio de Germán Basso – Director audiovisual.">
+    <meta name="twitter:image" content="Recursos/carrerovertical.jpg">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' font-family='sans-serif' fill='white'>v</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -109,6 +122,12 @@
             font-weight: 300;
             padding-top: 20px;
             /* Space from fade mask */
+        }
+
+        @media (max-width: 768px) {
+            .bio-text p {
+                text-align: left;
+            }
         }
 
         p,
@@ -335,10 +354,26 @@
             transition: opacity 0.3s ease;
             cursor: pointer;
             display: block;
+            position: relative;
         }
 
-        .nav-item:hover,
-        .nav-item.active {
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #fff;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-item:hover {
             opacity: 0.7;
         }
 
@@ -432,6 +467,34 @@
             z-index: 50;
             opacity: 0;
             transition: opacity 0.8s ease;
+        }
+
+        /* Video loading spinner */
+        .video-slide .video-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 32px;
+            height: 32px;
+            margin: -16px 0 0 -16px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-top-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            z-index: 44;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .video-slide.v-playing .video-spinner {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .video-slide.v-playing video {
@@ -683,12 +746,54 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(20px);
+            will-change: opacity, transform;
         }
 
+        /* Starting positions for Entry (immediate) */
+        .content-section.slide-left {
+            transform: translateX(-80px);
+            opacity: 0 !important;
+            transition: none !important;
+        }
+
+        .content-section.slide-right {
+            transform: translateX(80px);
+            opacity: 0 !important;
+            transition: none !important;
+        }
+
+        /* Active state - triggers the entry transition */
         .content-section.active {
-            opacity: 1;
+            opacity: 1 !important;
             pointer-events: all;
+            transform: translate(0, 0);
+            transition: opacity 0.35s ease-out, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        /* Exit states - used on clones for overlapping effect */
+        .content-section.is-exiting-clone {
+            z-index: 501;
+            /* Stay on top of the new content */
+            pointer-events: none;
+        }
+
+        .content-section.is-exiting {
+            opacity: 0 !important;
+            transition: opacity 0.35s ease-in, transform 0.35s ease-in !important;
+        }
+
+        .content-section.exit-left {
+            transform: translateX(-80px) !important;
+        }
+
+        .content-section.exit-right {
+            transform: translateX(80px) !important;
+        }
+
+        .content-section.exit-down {
+            transform: translateY(20px) !important;
         }
 
         .content-wrapper {
@@ -1335,6 +1440,48 @@
             opacity: 0.8;
         }
 
+        /* YouTube lazy-load placeholder */
+        .youtube-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .youtube-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .youtube-placeholder:hover img {
+            opacity: 0.8;
+        }
+
+        .yt-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            transition: opacity 0.3s ease;
+        }
+
+        .youtube-placeholder:hover .yt-play-btn {
+            opacity: 0.9;
+        }
+
+        .yt-play-btn svg {
+            width: 100%;
+            height: 100%;
+        }
+
         .progress-dots {
             display: none;
         }
@@ -1510,7 +1657,7 @@
             <a href="#" class="nav-item" data-section="contact">contacto</a>
         </div>
 
-        <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="hamburger-menu" id="hamburgerMenu" aria-label="Menú de navegación" role="button" tabindex="0">
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
@@ -1540,6 +1687,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1554,6 +1702,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1568,6 +1717,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1582,6 +1732,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1596,6 +1747,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1610,6 +1762,7 @@
                 <source src="" type="video/webm">
                 <source src="" type="video/mp4">
             </video>
+            <div class="video-spinner"></div>
             <div class="video-clickable"></div>
             <div class="pause-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1618,20 +1771,20 @@
             </div>
         </div>
 
-        <button class="nav-arrow prev" id="prevBtn">
+        <button class="nav-arrow prev" id="prevBtn" aria-label="Video anterior">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg>
         </button>
 
-        <button class="nav-arrow next" id="nextBtn">
+        <button class="nav-arrow next" id="nextBtn" aria-label="Video siguiente">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
         </button>
 
         <div class="video-controls">
-            <button class="sound-toggle" id="soundToggleBottom">
+            <button class="sound-toggle" id="soundToggleBottom" aria-label="Activar o desactivar sonido">
             </button>
         </div>
     </div>
@@ -1648,7 +1801,7 @@
         </div>
 
         <div class="video-controls">
-            <button class="sound-toggle" id="soundToggle">
+            <button class="sound-toggle" id="soundToggle" aria-label="Activar o desactivar sonido">
                 <svg id="soundIcon" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
@@ -2205,7 +2358,7 @@
                 }
 
                 const newProjectKey = this.projectOrder[newIndex];
-                this.showProjectDetail(newProjectKey);
+                this.showProjectDetail(newProjectKey, direction);
             }
 
             init() {
@@ -2279,19 +2432,9 @@
             }
 
             setupYoutubeLazyLoading() {
-                // Only apply lazy loading to iframes that are NOT in project detail pages
-                // Target only iframes in sections that are initially hidden/non-critical
-                const iframes = document.querySelectorAll('iframe[src*="youtube.com"]:not(.no-lazy)');
+                // Apply lazy loading to ALL YouTube iframes — they load only when clicked
+                const iframes = document.querySelectorAll('iframe[src*="youtube.com"]');
                 iframes.forEach(iframe => {
-                    // Skip iframes that are in project detail sections
-                    if (iframe.closest('#project-detail') ||
-                        iframe.closest('.vialidad-projects') ||
-                        iframe.closest('.alpapuyo-video') ||
-                        iframe.closest('.cosasviejas-video') ||
-                        iframe.closest('.roca-additional-video')) {
-                        return; // Don't lazy load these
-                    }
-
                     const videoId = this.extractYouTubeId(iframe.src);
                     if (videoId) {
                         const placeholder = this.createYouTubePlaceholder(videoId, iframe);
@@ -2315,6 +2458,19 @@
                 // Copy original iframe attributes
                 if (originalIframe.allow) placeholder.dataset.allow = originalIframe.allow;
                 if (originalIframe.referrerPolicy) placeholder.dataset.referrerPolicy = originalIframe.referrerPolicy;
+
+                // Add YouTube thumbnail
+                const img = document.createElement('img');
+                img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                img.alt = 'Video thumbnail';
+                img.loading = 'lazy';
+                placeholder.appendChild(img);
+
+                // Add play button overlay
+                const playBtn = document.createElement('div');
+                playBtn.className = 'yt-play-btn';
+                playBtn.innerHTML = '<svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.63-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#212121" fill-opacity=".8"/><path d="M45 24L27 14v20" fill="#fff"/></svg>';
+                placeholder.appendChild(playBtn);
 
                 placeholder.addEventListener('click', () => {
                     this.loadYouTubeVideo(placeholder);
@@ -2460,7 +2616,7 @@
                     bottomNav.classList.add('dynamic-position');
 
                     // Debug log for troubleshooting
-                    console.log('Footer position:', finalPosition, 'Space below video:', spaceBelow, 'Video bottom:', videoRect.bottom, 'Max allowed:', absoluteMaxTop);
+
                 };
 
                 // Try multiple times with increasing delays
@@ -2677,10 +2833,19 @@
                 // Initialize project info
                 this.updateProjectInfo();
 
-                // Pre-load next video only if connection is fast
-                if (!this.isSlowConnection) {
-                    setTimeout(() => this.loadVideo(1), 2000);
-                }
+                // Setup smart preload: preload next video when current reaches 75%
+                this.setupSmartPreload();
+            }
+
+            setupSmartPreload() {
+                this.videos.forEach((video, index) => {
+                    video.addEventListener('timeupdate', () => {
+                        if (video.duration && video.currentTime / video.duration >= 0.75) {
+                            const nextIndex = (index + 1) % this.videos.length;
+                            this.loadVideo(nextIndex);
+                        }
+                    });
+                });
             }
 
             setupIntersectionObserver() {
@@ -2959,178 +3124,133 @@
                 }
             }
 
-            showProjectDetail(projectKey) {
-                const project = this.projectData[projectKey];
-                if (!project) return;
+            showProjectDetail(projectKey, direction = 'up') {
+                const originalEl = document.getElementById('project-detail');
+                const isAlreadyActive = originalEl.classList.contains('active');
 
-                // Store current project key for navigation
-                this.currentProjectKey = projectKey;
+                // 1. CLONE current state for EXIT if we're navigating project-to-project
+                if (isAlreadyActive) {
+                    const clone = originalEl.cloneNode(true);
+                    clone.id = ''; // Avoid ID conflicts
+                    clone.classList.add('is-exiting-clone');
+                    originalEl.parentNode.appendChild(clone);
 
-                // Hide navigation elements for project detail pages
-                document.querySelector('.nav-progress-dots').style.display = 'none';
-                document.querySelector('.bottom-nav').style.display = 'none';
+                    // Start exit on clone immediately
+                    let exitClass = 'exit-down';
+                    if (direction === 'next') exitClass = 'exit-left';
+                    else if (direction === 'prev') exitClass = 'exit-right';
 
-                // Update project detail content
-                document.getElementById('projectTitle').textContent = project.title;
-                document.getElementById('projectCategory').textContent = project.category;
-                document.getElementById('projectDescription').textContent = project.description;
+                    requestAnimationFrame(() => {
+                        clone.classList.add('is-exiting', exitClass);
+                    });
 
-                // Handle project details differently for Roca
-                const detailGridStandard = document.getElementById('detail-grid-standard');
-                const projectDetailsRoca = document.getElementById('project-details-roca');
-
-                if (projectKey === 'roca') {
-                    // Show Roca-specific details format
-                    detailGridStandard.style.display = 'none';
-                    projectDetailsRoca.style.display = 'block';
-                    document.getElementById('projectClientRoca').textContent = project.client;
-                } else {
-                    // Show standard details format
-                    detailGridStandard.style.display = 'grid';
-                    projectDetailsRoca.style.display = 'none';
-                    document.getElementById('projectClient').textContent = project.client;
-                    document.getElementById('projectYear').textContent = project.year;
-                    document.getElementById('projectDuration').textContent = project.duration;
-                    document.getElementById('projectFormat').textContent = project.format;
+                    // Cleanup clone after transition
+                    setTimeout(() => clone.remove(), 500);
                 }
 
-                // Update video source (YouTube or local video) - Hide for Roca project
-                const projectYouTube = document.getElementById('projectYouTube');
-                const projectVideo = document.getElementById('projectVideo');
+                const performUpdate = () => {
+                    const project = this.projectData[projectKey];
+                    if (!project) return;
 
-                if (projectKey === 'roca') {
-                    // Hide main video section for Roca project
-                    projectYouTube.parentElement.style.display = 'none';
-                } else if (project.youtubeId) {
-                    // Show YouTube embed with minimal UI
-                    projectYouTube.src = `https://www.youtube.com/embed/${project.youtubeId}?modestbranding=1&rel=0&controls=1&showinfo=0&cc_load_policy=0&iv_load_policy=3&autohide=1&color=white&theme=dark`;
-                    projectYouTube.parentElement.style.display = 'block';
-                    if (projectVideo) projectVideo.parentElement.style.display = 'none';
-                } else if (project.video) {
-                    // Show local video
-                    if (projectVideo) {
-                        projectVideo.src = project.video;
-                        projectVideo.parentElement.style.display = 'block';
+                    this.currentProjectKey = projectKey;
+
+                    // Header/Nav visibility
+                    document.querySelector('.nav-progress-dots').style.display = 'none';
+                    document.querySelector('.bottom-nav').style.display = 'none';
+
+                    // Update contents
+                    document.getElementById('projectTitle').textContent = project.title;
+                    document.getElementById('projectCategory').textContent = project.category;
+                    document.getElementById('projectDescription').textContent = project.description;
+
+                    const detailGridStandard = document.getElementById('detail-grid-standard');
+                    const projectDetailsRoca = document.getElementById('project-details-roca');
+                    if (projectKey === 'roca') {
+                        detailGridStandard.style.display = 'none';
+                        projectDetailsRoca.style.display = 'block';
+                        document.getElementById('projectClientRoca').textContent = project.client;
+                    } else {
+                        detailGridStandard.style.display = 'grid';
+                        projectDetailsRoca.style.display = 'none';
+                        document.getElementById('projectClient').textContent = project.client;
+                        document.getElementById('projectYear').textContent = project.year;
+                        document.getElementById('projectDuration').textContent = project.duration;
+                        document.getElementById('projectFormat').textContent = project.format;
                     }
-                    projectYouTube.parentElement.style.display = 'none';
-                }
 
-                // Update links - hide links section for Roca, Vialidad and FIAT projects, modify for Alpapuyo and Cosas Viejas
-                const linksSection = document.querySelector('.project-links');
-                if (projectKey === 'roca' || projectKey === 'vialidad' || projectKey === 'fiat') {
-                    linksSection.style.display = 'none';
-                } else if (projectKey === 'alpapuyo' || projectKey === 'cosasviejas') {
-                    linksSection.style.display = 'block';
-                    const link1 = document.getElementById('projectLink1');
-                    const link2 = document.getElementById('projectLink2');
-                    // Show only first link for Alpapuyo and Cosas Viejas
-                    link1.textContent = project.link1.text;
-                    link1.href = project.link1.url;
-                    link1.style.display = 'inline-block';
-                    link2.style.display = 'none'; // Hide second link
-                } else {
-                    linksSection.style.display = 'block';
-                    const link1 = document.getElementById('projectLink1');
-                    const link2 = document.getElementById('projectLink2');
-                    if (project.link1 && project.link2) {
-                        link1.textContent = project.link1.text;
-                        link1.href = project.link1.url;
-                        link1.style.display = 'inline-block';
-                        link2.textContent = project.link2.text;
-                        link2.href = project.link2.url;
-                        link2.style.display = 'inline-block';
+                    // Media
+                    const projectYouTube = document.getElementById('projectYouTube');
+                    const projectVideo = document.getElementById('projectVideo');
+                    if (projectKey === 'roca') {
+                        projectYouTube.parentElement.style.display = 'none';
+                    } else if (project.youtubeId) {
+                        projectYouTube.src = `https://www.youtube.com/embed/${project.youtubeId}?modestbranding=1&rel=0&controls=1&showinfo=0&cc_load_policy=0&iv_load_policy=3&autohide=1&color=white&theme=dark`;
+                        projectYouTube.parentElement.style.display = 'block';
+                        if (projectVideo) projectVideo.parentElement.style.display = 'none';
+                    } else if (project.video) {
+                        if (projectVideo) {
+                            projectVideo.src = project.video;
+                            projectVideo.parentElement.style.display = 'block';
+                        }
+                        projectYouTube.parentElement.style.display = 'none';
                     }
-                }
 
-                // Handle project details - hide for Roca, Vialidad, FIAT, Alpapuyo and Cosas Viejas
-                const projectDetailsSection = document.querySelector('.project-details');
-                if (projectKey === 'roca') {
-                    // Show Roca-specific details format
-                    projectDetailsSection.style.display = 'block';
-                    detailGridStandard.style.display = 'none';
-                    projectDetailsRoca.style.display = 'block';
-                    document.getElementById('projectClientRoca').textContent = project.client;
-                } else if (projectKey === 'vialidad' || projectKey === 'fiat' || projectKey === 'alpapuyo' || projectKey === 'cosasviejas') {
-                    // Hide details section completely for Vialidad, FIAT, Alpapuyo and Cosas Viejas
-                    projectDetailsSection.style.display = 'none';
-                } else {
-                    // Show standard details format
-                    projectDetailsSection.style.display = 'block';
-                    detailGridStandard.style.display = 'grid';
-                    projectDetailsRoca.style.display = 'none';
-                    document.getElementById('projectClient').textContent = project.client;
-                    document.getElementById('projectYear').textContent = project.year;
-                    document.getElementById('projectDuration').textContent = project.duration;
-                    document.getElementById('projectFormat').textContent = project.format;
-                }
+                    // Links
+                    const linksSection = document.querySelector('.project-links');
+                    if (projectKey === 'roca' || projectKey === 'vialidad' || projectKey === 'fiat') {
+                        linksSection.style.display = 'none';
+                    } else {
+                        linksSection.style.display = 'block';
+                        const link1 = document.getElementById('projectLink1');
+                        const link2 = document.getElementById('projectLink2');
+                        if (projectKey === 'alpapuyo' || projectKey === 'cosasviejas') {
+                            link1.textContent = project.link1.text;
+                            link1.href = project.link1.url;
+                            link1.style.display = 'inline-block';
+                            link2.style.display = 'none';
+                        } else if (project.link1 && project.link2) {
+                            link1.textContent = project.link1.text;
+                            link1.href = project.link1.url;
+                            link1.style.display = 'inline-block';
+                            link2.textContent = project.link2.text;
+                            link2.href = project.link2.url;
+                            link2.style.display = 'inline-block';
+                        }
+                    }
 
-                // Show/hide sections based on project
-                const vialidadProjects = document.getElementById('vialidad-projects');
-                const projectAwards = document.getElementById('project-awards');
-                const projectReviews = document.getElementById('project-reviews');
-                const rocaAdditionalVideo = document.getElementById('roca-additional-video');
-                const fiatRectangles = document.getElementById('fiat-rectangles');
-                const alpapuyoVideo = document.getElementById('alpapuyo-video');
-                const cosasviejasVideo = document.getElementById('cosasviejas-video');
+                    // Toggle visibility of conditional sections
+                    document.getElementById('vialidad-projects').style.display = projectKey === 'vialidad' ? 'block' : 'none';
+                    document.getElementById('roca-additional-video').style.display = projectKey === 'roca' ? 'block' : 'none';
+                    if (projectKey === 'fiat') {
+                        document.getElementById('fiat-rectangles').style.display = 'block';
+                        this.setupInstagramLinks();
+                    } else {
+                        document.getElementById('fiat-rectangles').style.display = 'none';
+                    }
+                    document.getElementById('alpapuyo-video').style.display = projectKey === 'alpapuyo' ? 'block' : 'none';
+                    document.getElementById('cosasviejas-video').style.display = projectKey === 'cosasviejas' ? 'block' : 'none';
+                    document.getElementById('project-awards').style.display = project.hasAwards ? 'block' : 'none';
+                    document.getElementById('project-reviews').style.display = project.hasReviews ? 'block' : 'none';
 
-                // Vialidad Nacional projects section
-                if (projectKey === 'vialidad') {
-                    vialidadProjects.style.display = 'block';
-                } else {
-                    vialidadProjects.style.display = 'none';
-                }
+                    // Reset Classes and Start Entry
+                    this.carousel.style.display = 'none';
+                    this.sections.forEach(s => s.classList.remove('active'));
+                    originalEl.classList.remove('active', 'slide-left', 'slide-right', 'is-exiting', 'exit-left', 'exit-right');
 
-                // Roca additional video section
-                if (projectKey === 'roca') {
-                    rocaAdditionalVideo.style.display = 'block';
-                } else {
-                    rocaAdditionalVideo.style.display = 'none';
-                }
+                    if (direction === 'next') originalEl.classList.add('slide-right');
+                    else if (direction === 'prev') originalEl.classList.add('slide-left');
 
-                // FIAT rectangles section
-                if (projectKey === 'fiat') {
-                    fiatRectangles.style.display = 'block';
-                    // Add click events to Instagram rectangles
-                    this.setupInstagramLinks();
-                } else {
-                    fiatRectangles.style.display = 'none';
-                }
+                    // Trigger Entry animation
+                    originalEl.offsetHeight;
+                    requestAnimationFrame(() => {
+                        originalEl.classList.add('active');
+                    });
 
-                // Alpapuyo video section
-                if (projectKey === 'alpapuyo') {
-                    alpapuyoVideo.style.display = 'block';
-                } else {
-                    alpapuyoVideo.style.display = 'none';
-                }
+                    if (this.videos[this.currentSlide]) this.videos[this.currentSlide].pause();
+                };
 
-                // Cosas Viejas video section
-                if (projectKey === 'cosasviejas') {
-                    cosasviejasVideo.style.display = 'block';
-                } else {
-                    cosasviejasVideo.style.display = 'none';
-                }
-
-                // Awards section
-                if (project.hasAwards) {
-                    projectAwards.style.display = 'block';
-                } else {
-                    projectAwards.style.display = 'none';
-                }
-
-                // Reviews section
-                if (project.hasReviews) {
-                    projectReviews.style.display = 'block';
-                } else {
-                    projectReviews.style.display = 'none';
-                }
-
-                // Show project detail section
-                this.carousel.style.display = 'none';
-                this.sections.forEach(s => s.classList.remove('active'));
-                document.getElementById('project-detail').classList.add('active');
-
-                // Pause current video
-                this.videos[this.currentSlide].pause();
+                // Immediate update (clone handles the exit visual)
+                performUpdate();
             }
 
             setupInstagramLinks() {
