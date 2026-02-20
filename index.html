@@ -919,10 +919,11 @@
             align-items: center;
             gap: 10px;
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid transparent;
             color: #fff;
-            padding: 12px 20px;
-            border-radius: 6px;
+            padding: 10px 18px;
+            border-radius: 25px;
+            /* More rounded to feel closer to the "circulitos" */
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 40px;
@@ -931,7 +932,8 @@
 
         .back-btn:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .back-btn svg {
@@ -1626,6 +1628,31 @@
                 flex-direction: column;
             }
         }
+
+        /* Toast Notification - Email Copy */
+        .copy-toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 2000;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 
@@ -1866,7 +1893,7 @@
                 <div class="contact-details">
                     <div class="contact-item">
                         <strong>email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                        <a href="mailto:gerbasso@gmail.com">gerbasso@gmail.com</a>
+                        <a href="mailto:gerbasso@gmail.com" id="contactEmail">gerbasso@gmail.com</a>
                     </div>
                     <div class="contact-item">
                         <strong>instagram&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
@@ -2987,6 +3014,15 @@
                         this.toggleVideoPlayback(this.currentSlide);
                     }
                 });
+
+                // Email Copy Listener
+                const emailLink = document.getElementById('contactEmail');
+                if (emailLink) {
+                    emailLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.copyEmail(emailLink.textContent.trim());
+                    });
+                }
             }
 
             goToSlide(index) {
@@ -3264,6 +3300,30 @@
                         }
                     });
                 });
+            }
+
+            copyEmail(email) {
+                navigator.clipboard.writeText(email).then(() => {
+                    this.showToast('e-mail copiado');
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                });
+            }
+
+            showToast(message) {
+                let toast = document.querySelector('.copy-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.className = 'copy-toast';
+                    document.body.appendChild(toast);
+                }
+
+                toast.textContent = message;
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
             }
         }
 
