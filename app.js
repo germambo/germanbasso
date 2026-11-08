@@ -568,9 +568,10 @@
       '<nav class="indice" aria-labelledby="tituloObras"><h2 class="solo-lector" id="tituloObras">' + esc(ui('principales')) + '</h2>' +
       obras.map(fila).join('') + '</nav>' +
       '<section class="contacto" id="contacto"><h2 class="et">' + esc(ui('escribime')) + '</h2>' +
-      '<a class="mail" href="mailto:' + c.email + '">' + esc(c.email) + '</a>' +
-      '<div class="fila-contacto"><button type="button" class="accion copiar" data-copiar>' + corchetes(ui('copiar')) + '</button>' +
-      '<a href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></div></section>' +
+      // «Copiar» va al lado del mail, que es lo que copia; el Instagram, en su renglón.
+      '<div class="fila-contacto"><a class="mail" href="mailto:' + c.email + '">' + esc(c.email) + '</a>' +
+      '<button type="button" class="accion copiar" data-copiar>' + corchetes(ui('copiar')) + '</button></div>' +
+      '<a class="red" href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></section>' +
       '<p class="firma-pie">' + esc(D.firma) + ' · ' + esc(D.nombre) + '</p></div>';
   }
   function abrirObras(contacto) {

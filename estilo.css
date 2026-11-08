@@ -267,7 +267,8 @@ a:hover, button:hover { color: var(--sub); }
 .contacto { max-width: 1000px; margin: 84px auto 0; padding-left: 80px; display: grid; gap: 8px; }
 .contacto .et { margin: 0 0 6px; color: var(--hueso); font-weight: 600; font-size: 17px; letter-spacing: .05em; }
 .mail { font-size: 17px; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
-.fila-contacto { display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: center; }
+.fila-contacto { display: flex; flex-wrap: wrap; gap: 0 24px; align-items: baseline; }
+.contacto .red { justify-self: start; }
 .contacto .accion { padding: 6px 0; }
 .firma-pie { max-width: 1000px; margin: 56px auto 0; padding-left: 80px; color: var(--polvo); }
 
