@@ -264,69 +264,6 @@ window.MEDIOS = {
   },
   "mini": "media/cosas-viejas-mini.webp"
  },
- "alpapuyo": {
-  "h": {
-   "poster": [
-    {
-     "archivo": "alpapuyo-h-960",
-     "w": 960
-    },
-    {
-     "archivo": "alpapuyo-h-1920",
-     "w": 1920
-    }
-   ],
-   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAFwAAQEBAQEAAAAAAAAAAAAAAAMGAgEFAQADAQAAAAAAAAAAAAAAAAAAAwQFEAACAgMAAwEAAAAAAAAAAAABAgAREiEDQRMxUREBAQAAAAAAAAAAAAAAAAAAAAH/wAARCAAOACADASIAAhEAAxEA/9oADAMBAAIRAxEAPwCYrcfEgFq0J1fkfoxwr9lbOkLxYncqM6WecqBEAE17PFQMf//Z",
-   "video": [
-    {
-     "src": "media/alpapuyo-h-1280.av1.mp4",
-     "w": 1280,
-     "codec": "av1",
-     "bytes": 375602
-    },
-    {
-     "src": "media/alpapuyo-h-1280.mp4",
-     "w": 1280,
-     "codec": "h264",
-     "bytes": 569942
-    },
-    {
-     "src": "media/alpapuyo-h-1920.mp4",
-     "w": 1920,
-     "codec": "h264",
-     "bytes": 1561800
-    }
-   ]
-  },
-  "v": {
-   "poster": [
-    {
-     "archivo": "alpapuyo-v-490",
-     "w": 490
-    },
-    {
-     "archivo": "alpapuyo-v-540",
-     "w": 540
-    }
-   ],
-   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAGcAAAIDAQEAAAAAAAAAAAAAAAYEAQIAAwUBAQEBAQEAAAAAAAAAAAAAAAIEAwABEAACAgECBgMBAAAAAAAAAAABAAIRA2ExITKCoXEjBPATEhEBAQEBAAAAAAAAAAAAAAAAAAECEf/AABEIACIAFAMBIgACEQADEQD/2gAMAwEAAhEDEQA/ABx6BtL1xsvlRnKVRGrUgmeiKM+D1/tTAoN6UKflEGFDcnsj+EEzFfdVvNdnTg+/hgAIHQ96cmxsYw2/MLtMUVuAOTfqTXHyjwhU9+pNcfKPCHhxzmFE/9k=",
-   "video": [
-    {
-     "src": "media/alpapuyo-v-490.av1.mp4",
-     "w": 490,
-     "codec": "av1",
-     "bytes": 323371
-    },
-    {
-     "src": "media/alpapuyo-v-490.mp4",
-     "w": 490,
-     "codec": "h264",
-     "bytes": 464003
-    }
-   ]
-  },
-  "mini": "media/alpapuyo-mini.webp"
- },
  "homero-taisen": {
   "h": {
    "poster": [
@@ -395,6 +332,69 @@ window.MEDIOS = {
    ]
   },
   "mini": "media/homero-taisen-mini.webp"
+ },
+ "alpapuyo": {
+  "h": {
+   "poster": [
+    {
+     "archivo": "alpapuyo-h-960",
+     "w": 960
+    },
+    {
+     "archivo": "alpapuyo-h-1920",
+     "w": 1920
+    }
+   ],
+   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAFwAAQEBAQEAAAAAAAAAAAAAAAMGAgEFAQADAQAAAAAAAAAAAAAAAAAAAwQFEAACAgMAAwEAAAAAAAAAAAABAgAREiEDQRMxUREBAQAAAAAAAAAAAAAAAAAAAAH/wAARCAAOACADASIAAhEAAxEA/9oADAMBAAIRAxEAPwCYrcfEgFq0J1fkfoxwr9lbOkLxYncqM6WecqBEAE17PFQMf//Z",
+   "video": [
+    {
+     "src": "media/alpapuyo-h-1280.av1.mp4",
+     "w": 1280,
+     "codec": "av1",
+     "bytes": 375602
+    },
+    {
+     "src": "media/alpapuyo-h-1280.mp4",
+     "w": 1280,
+     "codec": "h264",
+     "bytes": 569942
+    },
+    {
+     "src": "media/alpapuyo-h-1920.mp4",
+     "w": 1920,
+     "codec": "h264",
+     "bytes": 1561800
+    }
+   ]
+  },
+  "v": {
+   "poster": [
+    {
+     "archivo": "alpapuyo-v-490",
+     "w": 490
+    },
+    {
+     "archivo": "alpapuyo-v-540",
+     "w": 540
+    }
+   ],
+   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAGcAAAIDAQEAAAAAAAAAAAAAAAYEAQIAAwUBAQEBAQEAAAAAAAAAAAAAAAIEAwABEAACAgECBgMBAAAAAAAAAAABAAIRA2ExITKCoXEjBPATEhEBAQEBAAAAAAAAAAAAAAAAAAECEf/AABEIACIAFAMBIgACEQADEQD/2gAMAwEAAhEDEQA/ABx6BtL1xsvlRnKVRGrUgmeiKM+D1/tTAoN6UKflEGFDcnsj+EEzFfdVvNdnTg+/hgAIHQ96cmxsYw2/MLtMUVuAOTfqTXHyjwhU9+pNcfKPCHhxzmFE/9k=",
+   "video": [
+    {
+     "src": "media/alpapuyo-v-490.av1.mp4",
+     "w": 490,
+     "codec": "av1",
+     "bytes": 323371
+    },
+    {
+     "src": "media/alpapuyo-v-490.mp4",
+     "w": 490,
+     "codec": "h264",
+     "bytes": 464003
+    }
+   ]
+  },
+  "mini": "media/alpapuyo-mini.webp"
  },
  "fiat": {},
  "vialidad": {},

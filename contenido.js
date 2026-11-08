@@ -122,21 +122,6 @@ window.VASO = {
       }
     },
     {
-      id: 'alpapuyo',
-      titulo: 'Alpapuyo',
-      datos: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
-      ver: { texto: { es: 'Ver videoclip', en: 'Watch the video' }, yt: 'QOEcIGJvAEY' },
-      ficha: {
-        frase: { es: 'Videoclip hecho con animación para Mango Lafruta.', en: 'Music video made with animation for Mango Lafruta.' },
-        linea: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
-        sinopsis: {
-          es: 'Videoclip realizado para Mango Lafruta. Fue seleccionado en múltiples festivales, incluyendo el Bamfest, donde ganó el premio a mejor videoclip de animación.',
-          en: 'Music video made for Mango Lafruta. Selected at multiple festivals, including Bamfest, where it won Best Animated Music Video.'
-        },
-        creditos: [[{ es: 'Artista', en: 'Artist' }, 'Mango Lafruta'], [{ es: 'Dirección', en: 'Directed by' }, 'Fiona Lena Brown, Germán Basso']]
-      }
-    },
-    {
       id: 'homero-taisen',
       titulo: 'Homero Taisen',
       datos: { es: 'Mi Casa sessions · Sesión en vivo · 2026', en: 'Mi Casa sessions · Live session · 2026' },
@@ -158,6 +143,21 @@ window.VASO = {
           [{ es: 'Colorimetría', en: 'Color grading' }, 'Lucía Kristef'],
           [{ es: 'Sonido', en: 'Sound' }, { es: 'DALSUONO (grabación), Piter Mazda (edición y mezcla)', en: 'DALSUONO (recording), Piter Mazda (editing and mixing)' }]
         ]
+      }
+    },
+    {
+      id: 'alpapuyo',
+      titulo: 'Alpapuyo',
+      datos: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
+      ver: { texto: { es: 'Ver videoclip', en: 'Watch the video' }, yt: 'QOEcIGJvAEY' },
+      ficha: {
+        frase: { es: 'Videoclip hecho con animación para Mango Lafruta.', en: 'Music video made with animation for Mango Lafruta.' },
+        linea: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
+        sinopsis: {
+          es: 'Videoclip realizado para Mango Lafruta. Fue seleccionado en múltiples festivales, incluyendo el Bamfest, donde ganó el premio a mejor videoclip de animación.',
+          en: 'Music video made for Mango Lafruta. Selected at multiple festivals, including Bamfest, where it won Best Animated Music Video.'
+        },
+        creditos: [[{ es: 'Artista', en: 'Artist' }, 'Mango Lafruta'], [{ es: 'Dirección', en: 'Directed by' }, 'Fiona Lena Brown, Germán Basso']]
       }
     },
     {
