@@ -109,7 +109,7 @@ window.VASO = {
     {
       id: 'cosas-viejas',
       titulo: 'Cosas Viejas',
-      datos: { es: 'Cortometraje · 2017 · 12:15', en: 'Short film · 2017 · 12:15' },
+      datos: { es: 'Cortometraje · 2017', en: 'Short film · 2017' },
       ver: { texto: { es: 'Ver corto', en: 'Watch the short' }, sub: { es: 'Completo · 12:15', en: 'Full film · 12:15' }, yt: 'W9JAXVvoanM' },
       ficha: {
         frase: { es: 'En San Telmo, Tristán dirige un negocio que compra muebles viejos, los restaura y los vende. Lo más riesgoso del oficio: reconocer un mueble de autor.', en: 'In San Telmo, Tristán runs a business that buys old furniture, restores it and sells it. The riskiest part of the trade: spotting a designer piece.' },
@@ -219,14 +219,14 @@ window.VASO = {
 
   ui: {
     es: {
-      obras: 'Obras', contacto: 'Contacto', lang: 'EN', langNombre: 'English', anterior: 'Obra anterior', siguiente: 'Obra siguiente', fichaAnterior: 'Ficha anterior', fichaSiguiente: 'Ficha siguiente',
+      obras: 'Obras', contacto: 'Contacto', lang: 'En', langNombre: 'English', anterior: 'Obra anterior', siguiente: 'Obra siguiente', fichaAnterior: 'Ficha anterior', fichaSiguiente: 'Ficha siguiente',
       trailer: 'Tráiler', ficha: 'Ficha', volver: 'Volver', cerrar: 'Cerrar',
       sinopsis: 'Sinopsis', creditos: 'Créditos', premios: 'Premios y festivales', criticas: 'Críticas', piezas: 'Piezas', reels: 'Reels',
       tambien: 'También', principales: 'Obras', escribime: 'Contacto', copiar: 'Copiar', copiado: 'Copiado',
       mas: 'Ver más', escuchar: 'Activar sonido', silenciar: 'Silenciar', liviano: 'Modo liviano: imágenes fijas para que cargue rápido.', cargarTodo: 'Cargar los clips igual'
     },
     en: {
-      obras: 'Works', contacto: 'Contact', lang: 'ES', langNombre: 'Español', anterior: 'Previous work', siguiente: 'Next work', fichaAnterior: 'Previous details', fichaSiguiente: 'Next details',
+      obras: 'Works', contacto: 'Contact', lang: 'Es', langNombre: 'Español', anterior: 'Previous work', siguiente: 'Next work', fichaAnterior: 'Previous details', fichaSiguiente: 'Next details',
       trailer: 'Trailer', ficha: 'Details', volver: 'Back', cerrar: 'Close',
       sinopsis: 'Synopsis', creditos: 'Credits', premios: 'Awards and festivals', criticas: 'Reviews', piezas: 'Pieces', reels: 'Reels',
       tambien: 'Also', principales: 'Works', escribime: 'Contact', copiar: 'Copy', copiado: 'Copied',
