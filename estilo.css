@@ -213,21 +213,32 @@ a:hover, button:hover { color: var(--sub); }
 .caratula-pie p { margin: 0; }
 .caratula-pie .nota { justify-self: end; text-align: right; color: var(--polvo); white-space: pre-line; }
 
-.detalle { max-width: 1120px; margin: 0 auto; display: grid; gap: 64px; padding-top: 48px; border-top: 1px solid var(--linea); }
+/* Parte de abajo de la ficha: el mismo lenguaje que el índice. Sin líneas, una
+   sola columna alineada con la del índice y encabezados como los de escena
+   (mayúsculas, en negrita). */
+.detalle { max-width: 1000px; margin: 0 auto; display: grid; gap: 72px; padding: 96px 80px 0; }
 .et { margin: 0 0 14px; color: var(--polvo); font-weight: 400; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
-.dos { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; }
-.sinopsis { margin: 0; font-size: 16px; line-height: 1.75; max-width: 60ch; }
-.dl { margin: 0; }
-.dl div { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--linea); }
+.detalle .et { margin: 0 0 18px; color: var(--hueso); font-weight: 600; font-size: 17px; letter-spacing: .05em; }
+.dos { display: grid; gap: 72px; }
+.sinopsis { margin: 0; font-size: 16px; line-height: 1.75; max-width: 62ch; }
+/* Créditos tabulados como a máquina: el rol en gris, el nombre en hueso. */
+.dl { margin: 0; display: grid; gap: 6px; }
+.dl div { display: grid; grid-template-columns: 13em minmax(0, 1fr); gap: 16px; }
 .dl dt { color: var(--polvo); }
 .dl dd { margin: 0; }
-.premios div { display: grid; grid-template-columns: minmax(10em, 3fr) minmax(0, 7fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--linea); align-items: center; }
-.premios b { font-family: var(--titulo); font-weight: 400; font-size: 26px; line-height: 1.1; }
-.premios ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.criticas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
-.critica { margin: 0; display: grid; gap: 12px; }
-.critica q { font-family: var(--titulo); font-size: clamp(24px, 2.6vw, 36px); line-height: 1.15; quotes: "«" "»"; }
-.critica cite { font-style: normal; color: var(--polvo); }
+/* Premios: el festival como un pequeño encabezado y los premios debajo. */
+.premios { display: grid; gap: 22px; }
+.premios div { display: grid; gap: 4px; }
+.premios b { font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.premios ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+/* Críticas como diálogo de guion: quien escribe va donde iría el personaje, el
+   medio como acotación y la cita como parlamento, en una columna angosta. */
+.criticas { display: grid; gap: 44px; }
+.critica { margin: 0; display: grid; gap: 2px; }
+.critica .quien { font-style: normal; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; margin-left: 28%; }
+.critica .medio { margin-left: 21%; color: var(--polvo); }
+.critica p { margin: 6px 0 0 14%; max-width: 30em; font-size: 16px; line-height: 1.7; }
+.critica q { quotes: "«" "»"; }
 .piezas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 28px 22px; }
 .pieza { display: grid; gap: 8px; text-decoration: none; }
 .pieza img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: #000; }
@@ -259,8 +270,13 @@ a:hover, button:hover { color: var(--sub); }
 .firma-pie { max-width: 1000px; margin: 56px auto 0; padding-left: 80px; color: var(--polvo); }
 
 @media (max-aspect-ratio: 11/10), (max-width: 760px) {
-  .dos, .criticas { grid-template-columns: minmax(0, 1fr); }
-  .premios div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .detalle { padding: 72px 0 0 34px; gap: 56px; }
+  .dos { gap: 56px; }
+  .detalle .et { font-size: 15px; }
+  .dl div { grid-template-columns: 8.5em minmax(0, 1fr); gap: 12px; }
+  .critica .quien { margin-left: 30%; }
+  .critica .medio { margin-left: 20%; }
+  .critica p { margin-left: 10%; }
   .reels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .indice { --margen: 34px; padding-top: 24px; gap: 24px; }
   .fila .num, .fila .t, .contacto .et, .mail { font-size: 15px; }

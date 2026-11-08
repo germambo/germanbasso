@@ -610,7 +610,8 @@
       return '<div><b>' + esc(g.f) + '</b><ul>' + g.l.map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul></div>';
     }).join('') + '</div></section>';
     if (f.criticas) h += '<section><h2 class="et">' + esc(ui('criticas')) + '</h2><div class="criticas">' + f.criticas.map(function (x) {
-      return '<blockquote class="critica"><q>' + esc(x.cita) + '</q><cite>' + esc(x.autor) + ', ' + esc(x.medio) + '</cite></blockquote>';
+      // Como diálogo de guion: quien escribe es el personaje, el medio la acotación.
+      return '<blockquote class="critica"><cite class="quien">' + esc(x.autor) + '</cite><span class="medio">(' + esc(x.medio) + ')</span><p><q>' + esc(x.cita) + '</q></p></blockquote>';
     }).join('') + '</div></section>';
     if (f.piezas) h += '<section id="piezas"><h2 class="et">' + esc(ui('piezas')) + '</h2><div class="piezas">' + f.piezas.map(function (p) {
       return '<a class="pieza" href="' + yt(p.yt) + '" target="_blank" rel="noopener" data-yt="' + p.yt + '"><img src="media/yt-' + p.yt + '.jpg" alt="" loading="lazy" decoding="async"><span>' + esc(t(p.t)) + '</span></a>';
