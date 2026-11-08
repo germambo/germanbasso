@@ -46,7 +46,7 @@ a:hover, button:hover { color: var(--sub); }
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   background: var(--noche);
 }
-.firma { }   /* misma letra que Obras / Contacto */
+.firma { font-size: calc(1em + 3px); }   /* misma letra que Obras / Contacto, 3 puntos más grande */
 .nav { display: flex; align-items: center; gap: 26px; }
 .tenue { color: var(--polvo); }
 .pagina { display: flex; align-items: center; gap: 6px; margin-left: 18px; font-variant-numeric: tabular-nums; }
@@ -196,7 +196,7 @@ a:hover, button:hover { color: var(--sub); }
    que sea fácil de tocar, y la "v" queda a la altura del texto. */
 .bajar {
   justify-self: center; align-self: end; width: 56px; height: 44px;
-  display: grid; place-items: end center; padding-bottom: calc(.85em - 8px);
+  display: grid; place-items: end center; padding-bottom: calc(.85em + 4px);
   color: var(--polvo); transition: opacity .3s;
 }
 .bajar svg { display: block; animation: bajar 2.2s ease-in-out infinite; }
@@ -206,12 +206,14 @@ a:hover, button:hover { color: var(--sub); }
 .caratula-centro { align-self: center; display: grid; justify-items: center; text-align: center; gap: 16px; padding-top: 24px; }
 .caratula h1 { margin: 0; font-family: var(--titulo); font-weight: 400; line-height: .92; letter-spacing: -.01em; font-size: min(190px, 17vw); overflow-wrap: anywhere; }
 /* Una frase sobre la obra en lugar de repetir los datos de la portada. */
-.caratula .frase { margin: 4px 0 0; max-width: 34em; font-size: 16px; line-height: 1.7; text-wrap: pretty; }
+/* La frase se separa del título según su tamaño: las colas de la p, la y o la j
+   (Alpapuyo, Cosas Viejas) bajan mucho en el Abril. */
+.caratula .frase { margin: max(18px, calc(min(190px, 17vw) * .22)) 0 0; max-width: 34em; font-size: 16px; line-height: 1.7; text-wrap: pretty; }
 .caratula .credito { margin: 14px 0 0; line-height: 1.7; white-space: pre-line; color: var(--polvo); }
 .caratula .acciones { justify-content: center; margin-top: 18px; }
 .caratula-pie { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px 40px; line-height: 1.7; }
 .caratula-pie p { margin: 0; }
-.caratula-pie .nota { justify-self: end; text-align: right; color: var(--polvo); white-space: pre-line; }
+.caratula-pie .nota { justify-self: end; text-align: right; }
 
 /* Parte de abajo de la ficha: el mismo lenguaje que el índice. Sin líneas, una
    sola columna alineada con la del índice y encabezados como los de escena

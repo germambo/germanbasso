@@ -168,7 +168,7 @@
       if (v.ficha) h += '<button type="button" class="accion prima" data-ficha="' + o.id + '" data-seccion="' + (v.seccion || 'reels') + '">' + corchetes(t(v.texto)) + '</button>';
       else h += '<a class="accion prima" href="' + yt(v.yt) + '" target="_blank" rel="noopener" data-yt="' + v.yt + '">' + corchetes(t(v.texto)) + '</a>';
     }
-    if (o.trailer) h += '<a class="accion" href="' + yt(o.trailer) + '" target="_blank" rel="noopener" data-yt="' + o.trailer + '">' + corchetes(ui('trailer')) + '</a>';
+    if (o.trailer && !sinVer) h += '<a class="accion" href="' + yt(o.trailer) + '" target="_blank" rel="noopener" data-yt="' + o.trailer + '">' + corchetes(ui('trailer')) + '</a>';   // el tráiler, también solo en la carátula
     if (conFicha && !sinVer) h += '<button type="button" class="accion" data-ficha="' + o.id + '">' + corchetes(ui('ficha')) + '</button>';
     return h;
   }
@@ -600,10 +600,10 @@
       (f.frase ? '<p class="frase">' + esc(t(f.frase)) + '</p>' : '<p>' + esc(t(f.linea)) + '</p>') +
       (f.credito ? '<p class="credito">' + esc(t(f.credito)) + '</p>' : '') +
       '<div class="acciones">' + (o.ver && !o.ver.ficha ? htmlAcciones(o, false) : '') + '</div></div>' +
-      '<div class="caratula-pie"><p>' + esc(ui('contacto')) + '<br><a href="mailto:' + c.email + '">' + esc(c.email) + '</a><br>' +
-      '<a href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></p>' +
+      // Pie de la carátula: el contacto (con el mail) a un lado y el Instagram al otro.
+      '<div class="caratula-pie"><p>' + esc(ui('contacto')) + '<br><a href="mailto:' + c.email + '">' + esc(c.email) + '</a></p>' +
       '<button type="button" class="bajar" data-bajar aria-label="' + esc(ui('mas')) + '"><svg width="28" height="16" viewBox="0 0 28 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l13 13L27 1"/></svg></button>' +
-      '<p class="nota">' + esc(t(f.nota)) + '</p></div></section>' +
+      '<p class="nota"><a href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></p></div></section>' +
       '<div class="detalle"><div class="dos"><div><h2 class="et">' + esc(ui('sinopsis')) + '</h2><p class="sinopsis">' + esc(t(f.sinopsis)) + '</p></div>' +
       (dl ? '<div><h2 class="et">' + esc(ui('creditos')) + '</h2><dl class="dl">' + dl + '</dl></div>' : '') + '</div>';
     if (f.premios) h += '<section><h2 class="et">' + esc(ui('premios')) + '</h2><div class="premios">' + agruparPremios(f.premios).map(function (g) {

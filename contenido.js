@@ -38,7 +38,6 @@ window.VASO = {
         // La frase de la carátula de la ficha (en lugar de repetir los datos de la portada).
         frase: { es: 'Ale tiene 17 años y pierde su trabajo en un supermercado. Empieza a salir con Rengo, un carrero del barrio, a juntar lo que la ciudad tira.', en: 'Ale is 17 and loses his job at a supermarket. He starts going out with Rengo, a carrero from the neighborhood, to collect what the city throws away.' },
         linea: { es: 'Largometraje · 2022 · 84 min · 2.35:1', en: 'Feature film · 2022 · 84 min · 2.35:1' },
-        nota: { es: 'Premio estímulo al cine argentino\nBAFICI 2022', en: 'Argentine Cinema Encouragement Award\nBAFICI 2022' },
         sinopsis: {
           es: 'Ale tiene 17 años y pierde su trabajo en un supermercado. Empieza a salir con Rengo, un carrero del barrio, a juntar lo que la ciudad tira. Su madre y su amigo Gonza le advierten que ese camino es peligroso, pero a Ale le gusta el oficio y la amistad que va creciendo. Filmada en el barrio Malvinas de La Plata, con vecinos y vecinas como elenco.',
           en: 'Ale is 17 and loses his job at a supermarket. He starts going out with Rengo, a carrero from the neighborhood, to collect what the city throws away. His mother and his friend Gonza warn him the path is dangerous, but Ale enjoys the trade and the growing friendship. Shot in barrio Malvinas, La Plata, with neighbors as the cast.'
@@ -80,7 +79,6 @@ window.VASO = {
       ficha: {
         frase: { es: 'Piguem, un niño qom de doce años del monte chaqueño, se convence de que está maldito y de que sólo los rocshés, los hombres blancos, pueden sacarle la maldición.', en: 'Piguem, a twelve-year-old Qom boy from the Chaco forest, becomes convinced that he is cursed and that only the rocshés, the white men, can lift the curse.' },
         linea: { es: 'Largometraje · Producción: Cinema 7 Films', en: 'Feature film · Produced by Cinema 7 Films' },
-        nota: { es: 'Guion disponible a pedido.', en: 'Screenplay available on request.' },
         sinopsis: {
           es: 'En el corazón del Gran Chaco, en el monte conocido como El Impenetrable, vive Piguem, un niño qom de doce años. Un objeto extraño que encuentra interrumpe ese equilibrio: el monte retumba, una estampida de pecaríes se hace presente y su amigo Payak cae y muere. Desde entonces Piguem carga una culpa que revive con cada pérdida. Mientras los rocshés —hombres blancos— avanzan y obligan a los qom a desplazarse, mueren su hermana Dasoví y su padre Kedok. Aturdido y con la sensación de estar maldito, Piguem se convence de que la maldición existe y sólo los rocshés pueden sacársela.',
           en: 'In the heart of the Gran Chaco, in the forest known as El Impenetrable, lives Piguem, a twelve-year-old Qom boy. A strange object he finds breaks that balance: the forest rumbles, a stampede of peccaries bursts in, and his friend Payak falls and dies. From then on Piguem carries a guilt that returns with every loss. As the rocshés (white men) advance and force the Qom to move, his sister Dasoví and his father Kedok die. Dazed and feeling cursed, Piguem becomes convinced that the curse is real and that only the rocshés can lift it.'
@@ -101,7 +99,6 @@ window.VASO = {
       ficha: {
         frase: { es: 'Darío «Roca», descendiente de qom, lleva consigo el conocimiento de una cultura ancestral mientras trabaja de hachero, de sereno o cavando pozos para piletas.', en: 'Darío “Roca”, a descendant of the Qom, carries the knowledge of an ancestral culture while working as a woodcutter, a night watchman or digging holes for swimming pools.' },
         linea: { es: 'Largometraje documental · Chaco, Argentina', en: 'Feature documentary · Chaco, Argentina' },
-        nota: { es: 'En desarrollo.', en: 'In development.' },
         sinopsis: {
           es: 'Proyecto documental sobre comunidades indígenas Qom del Chaco argentino, en la localidad de Roca. Sigue a Darío «Roca», un descendiente de Qoms que lleva consigo todo el conocimiento de la cultura ancestral y que trabaja de hachero, de sereno, o cavando pozos para piletas.',
           en: 'Documentary project about Qom indigenous communities in the Argentine Chaco, in the town of Roca. It follows Darío “Roca”, a descendant of the Qom who carries all the knowledge of the ancestral culture and works as a woodcutter, a night watchman, or digging holes for swimming pools.'
@@ -117,7 +114,6 @@ window.VASO = {
       ficha: {
         frase: { es: 'En San Telmo, Tristán dirige un negocio que compra muebles viejos, los restaura y los vende. Lo más riesgoso del oficio: reconocer un mueble de autor.', en: 'In San Telmo, Tristán runs a business that buys old furniture, restores it and sells it. The riskiest part of the trade: spotting a designer piece.' },
         linea: { es: 'Cortometraje documental · 2017 · 12:15', en: 'Documentary short · 2017 · 12:15' },
-        nota: { es: 'Maestría en cine documental, FUC.', en: 'Master’s in Documentary Film, FUC.' },
         sinopsis: {
           es: 'Compran muebles, los restauran y los ofrecen a la venta. Tristán es la cabeza del negocio de antigüedades. Su conocimiento del rubro y su atención a los detalles le permite manejar uno de los negocios más vendedores de San Telmo y de la Argentina. Detectar muebles de autor es uno de los desafíos de mayor riesgo en el rubro.',
           en: 'They buy furniture, restore it and put it up for sale. Tristán runs the antiques business. His knowledge of the trade and his eye for detail let him manage one of the best-selling shops in San Telmo and in Argentina. Spotting designer furniture is one of the riskiest challenges in the trade.'
@@ -131,9 +127,8 @@ window.VASO = {
       datos: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
       ver: { texto: { es: 'Ver videoclip', en: 'Watch the video' }, yt: 'QOEcIGJvAEY' },
       ficha: {
-        frase: { es: 'Videoclip animado para Mango Lafruta.', en: 'Animated music video for Mango Lafruta.' },
+        frase: { es: 'Videoclip hecho con animación para Mango Lafruta.', en: 'Music video made with animation for Mango Lafruta.' },
         linea: { es: 'Videoclip animado · 2021', en: 'Animated music video · 2021' },
-        nota: { es: 'Mejor videoclip de animación\nBamfest 2021', en: 'Best Animated Music Video\nBamfest 2021' },
         sinopsis: {
           es: 'Videoclip realizado para Mango Lafruta. Fue seleccionado en múltiples festivales, incluyendo el Bamfest, donde ganó el premio a mejor videoclip de animación.',
           en: 'Music video made for Mango Lafruta. Selected at multiple festivals, including Bamfest, where it won Best Animated Music Video.'
@@ -147,9 +142,8 @@ window.VASO = {
       datos: { es: 'Mi Casa sessions · Sesión en vivo · 2026', en: 'Mi Casa sessions · Live session · 2026' },
       ver: { texto: { es: 'Ver sesión', en: 'Watch the session' }, sub: { es: 'Completa · 13 min', en: 'Full session · 13 min' }, yt: '-uuosnM2FBg' },
       ficha: {
-        frase: { es: 'Homero Taisen y su banda tocan en vivo tres canciones: «Perdón Amor de nuevo», «Zamba del Desamorado» y «La Luna se me hizo calor».', en: 'Homero Taisen and band play three songs live: “Perdón Amor de nuevo”, “Zamba del Desamorado” and “La Luna se me hizo calor”.' },
+        frase: { es: 'Homero Taisen y su banda en una sesión en vivo de «Perdón Amor de nuevo», «Zamba del Desamorado» y «La Luna se me hizo calor».', en: 'Homero Taisen and band in a live session of “Perdón Amor de nuevo”, “Zamba del Desamorado” and “La Luna se me hizo calor”.' },
         linea: { es: 'Mi Casa sessions · Sesión en vivo · 2026 · 13 min', en: 'Mi Casa sessions · Live session · 2026 · 13 min' },
-        nota: '',
         sinopsis: {
           es: 'Sesión en vivo de Homero Taisen y su banda. Tres canciones: «Perdón Amor de nuevo», «Zamba del Desamorado» y «La Luna se me hizo calor».',
           en: 'Live session by Homero Taisen and band. Three songs: “Perdón Amor de nuevo”, “Zamba del Desamorado” and “La Luna se me hizo calor”.'
@@ -205,7 +199,6 @@ window.VASO = {
       ficha: {
         frase: { es: 'Campañas y contenidos sobre los caminos de la Argentina, hechos en el Área Audiovisual de Vialidad Nacional.', en: 'Campaigns and content about Argentina’s roads, made at the Audiovisual Area of Vialidad Nacional.' },
         linea: { es: 'Contenido institucional · 2020–2025', en: 'Institutional content · 2020–2025' },
-        nota: '',
         sinopsis: {
           es: 'Campañas y contenidos institucionales sobre la infraestructura vial argentina, realizados en el Área Audiovisual de Vialidad Nacional.',
           en: 'Campaigns and institutional content about Argentina’s road infrastructure, made at the Audiovisual Area of Vialidad Nacional.'
