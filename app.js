@@ -192,7 +192,8 @@
       el.setAttribute('aria-label', o.titulo);
       el.hidden = true;
       el.innerHTML = '<div class="cuadro"><div class="lqip"></div><video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>' +
-        '<button type="button" class="sonido" aria-pressed="false"></button></div><div class="banda"></div>';
+        '<button type="button" class="sonido" aria-pressed="false"></button>' +
+        '<button type="button" class="seguir" aria-label="' + esc(ui('siguiente')) + '"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l13 13L1 27"/></svg></button></div><div class="banda"></div>';
       portadaEl.appendChild(el);
       var s = { o: o, i: i, el: el, cuadro: el.querySelector('.cuadro'), video: el.querySelector('video'), banda: el.querySelector('.banda'),
         posterPedido: false, posterOk: false, fuente: null, completo: false };
@@ -261,18 +262,23 @@
     return null;
   }
   // Mide cuánto tardó en bajar el primer póster y decide el modo.
+  // Lo que bajó un archivo. Chrome informa transferSize; Safari puede dar solo
+  // encodedBodySize (o nada): se toma el primero que haya.
+  function bytesDe(e) { return e ? (e.transferSize || e.encodedBodySize || e.decodedBodySize || 0) : 0; }
   function decidirModo(img) {
     if (modo) return;
     var declarado = conexionDeclarada();
     if (declarado) { modo = declarado; return; }
-    // performance.now() cuenta desde que se pidió la página.
-    var tard = performance.now();
+    // Se decide por la velocidad a la que bajó el póster, no por cuánto tardó la
+    // página entera: en un celular, conectarse de cero ya lleva un par de segundos
+    // y con una buena conexión 4G quedaba en fotos fijas. Además el póster es chico
+    // (20 a 200 KB) y en él pesa más la demora de cada pedido que la velocidad, así
+    // que la medición da de menos: solo fotos si da realmente lenta (~400 kbps).
     var url = img && (img.currentSrc || img.src);
     var e = url && performance.getEntriesByName(url)[0];
-    if (e && e.transferSize > 6000 && e.responseEnd > e.responseStart) {
-      velocidad = Math.max(velocidad, e.transferSize / (e.responseEnd - e.responseStart));
-    }
-    modo = (tard > 3000 || (velocidad && velocidad < 120)) ? 'liviano' : 'normal';
+    var b = bytesDe(e);
+    if (b > 6000 && e.responseEnd > e.responseStart) velocidad = Math.max(velocidad, b / (e.responseEnd - e.responseStart));
+    modo = (velocidad && velocidad < 50) ? 'liviano' : 'normal';
   }
 
   /* ---------------------------------------------------------------- carga */
@@ -420,7 +426,7 @@
     var n = slides.length;
     i = (i % n + n) % n;
     var antes = slides[actual];
-    if (i !== actual && antes) { antes.video.pause(); antes.el.hidden = true; }
+    if (i !== actual && antes) { antes.video.pause(); antes.el.hidden = true; raiz.classList.add('ya-paso'); }
     actual = i;
     var s = slides[i];
     s.el.hidden = false;
@@ -687,7 +693,20 @@
     if (el.hasAttribute('data-yt') && embebe) { e.preventDefault(); abrirVideo(el.getAttribute('data-yt')); }
   });
   // Como en el sitio anterior: un clic en la imagen activa o silencia el sonido.
-  portadaEl.addEventListener('click', function (e) { if (e.target.closest('.cuadro')) alternarSonido(); });
+  portadaEl.addEventListener('click', function (e) {
+    if (e.target.closest('.seguir')) { ir(actual + 1); return; }   // la flecha del celular
+    if (e.target.closest('.cuadro')) alternarSonido();
+  });
+  // Con el modo de bajo consumo del iPhone los clips no arrancan solos: el primer
+  // toque en la pantalla (cualquiera) los pone en marcha.
+  function primerToque() {
+    document.removeEventListener('touchend', primerToque, true);
+    document.removeEventListener('click', primerToque, true);
+    var s = slides[actual];
+    if (s && s.video.getAttribute('src') && s.video.paused && !capaAbierta()) reproducir(s);
+  }
+  document.addEventListener('touchend', primerToque, true);
+  document.addEventListener('click', primerToque, true);
   // «vaso» lleva al comienzo: la primera obra, con la dirección de la portada (vaso.ar/).
   document.getElementById('firma').addEventListener('click', function () {
     ocultarCapas();
@@ -743,9 +762,10 @@
     if (modo !== 'liviano' || modoDeclarado || calma) return;
     var url = img && (img.currentSrc || img.src);
     var e = url && performance.getEntriesByName(url).pop();
-    if (!e || e.transferSize < 6000 || e.responseEnd <= e.responseStart) return;
-    var v = e.transferSize / (e.responseEnd - e.responseStart);
-    if (v >= 250) { velocidad = Math.max(velocidad, v); pasarAClips(); }
+    var b = bytesDe(e);
+    if (!e || b < 6000 || e.responseEnd <= e.responseStart) return;
+    var v = b / (e.responseEnd - e.responseStart);
+    if (v >= 120) { velocidad = Math.max(velocidad, v); pasarAClips(); }
   }
 
   /* ------------------------------------------------------------------ rutas */
@@ -826,7 +846,8 @@
     };
     asegurarPoster(s, true, seguir);
     contarObra();
-    setTimeout(function () { if (!decidido) { modo = 'liviano'; seguir(null); } }, 5000);
+    // Si el póster no llegó en 8 s, la conexión es realmente lenta: fotos fijas.
+    setTimeout(function () { if (!decidido) { modo = 'liviano'; seguir(null); } }, 8000);
     ruta();
   })();
 })();
