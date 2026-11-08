@@ -1,0 +1,292 @@
+/* ==========================================================================
+   vaso.ar
+   Una obra por pantalla. La imagen arriba, sin nada encima.
+   Abajo, en la banda negra, el título en Abril Fatface y el resto en
+   Overpass Mono, con aire de guion. Entre obra y obra: corte seco.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+  --noche: #0c0a08;
+  --hueso: #efe6d6;
+  --polvo: #b5a991;
+  --linea: rgba(239, 230, 214, .18);
+  --sub: #f2de7b;
+
+  --titulo: 'Abril Fatface', 'Bodoni 72', Didot, Georgia, serif;
+  --mono: 'Overpass Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --barra: 64px;
+  --banda: clamp(176px, 25svh, 228px);
+  --g: max(32px, env(safe-area-inset-left, 0px));
+  --gd: max(32px, env(safe-area-inset-right, 0px));
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--noche);
+  color: var(--hueso);
+  font: 400 14px/1.5 var(--mono);
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a:hover, button:hover { color: var(--sub); }
+:focus-visible { outline: 2px solid var(--sub); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------------------------------------------------------------- Barra */
+.barra {
+  position: fixed; inset: 0 0 auto; z-index: 20;
+  height: calc(var(--barra) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gd) 0 var(--g);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--noche);
+}
+.firma { }   /* misma letra que Obras / Contacto */
+.nav { display: flex; align-items: center; gap: 26px; }
+.tenue { color: var(--polvo); }
+.pagina { display: flex; align-items: center; gap: 6px; margin-left: 18px; font-variant-numeric: tabular-nums; }
+.pagina .flecha { width: 28px; height: 36px; font-size: 18px; line-height: 1; }
+
+/* ---------------------------------------------------------------- Obra */
+.obra {
+  position: fixed; inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--barra) var(--ch) minmax(0, 1fr);
+  /* Pantalla horizontal: primero el video, sin recortarlo nunca. Ocupa todo el
+     ancho y la banda de abajo se queda con lo que sobra (nunca menos de
+     --banda-min). Solo si la pantalla es más baja que eso quedan bordes finos
+     a los costados. */
+  --banda-min: 140px;
+  --ch: min(calc(100vw / 2.35), calc(100svh - var(--barra) - var(--banda-min)));
+  --cw: calc(var(--ch) * 2.35);
+}
+.obra[hidden] { display: none; }
+
+.cuadro {
+  grid-row: 2; justify-self: center; position: relative; overflow: hidden;
+  width: var(--cw); height: var(--ch); background: #000;
+}
+.cuadro .lqip { position: absolute; inset: -24px; background-size: cover; background-position: center; filter: blur(16px); }
+/* Foto y video 2 px más grandes que el cuadro, que los recorta: así ningún
+   borde (medio píxel de redondeo, o la columna que algunos decodificadores
+   por hardware dejan en el extremo) llega a verse. */
+.cuadro img, .cuadro video {
+  position: absolute; left: -2px; top: -2px; width: calc(100% + 4px); height: calc(100% + 4px);
+  object-fit: cover; display: block;
+}
+.cuadro img { opacity: 0; transition: opacity .2s linear; }
+.cuadro img.ok { opacity: 1; }
+.cuadro video { opacity: 0; }
+.cuadro.mueve video { opacity: 1; }          /* el póster es el primer cuadro: el cambio no se nota */
+.cuadro.mueve img, .cuadro.mueve .lqip { visibility: hidden; }   /* con el video andando, nada debajo */
+.cuadro.contener img, .cuadro.contener video { object-fit: contain; }
+.cuadro.contener .lqip { display: none; }
+.mosaico { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; background: #000; }
+.mosaico img { position: static; width: 100%; height: 100%; object-fit: cover; }
+
+.banda {
+  grid-row: 3; min-height: 0;
+  padding: clamp(12px, 2svh, 20px) var(--gd) 18px var(--g);
+  display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: space-between;
+  /* El renglón de los botones apoya en la misma línea de base que el título */
+  align-items: flex-end; align-items: last baseline;
+  gap: 14px 48px;
+}
+/* El título entra un poco desde el margen (30 px en una compu) */
+.ident { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 22px; min-width: 0; padding-left: min(30px, 2.1vw); }
+/* A la derecha, dos renglones: la descripción y los botones */
+.lado { display: grid; justify-items: end; gap: 6px; text-align: right; }
+.lado .acciones { justify-content: flex-end; }
+.titulo {
+  margin: 0; font-family: var(--titulo); font-weight: 400; letter-spacing: -.01em; line-height: .92;
+  font-size: min(140px, calc((100svh - var(--barra) - var(--ch)) * .56), 12vw);
+}
+.acotacion { white-space: nowrap; letter-spacing: .02em; }
+.datos { margin: 0; color: var(--polvo); }
+.datos button { color: var(--hueso); text-decoration: underline; text-underline-offset: 4px; }
+
+.acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 30px; text-transform: uppercase; }
+.acciones a, .acciones button { text-decoration: none; text-transform: uppercase; }
+.secundaria { padding: 12px 0; }
+
+/* Botones entre corchetes, como escritos a máquina */
+.accion { padding: 12px 0; white-space: pre; color: var(--polvo); }
+.accion.prima { color: var(--hueso); font-weight: 600; }
+.accion:hover { color: var(--sub); }
+
+/* Sonido: clic en cualquier parte de la imagen o en el parlante de la esquina.
+   Mudo se ve claro; con sonido queda casi transparente. */
+.cuadro { cursor: pointer; }
+.cuadro .sonido {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  width: 44px; height: 44px; display: none; place-items: center;
+  color: #fff; opacity: .85; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .7));
+  transition: opacity .8s ease;
+}
+.cuadro.con-video .sonido { display: grid; }
+.cuadro .sonido[aria-pressed="true"] { opacity: .18; }
+.cuadro .sonido:hover, .cuadro .sonido:focus-visible { opacity: 1; color: #fff; }
+
+/* --------------------------------------------- Pantallas verticales */
+@media (max-aspect-ratio: 11/10) {
+  :root {
+    --barra: 52px;
+    --banda: clamp(206px, 30svh, 260px);
+    --g: max(16px, env(safe-area-inset-left, 0px));
+    --gd: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .obra {
+    /* Se usa el clip vertical. Llena el ancho; en tablets se limita el
+       recorte con un máximo de 0.82 de proporción y se centra. */
+    --ch: calc(100svh - var(--barra) - var(--banda));
+    --cw: min(100vw, calc(var(--ch) * .82));
+  }
+  body { font-size: 13px; }
+  .nav { gap: 18px; }
+  .solo-ancho { display: none; }
+  .pagina { margin-left: 4px; gap: 2px; }
+  .banda { flex-direction: column; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start; gap: 8px; padding-top: 14px; }
+  .ident { padding-left: 0; }
+  .lado { justify-items: start; text-align: left; gap: 10px; padding-bottom: 0; }
+  .lado .acciones { justify-content: flex-start; }
+  .titulo { font-size: min(76px, 17vw); }
+  .acciones { gap: 4px 20px; padding-top: 0; }
+}
+
+/* ------------------------- Horizontal y muy baja (celular acostado) */
+@media (min-aspect-ratio: 11/10) and (max-height: 520px) {
+  :root { --barra: 44px; --banda: 0px; }
+  .obra {
+    overflow-y: auto; grid-template-rows: var(--barra) var(--ch) max-content;
+    --ch: min(calc(100vw / 2.35), calc(100svh - var(--barra)));
+    --cw: calc(var(--ch) * 2.35);
+  }
+  .banda { padding-bottom: 28px; }
+  .titulo { font-size: min(80px, 14svh + 30px); }
+}
+
+/* ---------------------------------------------------------------- Capas */
+.capa {
+  position: fixed; inset: 0; z-index: 30; background: var(--noche);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.capa[hidden] { display: none; }
+.capa-barra {
+  position: sticky; top: 0; z-index: 2; height: calc(var(--barra) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gd) 0 var(--g);
+  display: flex; align-items: center; justify-content: space-between; background: var(--noche);
+  text-transform: uppercase;
+}
+.capa-cuerpo { padding: 0 var(--gd) 64px var(--g); }
+
+/* Ficha: carátula de guion */
+.caratula {
+  min-height: calc(100svh - var(--barra));
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 24px;
+  padding-bottom: 16px;
+}
+/* Flecha hacia abajo: hay más información en la ficha. Va en el último renglón
+   del pie (el de la nota), centrada. El botón es más alto que el renglón para
+   que sea fácil de tocar, y la "v" queda a la altura del texto. */
+.bajar {
+  justify-self: center; align-self: end; width: 56px; height: 44px;
+  display: grid; place-items: end center; padding-bottom: calc(.85em - 8px);
+  color: var(--polvo); transition: opacity .3s;
+}
+.bajar svg { display: block; animation: bajar 2.2s ease-in-out infinite; }
+.bajar:hover { color: var(--sub); }
+.bajando .bajar { opacity: 0; pointer-events: none; }
+@keyframes bajar { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(4px); } }
+.caratula-centro { align-self: center; display: grid; justify-items: center; text-align: center; gap: 16px; padding-top: 24px; }
+.caratula h1 { margin: 0; font-family: var(--titulo); font-weight: 400; line-height: .92; letter-spacing: -.01em; font-size: min(190px, 17vw); overflow-wrap: anywhere; }
+/* Una frase sobre la obra en lugar de repetir los datos de la portada. */
+.caratula .frase { margin: 4px 0 0; max-width: 34em; font-size: 16px; line-height: 1.7; text-wrap: pretty; }
+.caratula .credito { margin: 14px 0 0; line-height: 1.7; white-space: pre-line; color: var(--polvo); }
+.caratula .acciones { justify-content: center; margin-top: 18px; }
+.caratula-pie { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px 40px; line-height: 1.7; }
+.caratula-pie p { margin: 0; }
+.caratula-pie .nota { justify-self: end; text-align: right; color: var(--polvo); white-space: pre-line; }
+
+.detalle { max-width: 1120px; margin: 0 auto; display: grid; gap: 64px; padding-top: 48px; border-top: 1px solid var(--linea); }
+.et { margin: 0 0 14px; color: var(--polvo); font-weight: 400; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+.dos { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; }
+.sinopsis { margin: 0; font-size: 16px; line-height: 1.75; max-width: 60ch; }
+.dl { margin: 0; }
+.dl div { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--linea); }
+.dl dt { color: var(--polvo); }
+.dl dd { margin: 0; }
+.premios div { display: grid; grid-template-columns: minmax(10em, 3fr) minmax(0, 7fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--linea); align-items: center; }
+.premios b { font-family: var(--titulo); font-weight: 400; font-size: 26px; line-height: 1.1; }
+.premios ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.criticas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+.critica { margin: 0; display: grid; gap: 12px; }
+.critica q { font-family: var(--titulo); font-size: clamp(24px, 2.6vw, 36px); line-height: 1.15; quotes: "«" "»"; }
+.critica cite { font-style: normal; color: var(--polvo); }
+.piezas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 28px 22px; }
+.pieza { display: grid; gap: 8px; text-decoration: none; }
+.pieza img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: #000; }
+.reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.reels img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; background: #000; }
+
+/* Índice de obras y contacto: como un guion de rodaje. Cada obra es una escena
+   numerada en los dos márgenes; el título va como encabezado y los datos como
+   línea de acción. Sin líneas: separa el aire. Al pasar el mouse aparecen el
+   asterisco de página corregida y el fotograma. */
+.solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.indice { --margen: 80px; max-width: 1000px; margin: 0 auto; padding-top: 40px; display: grid; gap: 30px; }
+.fila { position: relative; display: grid; grid-template-columns: var(--margen) minmax(0, 1fr) var(--margen); align-items: start; text-decoration: none; }
+.fila .num, .fila .t, .fila .rev { font-weight: 600; font-size: 17px; line-height: 1.45; }
+.fila .num + .escena + .num { text-align: right; }
+.escena { position: relative; display: grid; gap: 6px; }
+.fila .t { letter-spacing: .05em; text-transform: uppercase; }
+.fila .d { color: var(--polvo); transition: color .15s; }
+.fila img { position: absolute; right: 40px; top: -6px; width: 220px; aspect-ratio: 2.35; object-fit: cover; display: block; background: #000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, visibility .15s; }
+.fila .rev { position: absolute; right: -34px; top: 0; opacity: 0; }
+.fila:hover .d, .fila:focus-visible .d { color: var(--hueso); }
+.fila:hover .rev, .fila:focus-visible .rev { opacity: 1; }
+@media (hover: hover) { .fila:hover img, .fila:focus-visible img { opacity: 1; visibility: visible; } }
+.contacto { max-width: 1000px; margin: 84px auto 0; padding-left: 80px; display: grid; gap: 8px; }
+.contacto .et { margin: 0 0 6px; color: var(--hueso); font-weight: 600; font-size: 17px; letter-spacing: .05em; }
+.mail { font-size: 17px; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
+.fila-contacto { display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: center; }
+.contacto .accion { padding: 6px 0; }
+.firma-pie { max-width: 1000px; margin: 56px auto 0; padding-left: 80px; color: var(--polvo); }
+
+@media (max-aspect-ratio: 11/10), (max-width: 760px) {
+  .dos, .criticas { grid-template-columns: minmax(0, 1fr); }
+  .premios div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .reels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .indice { --margen: 34px; padding-top: 24px; gap: 24px; }
+  .fila .num, .fila .t, .contacto .et, .mail { font-size: 15px; }
+  .fila .rev, .fila img { display: none; }
+  .contacto, .firma-pie { padding-left: 34px; }
+  .contacto { margin-top: 56px; }
+  /* En el celular: contacto arriba; abajo, la nota y la flecha en su renglón */
+  .caratula-pie { grid-template-columns: minmax(0, 1fr) auto; gap: 16px 12px; }
+  .caratula-pie > p:first-child { grid-column: 1 / -1; }
+  .caratula-pie .nota { grid-column: 1; grid-row: 2; justify-self: start; text-align: left; }
+  .caratula-pie .bajar { grid-column: 2; grid-row: 2; }
+}
+
+/* Video a pantalla completa */
+.capa-video { background: #000; display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
+.capa-video[hidden] { display: none; }
+.marco-video { display: grid; place-items: center; padding: 0 var(--gd) 24px var(--g); min-height: 0; }
+.marco-video iframe { width: min(100%, calc((100svh - var(--barra) - 24px) * 16 / 9)); aspect-ratio: 16 / 9; border: 0; background: #000; }
+
+
+/* Pantallas horizontales bajas: barra más angosta para darle más alto al video */
+@media (min-aspect-ratio: 11/10) and (max-height: 820px) and (min-height: 521px) {
+  :root { --barra: 54px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .bajar svg { animation: none; }
+}

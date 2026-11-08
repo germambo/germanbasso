@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://vaso.ar/</loc>
-  <lastmod>2025-09-01T18:01:33+00:00</lastmod>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://vaso.ar/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/carrero/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/carrero/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/qomi/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/qomi/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/roca/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/roca/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/cosas-viejas/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/cosas-viejas/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/alpapuyo/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/alpapuyo/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/homero-taisen/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/homero-taisen/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/vialidad/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/vialidad/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/carrero/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/carrero/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/qomi/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/qomi/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/roca/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/roca/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/cosas-viejas/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/cosas-viejas/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/alpapuyo/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/alpapuyo/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/homero-taisen/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/homero-taisen/ficha/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/vialidad/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://vaso.ar/en/vialidad/ficha/</loc><lastmod>2026-11-08</lastmod></url>
 </urlset>
