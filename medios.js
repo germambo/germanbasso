@@ -396,8 +396,99 @@ window.MEDIOS = {
   },
   "mini": "media/homero-taisen-mini.webp"
  },
- "fiat": {},
- "vialidad": {},
+ "fiat": {
+  "v": {
+   "poster": [
+    {
+     "archivo": "fiat-v-540",
+     "w": 540
+    },
+    {
+     "archivo": "fiat-v-1080",
+     "w": 1080
+    }
+   ],
+   "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAMwAyAAD//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAHwAAAMBAQEAAAAAAAAAAAAAAAQHAgUGAwEAAwEBAQAAAAAAAAAAAAAAAgUEAQADEAABAwEDCQQLAQEAAAAAAAABAAMCESEEQRITUWExMkKBocGyczMF4dLRUhSiVHLxIhWREQEAAgMBAQAAAAAAAAAAAAAAARESE2FxAv/AABEIACIAFAMBIgACEQADEQD/2gAMAwEAAhEDEQA/AOubvwFBIGuqlvULVL0ZWVt0Hs08kpXZRDlI2itBiozgGrV+1RnUvDC4Mk7VCVBvV4r/ADI0wsB60UfNXr4vpHuTDZ89S654xzJxlwiW8LSNBIRjJzxkXZWCgAw2dizsvOHKcjUnixKgRyRXKNK2CiVGM+mc16SuzDcWyyJmIoTZp/Eor/Xuv20f+j2UnxDKt21xoqzWrp61rKbt64PCa7kUO55I5Im9cHhNdyKHc8kckI4e7W4EYhGtwItcJ//Z",
+   "video": [
+    {
+     "src": "media/fiat-v-720.av1.mp4",
+     "w": 720,
+     "codec": "av1",
+     "bytes": 1026938
+    },
+    {
+     "src": "media/fiat-v-720.mp4",
+     "w": 720,
+     "codec": "h264",
+     "bytes": 1492860
+    }
+   ]
+  },
+  "mini": "media/fiat-mini.webp"
+ },
+ "vialidad": {
+  "h": {
+   "poster": [
+    {
+     "archivo": "vialidad-h-960",
+     "w": 960
+    },
+    {
+     "archivo": "vialidad-h-1920",
+     "w": 1920
+    }
+   ],
+   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAGYAAQEBAAAAAAAAAAAAAAAAAAUGAwEBAQAAAAAAAAAAAAAAAAAAAwQQAAIBAgUACwEAAAAAAAAAAAECABEDITEEI8GBMqIFcWFBEuFRExQRAAMBAQAAAAAAAAAAAAAAAAARYQES/8AAEQgADgAgAwEiAAIRAAMRAP/aAAwDAQACEQMRAD8AqW7wuNl7VhDX2fNyfLEyBS61w0Wg8fiUx09wBdwYivVryJO1BlmmxbGGsGJzA6Yz/OxA3OyOCIa+iukV/b1+qQ+qIof/2Q==",
+   "video": [
+    {
+     "src": "media/vialidad-h-1280.av1.mp4",
+     "w": 1280,
+     "codec": "av1",
+     "bytes": 2100128
+    },
+    {
+     "src": "media/vialidad-h-1280.mp4",
+     "w": 1280,
+     "codec": "h264",
+     "bytes": 2548418
+    },
+    {
+     "src": "media/vialidad-h-1920.mp4",
+     "w": 1920,
+     "codec": "h264",
+     "bytes": 4412005
+    }
+   ]
+  },
+  "v": {
+   "poster": [
+    {
+     "archivo": "vialidad-v-540",
+     "w": 540
+    },
+    {
+     "archivo": "vialidad-v-918",
+     "w": 918
+    }
+   ],
+   "lqip": "data:image/jpeg;base64,/9j//gAPTGF2YzYzLjEuMTAxAP/bAEMACBgYHBgcISEhISEhJyQnKCgoJycnJygoKCsrKzMzMysrKygoKyswMDMzNzk3NDQzNDk5PDw8SEhFRVRUV2dnfP/EAHUAAAIDAQEBAAAAAAAAAAAAAAMCAAUBBgQHAQADAQEAAAAAAAAAAAAAAAABAgMEABAAAQMABwcEAwEAAAAAAAAAAQACEfADBCFhQTESkRRRUrGhgcHh0WITIpIRAQACAwEBAAAAAAAAAAAAAAARARKRE2ED/8AAEQgAIgAUAwEiAAIRAAMRAP/aAAwDAQACEQMRAD8A+mvtbBc0TibvlcvWWmsdmAMFRHZGpSTMxlqjlCFfNsnmsk0KBSmqnrTcu6K4PBIRf2VbiA5wZHL+vGqd9lqJu2oH5XHcFYMs9QBc0d+6wbbFMXNBgEnGkpdtuK6XhqjpG9Zwtn6R/pLNejoU5olPKGc0X790CkUUUSi//9k=",
+   "video": [
+    {
+     "src": "media/vialidad-v-720.av1.mp4",
+     "w": 720,
+     "codec": "av1",
+     "bytes": 2140378
+    },
+    {
+     "src": "media/vialidad-v-720.mp4",
+     "w": 720,
+     "codec": "h264",
+     "bytes": 2772195
+    }
+   ]
+  },
+  "mini": "media/vialidad-mini.webp"
+ },
  "vialidad-2": {
   "h": {
    "poster": [

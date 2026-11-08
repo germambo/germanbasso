@@ -170,8 +170,7 @@ window.VASO = {
       id: 'fiat',
       titulo: 'Fiat',
       // Oculta por ahora: no aparece en la portada ni en el índice. Para volver
-      // a mostrarla, borrar la línea de abajo y devolver sus archivos de
-      // guardado/media (fiat-*, instagram*.jpg) a web/media.
+      // a mostrarla, borrar la línea de abajo.
       oculta: true,
       // En pantallas horizontales se muestran los cinco reels uno al lado del otro.
       mosaicoHorizontal: true,
@@ -199,8 +198,7 @@ window.VASO = {
       id: 'vialidad',
       titulo: 'Vialidad Nacional',
       // Videos de la portada: 'vialidad-2' es el juego nuevo.
-      // Para volver al anterior, borrar esta línea y devolver sus archivos
-      // (vialidad-h-*, vialidad-v-*, vialidad-mini.webp) de guardado/media a web/media.
+      // Para volver al anterior, borrar esta línea; sus archivos siguen en media/.
       medios: 'vialidad-2',
       datos: { es: 'Institucional · 2020–2025 · 7 piezas', en: 'Institutional · 2020–2025 · 7 pieces' },
       ver: { texto: { es: 'Ver las piezas', en: 'See the pieces' }, ficha: true, seccion: 'piezas' },

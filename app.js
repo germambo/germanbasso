@@ -144,11 +144,13 @@
     var tamH = '(min-aspect-ratio: 11/10) 100vw, 100vw';
     var tamV = m.h ? '100vw' : '(min-aspect-ratio: 11/10) 40vw, 100vw';
     var base = m.v || m.h;
-    // Pósters solo en WebP (todos los navegadores desde 2020): una copia JPG por
-    // póster duplicaba los archivos sin que nadie la pidiera.
-    if (m.h && m.v) s += '<source media="' + mH + '" srcset="' + lista(m.h, 'webp') + '" sizes="' + tamH + '">';
+    if (m.h && m.v) {
+      s += '<source media="' + mH + '" type="image/webp" srcset="' + lista(m.h, 'webp') + '" sizes="' + tamH + '">';
+      s += '<source media="' + mH + '" srcset="' + lista(m.h, 'jpg') + '" sizes="' + tamH + '">';
+    }
+    s += '<source type="image/webp" srcset="' + lista(base, 'webp') + '" sizes="' + (m.h && !m.v ? tamH : tamV) + '">';
     var p0 = base.poster[0];
-    return '<picture>' + s + '<img src="media/' + p0.archivo + '.webp" srcset="' + lista(base, 'webp') + '" sizes="' + (m.h && !m.v ? tamH : tamV) +
+    return '<picture>' + s + '<img src="media/' + p0.archivo + '.jpg" srcset="' + lista(base, 'jpg') + '" sizes="' + (m.h && !m.v ? tamH : tamV) +
       '" alt="" decoding="async"' + (prioridad ? ' fetchpriority="high"' : '') + '></picture>';
   }
 
