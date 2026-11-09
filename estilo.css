@@ -244,6 +244,34 @@ a:hover, button:hover { color: var(--sub); }
 }
 .capa-cuerpo { padding: 0 var(--gd) 64px var(--g); }
 
+/* Obras: un panel que baja desde el encabezado (donde está el botón) y ocupa la
+   mitad derecha, sobre el video, que sigue andando a la izquierda. Se cierra
+   tocando afuera, con la X, con Esc o volviendo a tocar «Obras»; al cerrar
+   sube (lo anima una copia, .cierra). En el celular ocupa el 85 % del ancho y
+   deja a la vista una franja del video. */
+.capa.panel {
+  top: calc(var(--barra) + env(safe-area-inset-top, 0px)); right: 0; bottom: 0; left: auto;
+  width: 50vw; z-index: 18;
+  background: var(--noche);
+  box-shadow: -24px 0 48px rgba(0, 0, 0, .35);
+  animation: panel-baja .32s cubic-bezier(.2, .7, .2, 1);
+}
+.capa.panel.cierra { animation: panel-sube .24s cubic-bezier(.5, 0, .9, .4) forwards; pointer-events: none; }
+@keyframes panel-baja { from { transform: translateY(-100%); } }
+@keyframes panel-sube { to { transform: translateY(-100%); } }
+.velo { position: fixed; inset: 0; z-index: 17; display: none; }
+#capaObras:not([hidden]) + .velo { display: block; }
+/* Margen derecho del panel: los números de la derecha y el asterisco que
+   aparece al pasar el mouse quedan lejos del borde. */
+.panel { --der: 72px; }
+.panel-barra { display: flex; justify-content: flex-end; padding: 14px var(--der) 0 var(--g); }
+.panel .capa-cuerpo { padding-right: var(--der); }
+/* La X de cerrar: misma línea que las flechas; su borde derecho, alineado con
+   los números del margen. */
+.cerrar-x { width: 40px; height: 40px; display: grid; place-items: center; margin-right: -14px; }
+.panel .indice { --margen: 56px; padding-top: 28px; }
+@media (prefers-reduced-motion: reduce) { .capa.panel, .capa.panel.cierra { animation: none; } }
+
 /* Ficha: carátula de guion */
 .caratula {
   min-height: calc(100svh - var(--barra));
@@ -272,6 +300,7 @@ a:hover, button:hover { color: var(--sub); }
 .caratula .acciones { justify-content: center; margin-top: 18px; }
 .caratula-pie { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px 40px; line-height: 1.7; }
 .caratula-pie p { margin: 0; }
+.caratula-pie .copiar { padding: 0; margin-left: 16px; }
 .caratula-pie .nota { justify-self: end; text-align: right; }
 
 /* Parte de abajo de la ficha: el mismo lenguaje que el índice. Sin líneas, una
@@ -306,10 +335,10 @@ a:hover, button:hover { color: var(--sub); }
 .reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 .reels img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; background: #000; }
 
-/* Índice de obras y contacto: como un guion de rodaje. Cada obra es una escena
+/* Índice de obras: como un guion de rodaje. Cada obra es una escena
    numerada en los dos márgenes; el título va como encabezado y los datos como
    línea de acción. Sin líneas: separa el aire. Al pasar el mouse aparecen el
-   asterisco de página corregida y el fotograma. */
+   asterisco de página corregida. */
 .solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .indice { --margen: 80px; max-width: 1000px; margin: 0 auto; padding-top: 40px; display: grid; gap: 30px; }
 .fila { position: relative; display: grid; grid-template-columns: var(--margen) minmax(0, 1fr) var(--margen); align-items: start; text-decoration: none; }
@@ -318,18 +347,9 @@ a:hover, button:hover { color: var(--sub); }
 .escena { position: relative; display: grid; gap: 6px; }
 .fila .t { letter-spacing: .05em; text-transform: uppercase; }
 .fila .d { color: var(--polvo); transition: color .15s; }
-.fila img { position: absolute; right: 40px; top: -6px; width: 220px; aspect-ratio: 2.35; object-fit: cover; display: block; background: #000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, visibility .15s; }
 .fila .rev { position: absolute; right: -34px; top: 0; opacity: 0; }
 .fila:hover .d, .fila:focus-visible .d { color: var(--hueso); }
 .fila:hover .rev, .fila:focus-visible .rev { opacity: 1; }
-@media (hover: hover) { .fila:hover img, .fila:focus-visible img { opacity: 1; visibility: visible; } }
-.contacto { max-width: 1000px; margin: 84px auto 0; padding-left: 80px; display: grid; gap: 8px; }
-.contacto .et { margin: 0 0 6px; color: var(--hueso); font-weight: 600; font-size: 17px; letter-spacing: .05em; }
-.mail { font-size: 17px; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
-.fila-contacto { display: flex; flex-wrap: wrap; gap: 0 24px; align-items: baseline; }
-.contacto .red { justify-self: start; }
-.contacto .accion { padding: 6px 0; }
-.firma-pie { max-width: 1000px; margin: 56px auto 0; padding-left: 80px; color: var(--polvo); }
 
 @media (max-aspect-ratio: 11/10), (max-width: 760px) {
   .detalle { padding: 72px 0 0 34px; gap: 56px; }
@@ -341,10 +361,11 @@ a:hover, button:hover { color: var(--sub); }
   .critica p { margin-left: 10%; }
   .reels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .indice { --margen: 34px; padding-top: 24px; gap: 24px; }
-  .fila .num, .fila .t, .contacto .et, .mail { font-size: 15px; }
-  .fila .rev, .fila img { display: none; }
-  .contacto, .firma-pie { padding-left: 34px; }
-  .contacto { margin-top: 56px; }
+  .fila .num, .fila .t { font-size: 15px; }
+  .fila .rev { display: none; }
+  .capa.panel { width: 85vw; }
+  .panel { --der: 26px; }
+  .panel .indice { --margen: 30px; padding-top: 16px; }
   /* En el celular: contacto arriba; abajo, la nota y la flecha en su renglón */
   .caratula-pie { grid-template-columns: minmax(0, 1fr) auto; gap: 16px 12px; }
   .caratula-pie > p:first-child { grid-column: 1 / -1; }

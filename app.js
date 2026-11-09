@@ -343,7 +343,7 @@
   }
   // Reproduce con o sin sonido. Si el navegador no deja sonar, sigue mudo.
   function reproducir(s) {
-    if (capaAbierta()) return;   // detrás de la ficha o del índice, el clip espera
+    if (capaTapa()) return;   // detrás de la ficha o del video grande, el clip espera
     var v = s.video;
     v.muted = !(sonido && s.i === actual);
     var p = v.play();
@@ -626,7 +626,9 @@
   // eje: 'v' si el paso vino de un gesto vertical (trackpad o rueda hacia arriba o
   // abajo, deslizar el dedo hacia arriba o abajo, ↑ ↓); si no, de costado.
   var DIRECCIONES = ['adelante', 'atras', 'adelante-v', 'atras-v'];
-  function ir(i, sinHistoria, eje) {
+  // seco: sin transición (lo usa el panel de Obras al pasar el mouse).
+  function ir(i, sinHistoria, eje, seco) {
+    var corte = calma || !!seco;
     var n = slides.length;
     // Hacia dónde va el paso (antes de dar la vuelta): lo usan las transiciones
     // que se mueven. A la siguiente: «adelante»; a la anterior: «atras»; con «-v»
@@ -639,7 +641,7 @@
       antes.video.pause();
       raiz.classList.add('ya-paso');
       terminarSalida();
-      if (calma) antes.el.hidden = true;   // «reducir movimiento»: corte seco
+      if (corte) antes.el.hidden = true;   // «reducir movimiento»: corte seco
       // Se le saca «entra» (si no, su animación de entrada pisa la de salida).
       else {
         saliente = antes; antes.el.classList.remove.apply(antes.el.classList, ['entra'].concat(DIRECCIONES)); antes.el.classList.add('sale', dir);
@@ -650,11 +652,11 @@
     actual = i;
     var s = slides[i];
     s.el.hidden = false;
-    if (cambia && !calma) {
+    if (cambia && !corte) {
       raiz.classList.remove('pasando'); void raiz.offsetWidth; raiz.classList.add('pasando');
       clearTimeout(relojPasando); relojPasando = setTimeout(function () { raiz.classList.remove('pasando'); }, 900);
     }
-    if (cambia && !calma) {
+    if (cambia && !corte) {
       s.el.classList.remove.apply(s.el.classList, ['entra'].concat(DIRECCIONES)); void s.el.offsetWidth; s.el.classList.add('entra', dir);
       // Pasada la entrada se le saca la clase, así nada de lo que se redibuje
       // después (otro idioma, otra calidad) vuelve a animarse.
@@ -673,9 +675,9 @@
         t.parentNode.style.setProperty('--cuerpo', getComputedStyle(t).fontSize);
       });
     }
-    var conCartel = cambia && !calma && quiereCartel('--cartel');
+    var conCartel = cambia && !corte && quiereCartel('--cartel');
     if (conCartel && tSale && tEntra) cartel(tEntra.querySelector('a') || tEntra, tSale.textContent, tEntra.textContent, { demora: 70, paso: 32, giro: 80, vueltas: [2, 3], letras: LETRAS });
-    if (conCartel || (cambia && !calma && quiereCartel('--cartel-numero'))) cartel(numEl, numEl.textContent, (i + 1) + '.', { demora: 70, paso: 40, giro: 80, vueltas: [2, 3], letras: DIGITOS });
+    if (conCartel || (cambia && !corte && quiereCartel('--cartel-numero'))) cartel(numEl, numEl.textContent, (i + 1) + '.', { demora: 70, paso: 40, giro: 80, vueltas: [2, 3], letras: DIGITOS });
     else numEl.textContent = (i + 1) + '.';
     if (!sinHistoria) marcar(direccion(s.o.id), s.o.id);
     contarObra();
@@ -775,13 +777,56 @@
 
   /* ---------------------------------------------------------------- capas */
   var abridor = null;
+  var btnObras = document.getElementById('btnObras');
   function capaAbierta() { return !capaObras.hidden || !capaFicha.hidden || !capaVideo.hidden; }
+  // Lo que tapa el video (la ficha, el video grande). El panel de Obras no: deja
+  // la mitad izquierda a la vista y el clip sigue andando.
+  function capaTapa() { return !capaFicha.hidden || !capaVideo.hidden; }
+  // Detrás del panel, una capa transparente: tocar afuera lo cierra.
+  var velo = document.createElement('div');
+  velo.className = 'velo';
+  velo.addEventListener('click', function () { cerrarCapa(); });
+  capaObras.insertAdjacentElement('afterend', velo);
+  function mostrarPanel() { capaObras.hidden = false; btnObras.setAttribute('aria-expanded', 'true'); }
+  // El panel sube de vuelta al encabezado. Para eso se anima una copia: el panel
+  // de verdad se oculta en el acto (el resto del sitio lo da por cerrado).
+  function cerrarPanel() {
+    if (capaObras.hidden) return;
+    if (!calma) {
+      var copia = capaObras.cloneNode(true);
+      copia.removeAttribute('id');
+      [].forEach.call(copia.querySelectorAll('[id]'), function (x) { x.removeAttribute('id'); });
+      copia.setAttribute('aria-hidden', 'true');
+      copia.classList.add('cierra');
+      document.body.appendChild(copia);
+      copia.scrollTop = capaObras.scrollTop;
+      var fuera = function () { if (copia.parentNode) copia.parentNode.removeChild(copia); };
+      copia.addEventListener('animationend', fuera);
+      setTimeout(fuera, 500);
+    }
+    capaObras.hidden = true;
+    btnObras.setAttribute('aria-expanded', 'false');
+  }
+  // Con el panel abierto, pasar el mouse por una obra de la lista salta a esa
+  // obra en el acto, sin transición: se ve su video y su título. Un clic cierra
+  // el panel y deja esa obra. Solo con mouse (en el celular, el toque elige).
+  var conMouse = matchMedia('(hover: hover)'), relojHover = null;
+  capaObras.addEventListener('mouseover', function (e) {
+    if (!conMouse.matches) return;
+    var f = e.target.closest('.fila');
+    clearTimeout(relojHover);
+    if (!f) return;
+    var i = +f.getAttribute('data-ir');
+    // Una pausa mínima: cruzar la lista en diagonal no salta por cada renglón.
+    relojHover = setTimeout(function () { if (!capaObras.hidden && i !== actual) ir(i, false, 'h', true); }, 70);
+  });
   function abrirCapa(capa, url, id) {
     abridor = document.activeElement;
-    [capaObras, capaFicha].forEach(function (c) { if (c !== capa) c.hidden = true; });
-    capa.hidden = false;
+    if (capa !== capaObras) cerrarPanel();
+    if (capa !== capaFicha) capaFicha.hidden = true;
+    if (capa === capaObras) mostrarPanel(); else capa.hidden = false;
     capa.scrollTop = 0;
-    slides[actual].video.pause();
+    if (capaTapa()) slides[actual].video.pause();
     if (!igual(url)) marcar(url, id, true, { capa: 1 });
     var f = capa.querySelector('[data-cerrar]');
     if (f) f.focus({ preventScroll: true });
@@ -793,7 +838,7 @@
   }
   function ocultarCapas() {
     var habia = capaAbierta();
-    capaObras.hidden = true; capaFicha.hidden = true;
+    cerrarPanel(); capaFicha.hidden = true;
     if (habia) {
       var s = slides[actual];
       if (s.video.getAttribute('src')) reproducir(s);
@@ -810,24 +855,16 @@
   function htmlObras() {
     var fila = function (o) {
       var i = enPortada.indexOf(o);
-      var m = med(o);
-      var img = m.mini ? '<img src="' + m.mini + '" alt="" loading="lazy" decoding="async">' : '';
       return '<a class="fila" href="' + esc(direccion(o.id)) + '" data-ir="' + i + '">' +
         '<span class="num" aria-hidden="true">' + (i + 1) + '</span>' +
-        '<span class="escena"><span class="t">' + esc(o.titulo) + '</span><span class="d">' + esc(accion(t(o.datos))) + '</span>' + img + '</span>' +
+        '<span class="escena"><span class="t">' + esc(o.titulo) + '</span><span class="d">' + esc(accion(t(o.datos))) + '</span></span>' +
         '<span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="rev" aria-hidden="true">*</span></a>';
     };
-    var c = D.contacto;
-    return '<div class="capa-barra"><button type="button" data-cerrar>' + esc(ui('cerrar')) + '</button><button type="button" class="tenue" data-lang>' + esc(ui('lang')) + '</button></div>' +
+    // Solo las obras: el contacto está en la carátula de cada ficha.
+    return '<div class="panel-barra"><button type="button" class="cerrar-x" data-cerrar aria-label="' + esc(ui('cerrar')) + '"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l10 10M11 1L1 11"/></svg></button></div>' +
       '<div class="capa-cuerpo">' +
       '<nav class="indice" aria-labelledby="tituloObras"><h2 class="solo-lector" id="tituloObras">' + esc(ui('principales')) + '</h2>' +
-      obras.map(fila).join('') + '</nav>' +
-      '<section class="contacto" id="contacto"><h2 class="et">' + esc(ui('escribime')) + '</h2>' +
-      // «Copiar» va al lado del mail, que es lo que copia; el Instagram, en su renglón.
-      '<div class="fila-contacto"><a class="mail" href="mailto:' + c.email + '">' + esc(c.email) + '</a>' +
-      '<button type="button" class="accion copiar" data-copiar>' + corchetes(ui('copiar')) + '</button></div>' +
-      '<a class="red" href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></section>' +
-      '<p class="firma-pie">' + esc(D.firma) + ' · ' + esc(D.nombre) + '</p></div>';
+      obras.map(fila).join('') + '</nav></div>';
   }
   function abrirObras(contacto) {
     capaObras.innerHTML = htmlObras();
@@ -856,8 +893,10 @@
       (f.frase ? '<p class="frase">' + esc(t(f.frase)) + '</p>' : '<p>' + esc(t(f.linea)) + '</p>') +
       (f.credito ? '<p class="credito">' + esc(t(f.credito)) + '</p>' : '') +
       '<div class="acciones">' + (o.ver && !o.ver.ficha ? htmlAcciones(o, false) : '') + '</div></div>' +
-      // Pie de la carátula: el contacto (con el mail) a un lado y el Instagram al otro.
-      '<div class="caratula-pie"><p>' + esc(ui('contacto')) + '<br><a href="mailto:' + c.email + '">' + esc(c.email) + '</a></p>' +
+      // Pie de la carátula: el contacto (con el mail y «Copiar», que copia el mail)
+      // a un lado y el Instagram al otro.
+      '<div class="caratula-pie"><p>' + esc(ui('contacto')) + '<br><a href="mailto:' + c.email + '">' + esc(c.email) + '</a>' +
+      '<button type="button" class="accion copiar" data-copiar>' + corchetes(ui('copiar')) + '</button></p>' +
       '<button type="button" class="bajar" data-bajar aria-label="' + esc(ui('mas')) + '"><svg width="28" height="16" viewBox="0 0 28 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l13 13L27 1"/></svg></button>' +
       '<p class="nota"><a href="' + c.instagram.url + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram.usuario) + '</a></p></div></section>' +
       '<div class="detalle"><div class="dos"><div><h2 class="et">' + esc(ui('sinopsis')) + '</h2><p class="sinopsis">' + esc(t(f.sinopsis)) + '</p></div>' +
@@ -919,7 +958,7 @@
   }
   function cerrarVideo() {
     capaVideo.hidden = true; capaVideo.innerHTML = '';
-    if (!capaAbierta()) { var s = slides[actual]; if (s.video.getAttribute('src')) reproducir(s); }
+    if (!capaTapa()) { var s = slides[actual]; if (s.video.getAttribute('src')) reproducir(s); }
   }
 
   /* ------------------------------------------------------------------ clics */
@@ -953,7 +992,7 @@
   // antes que el clip, el siguiente lo pone en marcha.
   function primerToque() {
     var s = slides[actual];
-    if (!s || !s.video.getAttribute('src') || capaAbierta()) return;
+    if (!s || !s.video.getAttribute('src') || capaTapa()) return;
     if (!s.video.paused) { document.removeEventListener('touchend', primerToque, true); document.removeEventListener('click', primerToque, true); return; }
     reproducir(s);
   }
@@ -965,8 +1004,10 @@
     ir(0, carpetas);
     if (carpetas) marcar(direccion(null), null, false, null);
   });
-  document.getElementById('btnObras').addEventListener('click', function () { abrirObras(false); });
-  document.getElementById('btnContacto').addEventListener('click', function () { abrirObras(true); });
+  // «Obras» abre el panel; si ya está abierto, lo cierra. (El contacto está al
+  // final del panel y en la carátula de cada ficha: no va en el encabezado.)
+  btnObras.setAttribute('aria-expanded', 'false');
+  btnObras.addEventListener('click', function () { if (!capaObras.hidden) cerrarCapa(); else abrirObras(false); });
   document.getElementById('btnLang').addEventListener('click', cambiarIdioma);
   document.getElementById('btnAnt').addEventListener('click', function () { ir(actual - 1); });
   document.getElementById('btnSig').addEventListener('click', function () { ir(actual + 1); });
@@ -979,7 +1020,6 @@
   function textosBarra() {
     raiz.lang = lang;
     document.getElementById('btnObras').textContent = ui('obras');
-    document.getElementById('btnContacto').textContent = ui('contacto');
     var bl = document.getElementById('btnLang');
     pintarSonido();
     bl.textContent = ui('lang'); bl.setAttribute('aria-label', ui('langNombre')); bl.setAttribute('lang', lang === 'es' ? 'en' : 'es');
@@ -1028,12 +1068,17 @@
     if (carpetas) { var bien = direccion(r.id, r.ficha, r.capa); if (!igual(bien)) history.replaceState(history.state, '', bien); }
     ponerTitulo(r.id);
     if (r.ficha) {
-      if (capaFicha.hidden || capaFicha.getAttribute('data-id') !== r.id) { pintarFicha(porId[r.id]); capaFicha.scrollTop = 0; capaObras.hidden = true; capaFicha.hidden = false; slides[actual].video.pause(); evento('abrir_ficha', { obra: r.id }); }
+      if (capaFicha.hidden || capaFicha.getAttribute('data-id') !== r.id) { pintarFicha(porId[r.id]); capaFicha.scrollTop = 0; cerrarPanel(); capaFicha.hidden = false; slides[actual].video.pause(); evento('abrir_ficha', { obra: r.id }); }
       var i0 = enPortada.indexOf(porId[r.id]);
       if (i0 >= 0 && i0 !== actual) ir(i0, true);
       return;
     }
-    if (r.capa) { if (capaObras.hidden) { capaObras.innerHTML = htmlObras(); capaFicha.hidden = true; capaObras.hidden = false; } return; }
+    if (r.capa) {
+      if (capaObras.hidden) {
+        capaObras.innerHTML = htmlObras(); capaFicha.hidden = true; mostrarPanel();
+      }
+      return;
+    }
     // Al volver de la ficha, la portada queda en la obra de la última ficha vista
     // (aunque hayas entrado por otra y pasado de ficha en ficha).
     var deFicha = !capaFicha.hidden;
@@ -1073,7 +1118,7 @@
       s.video.pause();
       if (descarga) { descarga.ctrl.abort(); descarga = null; ocupado = false; }
     } else {
-      if (s.video.getAttribute('src') && !capaAbierta()) reproducir(s);
+      if (s.video.getAttribute('src') && !capaTapa()) reproducir(s);
       bombear();
     }
   });
