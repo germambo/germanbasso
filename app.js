@@ -23,6 +23,13 @@
   var mqBaja = matchMedia('(min-aspect-ratio: 11/10) and (max-height: 520px)');
   var calma = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var embebe = /(^|\.)vaso\.ar$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
+  // vaso.ar/?diag muestra qué decide el sitio en este equipo (ver «diagnóstico»).
+  var diagActivo = /[?&]diag\b/.test(location.search), diagEventos = [];
+  function diag(m) {
+    if (!diagActivo) return;
+    diagEventos.push((performance.now() / 1000).toFixed(1) + ' s  ' + m);
+    if (diagEventos.length > 12) diagEventos.shift();
+  }
 
   /* ------------------------------------------------------------ direcciones
      En vaso.ar cada obra tiene su dirección: vaso.ar/qomi/, la ficha en
@@ -75,10 +82,26 @@
   }
   // La dirección /en/… pide inglés; si no lo dice, queda el idioma elegido antes.
   if (carpetas && leerDireccion().en) lang = 'en';
-  var av1 = (function () {
+  // AV1 pesa menos, pero solo se usa si el equipo lo decodifica bien. En un
+  // celular, además, tiene que ser por hardware: si no, H.264, que todos los
+  // celulares decodifican por hardware. Si un clip AV1 falla, el equipo deja de
+  // usarlo (queda anotado para las próximas visitas) y se pide el H.264.
+  var tactil = matchMedia('(pointer: coarse)').matches;
+  var fallidos = {};      // url del clip -> falló en este equipo: no se vuelve a pedir
+  var av1 = leer('vaso-av1') !== 'no' && (function () {
     var v = document.createElement('video');
     return !!(v.canPlayType && v.canPlayType('video/mp4; codecs="av01.0.04M.08"'));
   })();
+  var av1Info = leer('vaso-av1') === 'no' ? 'falló antes en este equipo' : av1 ? 'el navegador dice que sí' : 'el navegador no lo tiene';
+  if (av1 && navigator.mediaCapabilities && navigator.mediaCapabilities.decodingInfo) {
+    try {
+      navigator.mediaCapabilities.decodingInfo({ type: 'file', video: { contentType: 'video/mp4; codecs="av01.0.04M.08"', width: 1280, height: 544, bitrate: 1000000, framerate: 24 } })
+        .then(function (r) {
+          av1Info = (r.supported ? 'decodifica' : 'no decodifica') + ' · fluido ' + (r.smooth ? 'sí' : 'no') + ' · por hardware ' + (r.powerEfficient ? 'sí' : 'no');
+          if (!r.supported || !r.smooth || (tactil && !r.powerEfficient)) dejarAV1(false);
+        }, function () {});
+    } catch (e) { /* sin MediaCapabilities */ }
+  }
 
   var orient = mqH.matches ? 'h' : 'v';
   var modo = null;        // 'normal' | 'liviano'
@@ -122,8 +145,9 @@
     if (mosaico(o)) return null;
     var g = grupo(o);
     if (!g || !g.video || !g.video.length) return null;
+    var lista = g.video.filter(function (v) { return !fallidos[v.src] && (av1 || v.codec !== 'av1'); });
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var grandes = g.video.filter(function (v) { return v.w >= 1900; });
+    var grandes = lista.filter(function (v) { return v.w >= 1900; });
     var ancho = anchoCuadro();
     if (!contener(o) && ancho >= 1100 && ancho * dpr > 1500) {
       var ga = av1 && grandes.filter(function (v) { return v.codec === 'av1'; })[0];
@@ -131,7 +155,7 @@
       var gh = grandes.filter(function (v) { return v.codec === 'h264'; })[0];
       if (gh && velocidad > 2000) return gh;
     }
-    var base = g.video.filter(function (v) { return v.w < 1900; });
+    var base = lista.filter(function (v) { return v.w < 1900; });
     return (av1 && base.filter(function (v) { return v.codec === 'av1'; })[0]) ||
       base.filter(function (v) { return v.codec === 'h264'; })[0] || base[0];
   }
@@ -210,7 +234,17 @@
       s.video.addEventListener('progress', revisar);
       s.video.addEventListener('suspend', revisar);
       s.video.addEventListener('canplaythrough', revisar);
-      s.video.addEventListener('error', function () { s.completo = true; s.fuente = null; bombear(); });
+      // Si un clip falla, no se vuelve a pedir (antes se reintentaba sin fin y el
+      // video no aparecía nunca). Si era AV1, el equipo pasa a H.264.
+      s.video.addEventListener('error', function () {
+        var src = s.fuente, err = s.video.error;
+        if (!src) return;
+        diag('ERROR ' + (err ? err.code : '?') + ' en ' + src.split('/').pop());
+        fallidos[src] = true;
+        s.completo = true; s.fuente = null;
+        if (/\.av1\./.test(src) && av1) dejarAV1(true);
+        else bombear();
+      });
       return s;
     });
     slides.forEach(pintarSlide);
@@ -270,7 +304,7 @@
   function decidirModo(img) {
     if (modo) return;
     var declarado = conexionDeclarada();
-    if (declarado) { modo = declarado; return; }
+    if (declarado) { modo = declarado; diag('modo ' + modo + (modoDeclarado ? ' (ahorro de datos del equipo)' : ' (el navegador estima 2G/3G)')); return; }
     // Se decide por la velocidad a la que bajó el póster, no por cuánto tardó la
     // página entera: en un celular, conectarse de cero ya lleva un par de segundos
     // y con una buena conexión 4G quedaba en fotos fijas. Además el póster es chico
@@ -281,9 +315,24 @@
     var b = bytesDe(e);
     if (b > 6000 && e.responseEnd > e.responseStart) velocidad = Math.max(velocidad, b / (e.responseEnd - e.responseStart));
     modo = (velocidad && velocidad < 50) ? 'liviano' : 'normal';
+    diag('modo ' + modo + ' (' + Math.round(velocidad) + ' KB/s)');
   }
 
   /* ---------------------------------------------------------------- carga */
+  // Deja de usar AV1: lo que ya estaba en AV1 se vuelve a pedir en H.264.
+  function dejarAV1(anotar) {
+    if (!av1) return;
+    av1 = false;
+    if (anotar) guardar('vaso-av1', 'no');
+    diag('AV1 desactivado' + (anotar ? ' (falló un clip)' : ''));
+    Object.keys(blobs).forEach(function (u) { if (/\.av1\./.test(u)) { try { URL.revokeObjectURL(blobs[u]); } catch (e) {} delete blobs[u]; } });
+    if (descarga && /\.av1\./.test(descarga.url)) { descarga.ctrl.abort(); descarga = null; ocupado = false; }
+    slides.forEach(function (s) {
+      if (s.fuente && /\.av1\./.test(s.fuente)) { s.fuente = null; s.completo = false; s.video.removeAttribute('src'); s.video.load(); s.cuadro.classList.remove('mueve'); }
+      else if (!s.fuente) s.completo = false;
+    });
+    if (modo === 'normal' && !calma && slides.length) cargarActual();
+  }
   function ponerVideo(s, src) {
     var v = s.video;
     if (v.getAttribute('src') !== src) { s.cuadro.classList.remove('mueve'); v.src = src; }
@@ -296,7 +345,8 @@
     var v = s.video;
     v.muted = !(sonido && s.i === actual);
     var p = v.play();
-    if (p && p.catch) p.catch(function () {
+    if (p && p.catch) p.catch(function (e) {
+      diag('play() no arrancó: ' + (e && e.name));
       if (!v.muted) { v.muted = true; sonido = false; pintarSonido(); var q = v.play(); if (q && q.catch) q.catch(function () {}); }
     });
   }
@@ -335,6 +385,7 @@
       descarga.ctrl.abort(); descarga = null; ocupado = false;
     }
     s.completo = false;
+    diag('pide ' + f.src.split('/').pop());
     ponerVideo(s, f.src);
     // Si el navegador nunca confirma que terminó, la cola sigue a los 20 s.
     clearTimeout(s.reloj);
@@ -364,7 +415,7 @@
       if (distancia(i) === 1 && !slides[i].posterPedido) { tarea(function (cb) { asegurarPoster(slides[i], false, cb); }); return; }
     }
     // 2) el clip de la obra que se ve
-    if (conClips && !s.fuente && tieneVideo(s.o)) { cargarActual(); return; }
+    if (conClips && !s.fuente && !s.completo && tieneVideo(s.o)) { cargarActual(); return; }
     if (conClips && s.fuente && !s.completo) return;
     // 3) los demás pósters, por cercanía
     for (var b = 0; b < cola.length; b++) {
@@ -895,11 +946,13 @@
   });
   // Con el modo de bajo consumo del iPhone los clips no arrancan solos: el primer
   // toque en la pantalla (cualquiera) los pone en marcha.
+  // Sigue escuchando hasta que algún clip arranque: si el primer toque llega
+  // antes que el clip, el siguiente lo pone en marcha.
   function primerToque() {
-    document.removeEventListener('touchend', primerToque, true);
-    document.removeEventListener('click', primerToque, true);
     var s = slides[actual];
-    if (s && s.video.getAttribute('src') && s.video.paused && !capaAbierta()) reproducir(s);
+    if (!s || !s.video.getAttribute('src') || capaAbierta()) return;
+    if (!s.video.paused) { document.removeEventListener('touchend', primerToque, true); document.removeEventListener('click', primerToque, true); return; }
+    reproducir(s);
   }
   document.addEventListener('touchend', primerToque, true);
   document.addEventListener('click', primerToque, true);
@@ -1022,10 +1075,40 @@
     }
   });
 
+  /* ----------------------------------------------------------- diagnóstico
+     vaso.ar/?diag muestra arriba qué decidió el sitio en este equipo (fotos o
+     clips, AV1 o H.264) y qué pasa con el video de la obra que se ve. Sirve para
+     revisar un celular sin cables: se abre así y se manda una captura. */
+  function iniciarDiag() {
+    var caja = document.createElement('pre');
+    caja.style.cssText = 'position:fixed;left:6px;right:6px;top:48px;z-index:99;margin:0;padding:8px 10px;background:rgba(0,0,0,.85);color:#d8f0e0;font:11px/1.45 ui-monospace,Menlo,monospace;white-space:pre-wrap;word-break:break-all;pointer-events:none';
+    document.body.appendChild(caja);
+    slides.forEach(function (s) {
+      ['loadedmetadata', 'canplay', 'playing', 'waiting', 'stalled'].forEach(function (ev) {
+        s.video.addEventListener(ev, function () { if (s.i === actual) diag(ev); });
+      });
+    });
+    setInterval(function () {
+      var c = navigator.connection || {}, s = slides[actual], v = s.video;
+      var q = v.getVideoPlaybackQuality ? v.getVideoPlaybackQuality() : null, src = v.getAttribute('src') || '';
+      caja.textContent = [
+        'modo: ' + (modo || 'decidiendo…') + (modoDeclarado ? ' (ahorro de datos del equipo)' : '') + ' · velocidad ' + Math.round(velocidad) + ' KB/s',
+        'conexión: ' + (c.effectiveType || '?') + ' · ' + (c.downlink != null ? c.downlink + ' Mb/s' : '?') + ' · ahorro de datos: ' + (c.saveData ? 'SÍ' : 'no'),
+        'AV1: ' + (av1 ? 'se usa' : 'no se usa') + ' (' + av1Info + ')',
+        'clip: ' + (s.fuente ? s.fuente.split('/').pop() : '—') + (/^blob:/.test(src) ? ' (precargado)' : ''),
+        'video: ' + (v.paused ? 'PAUSADO' : 'andando') + ' · listo ' + v.readyState + '/4 · red ' + v.networkState + ' · ' + v.currentTime.toFixed(1) + ' s' + (q ? ' · ' + q.totalVideoFrames + ' cuadros' : '') + (v.error ? ' · ERROR ' + v.error.code : ''),
+        'pantalla: ' + innerWidth + '×' + innerHeight + ' ×' + (window.devicePixelRatio || 1) + ' · ' + (orient === 'h' ? 'horizontal' : 'vertical') + (tactil ? ' · táctil' : ''),
+        navigator.userAgent.replace(/^Mozilla\/5\.0 /, ''),
+        '—'
+      ].concat(diagEventos).join('\n');
+    }, 500);
+  }
+
   /* ---------------------------------------------------------------- arranque */
   textosBarra();
   armarPortada();
   pintarSonido();
+  if (diagActivo) iniciarDiag();
   (function inicio() {
     var r0 = leerDireccion();
     var i = r0.id ? enPortada.indexOf(porId[r0.id]) : -1;
