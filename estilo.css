@@ -145,6 +145,11 @@ a:hover, button:hover { color: var(--sub); }
   font-size: min(140px, calc((100svh - var(--barra) - var(--ch)) * .56), 12vw);
 }
 .acotacion { white-space: nowrap; letter-spacing: .02em; }
+/* El título lleva a la ficha. Cambia de color al pasar el mouse, como los
+   demás links; en el celular no (quedaría marcado después del toque). */
+.titulo a { color: inherit; text-decoration: none; }
+.titulo a:hover { color: inherit; }
+@media (hover: hover) { .titulo a:hover { color: var(--sub); } }
 .datos { margin: 0; color: var(--polvo); }
 .datos button { color: var(--hueso); text-decoration: underline; text-underline-offset: 4px; }
 

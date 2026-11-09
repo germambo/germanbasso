@@ -201,7 +201,8 @@
   function htmlBanda(s) {
     var o = s.o;
     // El estado («en desarrollo») va en la línea de datos, a la derecha; la acotación queda para la ficha.
-    return '<div class="ident"><h2 class="titulo">' + esc(o.titulo) + '</h2></div>' +
+    // El título es un link a la ficha (como el botón [ FICHA ]).
+    return '<div class="ident"><h2 class="titulo"><a href="' + esc(direccion(o.id, true)) + '" data-ficha="' + o.id + '">' + esc(o.titulo) + '</a></h2></div>' +
       '<div class="lado"><p class="datos">' + datosSinCortes(t(o.datos)) + '</p>' +
       '<div class="acciones">' + htmlAcciones(o, true, true) + '</div></div>';
   }
@@ -673,7 +674,7 @@
       });
     }
     var conCartel = cambia && !calma && quiereCartel('--cartel');
-    if (conCartel && tSale && tEntra) cartel(tEntra, tSale.textContent, tEntra.textContent, { demora: 70, paso: 32, giro: 80, vueltas: [2, 3], letras: LETRAS });
+    if (conCartel && tSale && tEntra) cartel(tEntra.querySelector('a') || tEntra, tSale.textContent, tEntra.textContent, { demora: 70, paso: 32, giro: 80, vueltas: [2, 3], letras: LETRAS });
     if (conCartel || (cambia && !calma && quiereCartel('--cartel-numero'))) cartel(numEl, numEl.textContent, (i + 1) + '.', { demora: 70, paso: 40, giro: 80, vueltas: [2, 3], letras: DIGITOS });
     else numEl.textContent = (i + 1) + '.';
     if (!sinHistoria) marcar(direccion(s.o.id), s.o.id);

@@ -141,7 +141,6 @@ window.VASO = {
           [{ es: 'Cámaras', en: 'Camera' }, 'Catalina Chontasi, Germán Basso'],
           [{ es: 'Edición', en: 'Editing' }, 'Germán Basso'],
           [{ es: 'Arte', en: 'Art direction' }, 'Sol Irupé Saralegui'],
-          [{ es: 'Foto fija', en: 'Stills' }, 'Sol Irupé Saralegui'],
           [{ es: 'Colorimetría', en: 'Color grading' }, 'Lucía Kristef'],
           [{ es: 'Sonido', en: 'Sound' }, { es: 'DALSUONO (grabación), Piter Mazda (edición y mezcla)', en: 'DALSUONO (recording), Piter Mazda (editing and mixing)' }]
         ]
