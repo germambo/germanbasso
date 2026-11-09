@@ -169,22 +169,26 @@ a:hover, button:hover { color: var(--sub); }
 .cuadro.con-video .sonido { display: grid; }
 .cuadro .sonido[aria-pressed="true"] { opacity: .18; }
 .cuadro .sonido:hover, .cuadro .sonido:focus-visible { opacity: 1; color: #fff; }
-/* Celular: flecha a la derecha del cuadro que muestra que se pasa de obra
-   deslizando (y que también pasa con un toque). Misma línea que la flecha de la
-   ficha; se mueve hasta que el visitante pasa de obra por primera vez. */
-.cuadro .seguir {
-  position: absolute; right: 2px; top: 50%; z-index: 2; transform: translateY(-50%);
+/* Celular: una flecha a cada lado del cuadro, que muestran que se pasa de obra
+   deslizando (y que también pasan con un toque). Misma línea que la flecha de
+   la ficha. Se mecen apenas, cada una hacia su lado, y desaparecen apenas el
+   visitante pasa de obra por primera vez: ya entendió cómo es. */
+.cuadro .seguir, .cuadro .volver {
+  position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
   width: 44px; height: 64px; display: none; place-items: center;
   color: #fff; opacity: .85; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .7));
+  transition: opacity .4s ease, visibility 0s linear .4s;
 }
-.cuadro .seguir svg { display: block; animation: deslizar 2.2s ease-in-out infinite; }
-.ya-paso .cuadro .seguir svg { animation: none; }
-@keyframes deslizar { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(4px); } }
-@media (prefers-reduced-motion: reduce) { .cuadro .seguir svg { animation: none; } }
+.cuadro .seguir { right: 2px; --hacia: 3px; }
+.cuadro .volver { left: 2px; --hacia: -3px; }
+.cuadro .seguir svg, .cuadro .volver svg { display: block; animation: mecer 2.4s ease-in-out infinite; }
+@keyframes mecer { 0%, 100% { transform: none; } 50% { transform: translateX(var(--hacia)); } }
+.ya-paso .cuadro .seguir, .ya-paso .cuadro .volver { opacity: 0; visibility: hidden; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .cuadro .seguir svg, .cuadro .volver svg { animation: none; } }
 
 /* --------------------------------------------- Pantallas verticales */
 @media (max-aspect-ratio: 11/10) {
-  .cuadro .seguir { display: grid; }
+  .cuadro .seguir, .cuadro .volver { display: grid; }
   :root {
     --barra: 52px;
     --banda: clamp(206px, 30svh, 260px);

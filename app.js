@@ -219,6 +219,7 @@
       // dentro del cuadro, que queda quieto (los botones no se mueven).
       el.innerHTML = '<div class="cuadro"><div class="pelicula"><div class="lqip"></div><video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video></div>' +
         '<button type="button" class="sonido" aria-pressed="false"></button>' +
+        '<button type="button" class="volver" aria-label="' + esc(ui('anterior')) + '"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 1L2 14l13 13"/></svg></button>' +
         '<button type="button" class="seguir" aria-label="' + esc(ui('siguiente')) + '"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l13 13L1 27"/></svg></button></div><div class="banda"></div>';
       portadaEl.appendChild(el);
       var s = { o: o, i: i, el: el, cuadro: el.querySelector('.cuadro'), video: el.querySelector('video'), banda: el.querySelector('.banda'),
@@ -941,7 +942,8 @@
   });
   // Como en el sitio anterior: un clic en la imagen activa o silencia el sonido.
   portadaEl.addEventListener('click', function (e) {
-    if (e.target.closest('.seguir')) { ir(actual + 1); return; }   // la flecha del celular
+    if (e.target.closest('.seguir')) { ir(actual + 1); return; }   // las flechas del celular
+    if (e.target.closest('.volver')) { ir(actual - 1); return; }
     if (e.target.closest('.cuadro')) alternarSonido();
   });
   // Con el modo de bajo consumo del iPhone los clips no arrancan solos: el primer
