@@ -67,6 +67,43 @@ a:hover, button:hover { color: var(--sub); }
   --cw: calc(var(--ch) * 2.35);
 }
 .obra[hidden] { display: none; }
+/* Capa para transiciones que desenfocan la pantalla: entre las obras y el
+   encabezado. Quieta no se ve ni cuesta nada. */
+.vidrio { position: fixed; inset: 0; z-index: 15; pointer-events: none; display: none; }
+/* Dentro del cuadro, la imagen va en su propia capa: hay transiciones que la
+   mueven mientras el cuadro (y sus botones) quedan quietos. */
+.cuadro .pelicula { position: absolute; inset: 0; overflow: hidden; background: #000; }
+/* ====== TRANSICIÓN ENTRE OBRAS: inicio ====== */
+/* Otras versiones guardadas en «Web porfolio v2/transiciones» (ver su LEEME). */
+/* Entre obras: corte y vuelta. La imagen cambia por corte seco. El título y
+   los datos (con los botones) se dan vuelta cada uno de un golpe, como una
+   paleta: cae la de la obra que se va y baja la de la nueva. Primero el
+   título y, un instante después, los datos. El número de obra cambia como un
+   cartel de llegadas (app.js, porque acá está --cartel-numero: 1).
+   Con «reducir movimiento» en el equipo, todo por corte. */
+:root { --cartel-numero: 1; }
+.obra.entra { z-index: 1; }
+.obra.sale { pointer-events: none; animation: espera .26s linear both; }   /* se queda hasta que caen sus textos */
+@keyframes espera { to { visibility: visible; } }
+.obra.sale .cuadro { visibility: hidden; }   /* la imagen, por corte */
+/* Título */
+.obra.sale .titulo { animation: titulo-cae .16s cubic-bezier(.55, 0, 1, .45) both; }
+.obra.entra .titulo { animation: titulo-baja .22s .16s cubic-bezier(0, .55, .45, 1) both; }
+@keyframes titulo-cae { from { transform: perspective(8em) rotateX(0deg); } to { transform: perspective(8em) rotateX(-90deg); opacity: .3; } }
+@keyframes titulo-baja { from { transform: perspective(8em) rotateX(90deg); opacity: .3; } to { transform: perspective(8em) rotateX(0deg); opacity: 1; } }
+/* Datos y botones */
+.obra.sale .lado { animation: lado-cae .16s .06s cubic-bezier(.55, 0, 1, .45) both; }
+.obra.entra .lado { animation: lado-baja .22s .22s cubic-bezier(0, .55, .45, 1) both; }
+@keyframes lado-cae { to { transform: perspective(600px) rotateX(-90deg); opacity: .3; } }
+@keyframes lado-baja { from { transform: perspective(600px) rotateX(90deg); opacity: .3; } to { transform: none; opacity: 1; } }
+/* Las paletas del número (las arma app.js y las saca al terminar) */
+.cartel .palabra { white-space: nowrap; }
+.paleta { display: inline-block; position: relative; white-space: pre; vertical-align: baseline; perspective: 2.5em; }
+.paleta .mitad { position: absolute; top: 0; left: -1em; right: -1em; text-align: center; transform-origin: 50% var(--corte, 50%); }
+.paleta .arriba { clip-path: inset(-1em 0 calc(100% - var(--corte, 50%) + .5px) 0); }
+.paleta .abajo { clip-path: inset(calc(var(--corte, 50%) + .5px) 0 -1em 0); }
+@media (prefers-reduced-motion: reduce) { .obra.sale, .obra.entra, .obra .titulo, .obra .lado { animation: none !important; } }
+/* ====== TRANSICIÓN ENTRE OBRAS: fin ====== */
 
 .cuadro {
   grid-row: 2; justify-self: center; position: relative; overflow: hidden;
@@ -98,8 +135,8 @@ a:hover, button:hover { color: var(--sub); }
   align-items: flex-end; align-items: last baseline;
   gap: 14px 48px;
 }
-/* El título entra un poco desde el margen (30 px en una compu) */
-.ident { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 22px; min-width: 0; padding-left: min(30px, 2.1vw); }
+/* El título entra un poco desde el margen (10 px en una compu) */
+.ident { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 22px; min-width: 0; padding-left: min(10px, .7vw); }
 /* A la derecha, dos renglones: la descripción y los botones */
 .lado { display: grid; justify-items: end; gap: 6px; text-align: right; }
 .lado .acciones { justify-content: flex-end; }

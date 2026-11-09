@@ -7,8 +7,10 @@
    - El orden de la lista es el orden de la portada y del índice: la
      importancia la marca el orden.
    - Una obra con «oculta: true» queda guardada pero no aparece.
-   - «acotacion» va solo en la ficha, debajo del título. En la portada, el
-     estado va al final de «datos» (… · en desarrollo).
+   - «datos» es la línea de la portada: solo qué es (largometraje,
+     cortometraje…), el año y, si corresponde, el estado al final
+     (… · en desarrollo). Duración, formato, productora y demás van en la
+     ficha. «acotacion» va solo en la ficha, debajo del título.
    - Cada texto puede ser un string o { es: '...', en: '...' }.
    ========================================================================== */
 
@@ -31,7 +33,7 @@ window.VASO = {
     {
       id: 'carrero',
       titulo: 'Carrero',
-      datos: { es: 'Largometraje · 2022 · 84 min · 2.35:1', en: 'Feature film · 2022 · 84 min · 2.35:1' },
+      datos: { es: 'Largometraje · 2022', en: 'Feature film · 2022' },
       ver: { texto: { es: 'Ver película', en: 'Watch the film' }, sub: { es: 'Completa · 84 min', en: 'Full film · 84 min' }, yt: '1Yp5gZYMWew' },
       trailer: 'kMbPUt84vRg',
       ficha: {
@@ -74,7 +76,7 @@ window.VASO = {
       id: 'qomi',
       titulo: 'Qomí',
       acotacion: { es: '(EN DESARROLLO)', en: '(IN DEVELOPMENT)' },
-      datos: { es: 'Largometraje · Cinema 7 Films · en desarrollo', en: 'Feature film · Cinema 7 Films · in development' },
+      datos: { es: 'Largometraje · en desarrollo', en: 'Feature film · in development' },
       ver: { texto: { es: 'Ver prueba de concepto', en: 'Watch proof of concept' }, yt: 'rmHEXpIrGEk' },
       ficha: {
         frase: { es: 'Piguem, un niño qom de doce años del monte chaqueño, se convence de que está maldito y de que sólo los rocshés, los hombres blancos, pueden sacarle la maldición.', en: 'Piguem, a twelve-year-old Qom boy from the Chaco forest, becomes convinced that he is cursed and that only the rocshés, the white men, can lift the curse.' },
@@ -124,7 +126,7 @@ window.VASO = {
     {
       id: 'homero-taisen',
       titulo: 'Homero Taisen',
-      datos: { es: 'Mi Casa sessions · Sesión en vivo · 2026', en: 'Mi Casa sessions · Live session · 2026' },
+      datos: { es: 'Mi Casa sessions · 2026', en: 'Mi Casa sessions · 2026' },
       ver: { texto: { es: 'Ver sesión', en: 'Watch the session' }, sub: { es: 'Completa · 13 min', en: 'Full session · 13 min' }, yt: '-uuosnM2FBg' },
       ficha: {
         frase: { es: 'Homero Taisen y su banda en una sesión en vivo de «Perdón Amor de nuevo», «Zamba del Desamorado» y «La Luna se me hizo calor».', en: 'Homero Taisen and band in a live session of “Perdón Amor de nuevo”, “Zamba del Desamorado” and “La Luna se me hizo calor”.' },
@@ -194,7 +196,7 @@ window.VASO = {
       // Videos de la portada: 'vialidad-2' es el juego nuevo.
       // Para volver al anterior, borrar esta línea; sus archivos siguen en media/.
       medios: 'vialidad-2',
-      datos: { es: 'Institucional · 2020–2025 · 7 piezas', en: 'Institutional · 2020–2025 · 7 pieces' },
+      datos: { es: 'Institucional · 2020–2025', en: 'Institutional · 2020–2025' },
       ver: { texto: { es: 'Ver las piezas', en: 'See the pieces' }, ficha: true, seccion: 'piezas' },
       ficha: {
         frase: { es: 'Campañas y contenidos sobre los caminos de la Argentina, hechos en el Área Audiovisual de Vialidad Nacional.', en: 'Campaigns and content about Argentina’s roads, made at the Audiovisual Area of Vialidad Nacional.' },

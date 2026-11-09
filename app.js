@@ -191,7 +191,9 @@
       el.setAttribute('aria-roledescription', 'obra');
       el.setAttribute('aria-label', o.titulo);
       el.hidden = true;
-      el.innerHTML = '<div class="cuadro"><div class="lqip"></div><video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>' +
+      // La imagen va dentro de «pelicula»: las transiciones pueden moverla por
+      // dentro del cuadro, que queda quieto (los botones no se mueven).
+      el.innerHTML = '<div class="cuadro"><div class="pelicula"><div class="lqip"></div><video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video></div>' +
         '<button type="button" class="sonido" aria-pressed="false"></button>' +
         '<button type="button" class="seguir" aria-label="' + esc(ui('siguiente')) + '"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l13 13L1 27"/></svg></button></div><div class="banda"></div>';
       portadaEl.appendChild(el);
@@ -244,7 +246,7 @@
     };
     s.img.addEventListener('load', fin, { once: true });
     s.img.addEventListener('error', fin, { once: true });
-    s.cuadro.insertBefore(pic, s.video);
+    s.video.parentNode.insertBefore(pic, s.video);
     if (s.img.complete && s.img.naturalWidth) fin();
   }
 
@@ -422,15 +424,206 @@
     relojObra = setTimeout(function () { if (slides[actual].o.id === id && !capaAbierta()) evento('ver_obra', { obra: id }); }, 2000);
   }
 
-  function ir(i, sinHistoria) {
+  // Transición entre obras: la que se va queda encima con la clase «sale» y la
+  // nueva recibe «entra»; cómo se ven las define estilo.css (bloque «TRANSICIÓN
+  // ENTRE OBRAS»). La salida termina sola cuando acaba su animación, dure lo que
+  // dure. Si se pasa rápido de obra en obra, la salida anterior se corta en el acto.
+  var saliente = null, relojSale = null, relojPasando = null, relojEntra = null;
+  // Capa de vidrio para las transiciones que desenfocan toda la pantalla. Mientras
+  // dura un cambio de obra, la raíz lleva la clase «pasando».
+  var vidrio = document.createElement('div');
+  vidrio.className = 'vidrio';
+  vidrio.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(vidrio);
+  function terminarSalida() {
+    clearTimeout(relojSale);
+    if (saliente) { saliente.el.removeEventListener('animationend', alTerminarAnimacion); saliente.el.classList.remove.apply(saliente.el.classList, ['sale'].concat(DIRECCIONES)); if (saliente.i !== actual) saliente.el.hidden = true; saliente = null; }
+  }
+  // Solo cuenta la animación de la obra misma, no la de algo de adentro (imagen,
+  // datos) que termine antes.
+  function alTerminarAnimacion(e) { if (e.target === e.currentTarget) terminarSalida(); }
+
+  /* Cartel de aeropuerto: el título y el número de obra cambian letra por letra,
+     como las paletas de los carteles de llegadas. Cada letra está partida al
+     medio: la mitad de arriba cae y la de abajo de la letra siguiente baja a su
+     lugar. Antes de la letra final pasan dos o tres al azar, y cada letra arranca
+     un poco después que la anterior. Solo corre si la transición de estilo.css lo
+     pide dentro del bloque «TRANSICIÓN ENTRE OBRAS»: --cartel: 1 para el título y
+     el número, --cartel-numero: 1 para el número solo. */
+  var carteles = [], relojCartel = 0;
+  var LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', DIGITOS = '0123456789';
+  function quiereCartel(nombre) { return getComputedStyle(raiz).getPropertyValue(nombre).trim() === '1' && !document.hidden; }
+  // Ancho de cada letra tal como queda en el texto real (con su interletra y
+  // sus ajustes entre pares), para que al terminar no se mueva nada.
+  function anchosDe(el, texto) {
+    el.textContent = texto;
+    var nodo = el.firstChild, r = document.createRange(), pos = 0;
+    return Array.from(texto).map(function (c) {
+      if (!nodo) return 0;
+      r.setStart(nodo, pos); r.setEnd(nodo, pos + c.length); pos += c.length;
+      return r.getBoundingClientRect().width;
+    });
+  }
+  // Ancho de cada letra posible, para elegir las que pasan al azar: tienen que
+  // caber en su lugar, si no se pisan con las de al lado.
+  function anchosLetras(el, letras) {
+    var m = document.createElement('span'), r = {};
+    m.style.cssText = 'position:absolute;visibility:hidden;white-space:pre';
+    el.appendChild(m);
+    Array.from(letras).forEach(function (c) { m.textContent = c; r[c] = m.getBoundingClientRect().width; });
+    // Dónde está la línea de base dentro del renglón: el corte de las paletas va
+    // a media altura de las minúsculas, no a media altura del renglón.
+    m.innerHTML = 'x<span style="display:inline-block;width:0;height:0"></span>';
+    var caja = m.getBoundingClientRect(), base = m.lastChild.getBoundingClientRect().bottom - caja.top;
+    var cuerpo = parseFloat(getComputedStyle(el).fontSize);
+    el.removeChild(m);
+    return { ancho: r, corte: Math.max(0, Math.min(caja.height, base - cuerpo * 0.27)) };
+  }
+  function letraParaAncho(medidas, letras, w) {
+    var buenas = Array.from(letras).filter(function (c) { var x = medidas.ancho[c]; return x <= w * 1.12 + 1 && x >= w * 0.6 - 1; });
+    if (!buenas.length) buenas = Array.from(letras).sort(function (x, y) { return Math.abs(medidas.ancho[x] - w) - Math.abs(medidas.ancho[y] - w); }).slice(0, 4);
+    return buenas[Math.floor(Math.random() * buenas.length)];
+  }
+  function cartel(el, viejo, nuevo, op) {
+    var a = Array.from(viejo), b = Array.from(nuevo), n = Math.max(a.length, b.length);
+    var wa = anchosDe(el, viejo), wb = anchosDe(el, nuevo);
+    var medidas = anchosLetras(el, op.letras);
+    var vista = document.createElement('span'), lector = document.createElement('span');
+    vista.className = 'cartel'; vista.setAttribute('aria-hidden', 'true');
+    vista.style.setProperty('--corte', medidas.corte.toFixed(1) + 'px');
+    lector.className = 'solo-lector'; lector.textContent = nuevo;
+    var palabra = null, paletas = [];
+    for (var i = 0; i < n; i++) {
+      var de = a[i] || '', va = b[i] || '', seq = [de], w0 = wa[i] || 0, w1 = wb[i] || 0;
+      if (de !== va) {
+        // Las del medio, cada una del ancho que tiene el lugar en ese momento
+        // (el lugar va pasando del ancho de la letra vieja al de la nueva).
+        var vueltas = op.vueltas[0] + Math.floor(Math.random() * (op.vueltas[1] - op.vueltas[0] + 1));
+        for (var k = 1; k <= vueltas; k++) seq.push(letraParaAncho(medidas, op.letras, w0 + (w1 - w0) * suave(k / (vueltas + 1))));
+        seq.push(va);
+      }
+      var el2 = document.createElement('span');
+      el2.className = 'paleta';
+      el2.innerHTML = '<span class="mitad arriba"></span><span class="mitad abajo"></span>\u00a0';
+      // El título solo se puede cortar en renglones donde el nuevo tiene espacio.
+      if (!palabra) { palabra = document.createElement('span'); palabra.className = 'palabra'; vista.appendChild(palabra); }
+      palabra.appendChild(el2);
+      if (va === ' ') { palabra = null; vista.appendChild(document.createElement('wbr')); }
+      var p = { el: el2, arriba: el2.firstChild, abajo: el2.childNodes[1], seq: seq, w0: w0, w1: w1,
+        inicio: op.demora + i * op.paso, giro: op.giro, txtA: null, txtB: null, rotA: null, rotB: null, ancho: null };
+      pintarPaleta(p, -1);
+      paletas.push(p);
+    }
+    el.textContent = '';
+    el.appendChild(vista); el.appendChild(lector);
+    var c = { paletas: paletas, t0: performance.now(), terminar: function () { el.textContent = nuevo; } };
+    carteles.push(c);
+    if (!relojCartel) relojCartel = requestAnimationFrame(moverCarteles);
+  }
+  function suave(x) { return x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x); }
+  function ponerMitad(p, cual, texto, grados) {
+    var m = p[cual], kt = cual === 'arriba' ? 'txtA' : 'txtB', kr = cual === 'arriba' ? 'rotA' : 'rotB';
+    if (p[kt] !== texto) { m.textContent = texto; p[kt] = texto; }
+    if (p[kr] !== grados) {
+      p[kr] = grados;
+      m.style.transform = grados ? 'rotateX(' + grados.toFixed(1) + 'deg)' : '';
+      // La paleta que gira se oscurece al ponerse de canto, como con luz de arriba.
+      m.style.opacity = grados ? (0.3 + 0.7 * Math.cos(grados * Math.PI / 180)).toFixed(3) : '';
+    }
+  }
+  // Dibuja una paleta en el momento t (ms desde que arrancó el cartel). Devuelve
+  // true cuando ya llegó a su letra final.
+  function pintarPaleta(p, t) {
+    var vueltas = p.seq.length - 1, tt = t - p.inicio, total = vueltas * p.giro;
+    var listo = tt >= total, x = vueltas ? tt / p.giro : 0;
+    var ancho = p.w0 + (p.w1 - p.w0) * (total ? suave(tt / total) : 1);
+    if (p.ancho !== ancho) { p.ancho = ancho; p.el.style.width = ancho.toFixed(2) + 'px'; }
+    if (listo || tt < 0) {
+      var letra = p.seq[listo ? vueltas : 0];
+      ponerMitad(p, 'arriba', letra, 0); ponerMitad(p, 'abajo', letra, 0);
+      return listo;
+    }
+    var k = Math.floor(x), f = x - k;
+    if (f < 0.5) {   // cae la mitad de arriba de la letra que estaba
+      var g = f * 2;
+      ponerMitad(p, 'arriba', p.seq[k], -90 * g * g);
+      ponerMitad(p, 'abajo', p.seq[k], 0);
+    } else {         // baja la mitad de abajo de la letra que sigue
+      var h = 1 - (f - 0.5) * 2;
+      ponerMitad(p, 'arriba', p.seq[k + 1], 0);
+      ponerMitad(p, 'abajo', p.seq[k + 1], 90 * h * h);
+    }
+    return false;
+  }
+  function moverCarteles(ahora) {
+    carteles = carteles.filter(function (c) {
+      var t = Math.max(ahora, performance.now()) - c.t0, listo = true;
+      c.paletas.forEach(function (p) { if (!pintarPaleta(p, t)) listo = false; });
+      if (listo) c.terminar();
+      return !listo;
+    });
+    relojCartel = carteles.length ? requestAnimationFrame(moverCarteles) : 0;
+  }
+  // Si se pasa de obra antes de que termine, el cartel anterior queda en su texto final.
+  function cortarCarteles() {
+    carteles.forEach(function (c) { c.terminar(); });
+    carteles = [];
+    if (relojCartel) { cancelAnimationFrame(relojCartel); relojCartel = 0; }
+  }
+  // eje: 'v' si el paso vino de un gesto vertical (trackpad o rueda hacia arriba o
+  // abajo, deslizar el dedo hacia arriba o abajo, ↑ ↓); si no, de costado.
+  var DIRECCIONES = ['adelante', 'atras', 'adelante-v', 'atras-v'];
+  function ir(i, sinHistoria, eje) {
     var n = slides.length;
+    // Hacia dónde va el paso (antes de dar la vuelta): lo usan las transiciones
+    // que se mueven. A la siguiente: «adelante»; a la anterior: «atras»; con «-v»
+    // si el gesto fue vertical.
+    var dir = (i < actual ? 'atras' : 'adelante') + (eje === 'v' ? '-v' : '');
     i = (i % n + n) % n;
     var antes = slides[actual];
-    if (i !== actual && antes) { antes.video.pause(); antes.el.hidden = true; raiz.classList.add('ya-paso'); }
+    var cambia = !!antes && i !== actual;
+    if (cambia) {
+      antes.video.pause();
+      raiz.classList.add('ya-paso');
+      terminarSalida();
+      if (calma) antes.el.hidden = true;   // «reducir movimiento»: corte seco
+      // Se le saca «entra» (si no, su animación de entrada pisa la de salida).
+      else {
+        saliente = antes; antes.el.classList.remove.apply(antes.el.classList, ['entra'].concat(DIRECCIONES)); antes.el.classList.add('sale', dir);
+        antes.el.addEventListener('animationend', alTerminarAnimacion);
+        relojSale = setTimeout(terminarSalida, 1000);   // por si una animación no avisa
+      }
+    }
     actual = i;
     var s = slides[i];
     s.el.hidden = false;
-    document.getElementById('numPagina').textContent = (i + 1) + '.';
+    if (cambia && !calma) {
+      raiz.classList.remove('pasando'); void raiz.offsetWidth; raiz.classList.add('pasando');
+      clearTimeout(relojPasando); relojPasando = setTimeout(function () { raiz.classList.remove('pasando'); }, 900);
+    }
+    if (cambia && !calma) {
+      s.el.classList.remove.apply(s.el.classList, ['entra'].concat(DIRECCIONES)); void s.el.offsetWidth; s.el.classList.add('entra', dir);
+      // Pasada la entrada se le saca la clase, así nada de lo que se redibuje
+      // después (otro idioma, otra calidad) vuelve a animarse.
+      clearTimeout(relojEntra);
+      relojEntra = setTimeout(function () { s.el.classList.remove.apply(s.el.classList, ['entra'].concat(DIRECCIONES)); }, 1000);
+    }
+    var numEl = document.getElementById('numPagina');
+    if (cambia) cortarCarteles();
+    var tSale = cambia && antes.el.querySelector('.titulo'), tEntra = s.el.querySelector('.titulo');
+    if (cambia && !calma && tSale && tEntra) {
+      // Para las transiciones que mueven el título: --prof es la mitad de su alto
+      // (la profundidad del prisma) y --cuerpo, en la caja que lo contiene, el
+      // tamaño de su letra (la ranura del rodillo se mide con eso).
+      [tSale, tEntra].forEach(function (t) {
+        t.style.setProperty('--prof', (t.offsetHeight / 2).toFixed(1) + 'px');
+        t.parentNode.style.setProperty('--cuerpo', getComputedStyle(t).fontSize);
+      });
+    }
+    var conCartel = cambia && !calma && quiereCartel('--cartel');
+    if (conCartel && tSale && tEntra) cartel(tEntra, tSale.textContent, tEntra.textContent, { demora: 70, paso: 32, giro: 80, vueltas: [2, 3], letras: LETRAS });
+    if (conCartel || (cambia && !calma && quiereCartel('--cartel-numero'))) cartel(numEl, numEl.textContent, (i + 1) + '.', { demora: 70, paso: 40, giro: 80, vueltas: [2, 3], letras: DIGITOS });
+    else numEl.textContent = (i + 1) + '.';
     if (!sinHistoria) marcar(direccion(s.o.id), s.o.id);
     contarObra();
     asegurarPoster(s, true, null);
@@ -465,8 +658,9 @@
     }
     if (capaAbierta() || mqBaja.matches) return;
     e.preventDefault();
-    var pp = gesto((Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * escala);
-    if (pp) ir(actual + pp);
+    var vertical = Math.abs(e.deltaY) >= Math.abs(e.deltaX);
+    var pp = gesto((vertical ? e.deltaY : e.deltaX) * escala);
+    if (pp) ir(actual + pp, false, vertical ? 'v' : 'h');
   }, { passive: false });
   // Devuelve 1 o -1 cuando un gesto completa un paso; 0 mientras tanto.
   function gesto(d) {
@@ -495,8 +689,8 @@
     if (!toque) return;
     var p = e.changedTouches[0], dx = p.clientX - toque.x, dy = p.clientY - toque.y;
     toque = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.2) ir(actual + (dx < 0 ? 1 : -1));
-    else if (!mqBaja.matches && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx) * 1.2) ir(actual + (dy < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.2) ir(actual + (dx < 0 ? 1 : -1), false, 'h');
+    else if (!mqBaja.matches && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx) * 1.2) ir(actual + (dy < 0 ? 1 : -1), false, 'v');
   }, { passive: true });
 
   // En la ficha, deslizar el dedo hacia un costado pasa a la ficha vecina.
@@ -520,8 +714,10 @@
     if (!capaFicha.hidden && capaVideo.hidden && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); pasarFicha(e.key === 'ArrowRight' ? 1 : -1); return; }
     if (capaAbierta()) return;
     if (e.key === 'm' || e.key === 'M') { alternarSonido(); return; }
-    if (['ArrowRight', 'ArrowDown', 'PageDown'].indexOf(e.key) >= 0 || (e.key === ' ' && e.target === document.body)) { e.preventDefault(); ir(actual + 1); }
-    else if (['ArrowLeft', 'ArrowUp', 'PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); ir(actual - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); ir(actual + 1, false, 'h'); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); ir(actual - 1, false, 'h'); }
+    else if (['ArrowDown', 'PageDown'].indexOf(e.key) >= 0 || (e.key === ' ' && e.target === document.body)) { e.preventDefault(); ir(actual + 1, false, 'v'); }
+    else if (['ArrowUp', 'PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); ir(actual - 1, false, 'v'); }
   });
 
   /* ---------------------------------------------------------------- capas */
